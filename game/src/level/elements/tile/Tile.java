@@ -19,6 +19,8 @@ import tools.Point;
  * @author Andre Matutat
  */
 public abstract class Tile {
+
+    public String name;
     protected final Coordinate globalPosition;
     protected DesignLabel designLabel;
     protected String texturePath;
@@ -43,6 +45,9 @@ public abstract class Tile {
         this.designLabel = designLabel;
         this.level = level;
     }
+
+
+
 
     /**
      * What happens, if someone moves on this Tile?

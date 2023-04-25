@@ -188,9 +188,13 @@ public class RoomGenerator {
         for (int y = WALL_BUFFER; y < layout.length - WALL_BUFFER; y++) {
             for (int x = WALL_BUFFER; x < layout[0].length - WALL_BUFFER; x++) {
                 if (layout[y][x] == LevelElement.FLOOR && random.nextFloat() < PROBABILITY_HOLE)
-                    layout[y][x] = LevelElement.HOLE;
+                    layout[y][x] = LevelElement.TRAP;
             }
         }
+
+
+
+
 
         // add supports for large rooms
         if (baseFloor.x >= 15 && baseFloor.y >= 15) {
@@ -589,7 +593,7 @@ public class RoomGenerator {
                     case FLOOR -> System.out.print(". ");
                     case WALL -> System.out.print("W ");
                     case EXIT -> System.out.print("E ");
-                    case HOLE -> System.out.println("H ");
+                    case TRAP -> System.out.println("H ");
                     case DOOR -> System.out.println("D ");
                 }
             }

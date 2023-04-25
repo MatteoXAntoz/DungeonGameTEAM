@@ -1,13 +1,16 @@
 package level.elements;
 
 import java.util.List;
+
 import level.elements.tile.*;
 import level.tools.LevelElement;
 import level.tools.TileTextureFactory;
 
 public interface ILevel extends ITileable {
 
-    /** Mark a random tile as start */
+    /**
+     * Mark a random tile as start
+     */
     default void setRandomStart() {
         setStartTile(getRandomTile(LevelElement.FLOOR));
     }
@@ -19,7 +22,9 @@ public interface ILevel extends ITileable {
      */
     void setStartTile(Tile start);
 
-    /** Mark a random tile as end */
+    /**
+     * Mark a random tile as end
+     */
     default void setRandomEnd() {
         List<FloorTile> floorTiles = getFloorTiles();
         if (floorTiles.size() <= 1) {
@@ -29,7 +34,7 @@ public interface ILevel extends ITileable {
         int startTileIndex = floorTiles.indexOf(getStartTile());
         int index = RANDOM.nextInt(floorTiles.size() - 1);
         changeTileElementType(
-                floorTiles.get(index < startTileIndex ? index : index + 1), LevelElement.EXIT);
+            floorTiles.get(index < startTileIndex ? index : index + 1), LevelElement.EXIT);
     }
 
     /**
@@ -51,7 +56,7 @@ public interface ILevel extends ITileable {
      *
      * @param tile new hole tile
      */
-    void addHoleTile(HoleTile tile);
+    void addTrapTile(TrapTile tile);
 
     /**
      * Add door tile to level.
@@ -107,7 +112,7 @@ public interface ILevel extends ITileable {
      *
      * @return list of hole tiles
      */
-    List<HoleTile> getHoleTiles();
+    List<TrapTile> getTrapTiles();
 
     /**
      * Returns List of all door tiles of the level.
@@ -115,6 +120,10 @@ public interface ILevel extends ITileable {
      * @return list of door tiles
      */
     List<DoorTile> getDoorTiles();
+
+
+    //Fallen
+
 
     /**
      * Returns List of all exit tiles of the level.
@@ -159,7 +168,7 @@ public interface ILevel extends ITileable {
     /**
      * Change the type of tile (including changing texture)
      *
-     * @param tile The Tile you want to change
+     * @param tile       The Tile you want to change
      * @param changeInto The LevelElement to change the Tile into.
      */
     default void changeTileElementType(Tile tile, LevelElement changeInto) {
@@ -169,11 +178,11 @@ public interface ILevel extends ITileable {
         }
         level.removeTile(tile);
         Tile newTile =
-                TileFactory.createTile(
-                        TileTextureFactory.findTexturePath(tile, getLayout(), changeInto),
-                        tile.getCoordinate(),
-                        changeInto,
-                        tile.getDesignLabel());
+            TileFactory.createTile(
+                TileTextureFactory.findTexturePath(tile, getLayout(), changeInto),
+                tile.getCoordinate(),
+                changeInto,
+                tile.getDesignLabel());
         level.getLayout()[tile.getCoordinate().y][tile.getCoordinate().x] = newTile;
         level.addTile(newTile);
     }
@@ -182,23 +191,24 @@ public interface ILevel extends ITileable {
     default Tile getRandomTile(LevelElement elementType) {
         return switch (elementType) {
             case SKIP -> getSkipTiles().size() > 0
-                    ? getSkipTiles().get(RANDOM.nextInt(getSkipTiles().size()))
-                    : null;
+                ? getSkipTiles().get(RANDOM.nextInt(getSkipTiles().size()))
+                : null;
             case FLOOR -> getFloorTiles().size() > 0
-                    ? getFloorTiles().get(RANDOM.nextInt(getFloorTiles().size()))
-                    : null;
+                ? getFloorTiles().get(RANDOM.nextInt(getFloorTiles().size()))
+                : null;
             case WALL -> getWallTiles().size() > 0
-                    ? getWallTiles().get(RANDOM.nextInt(getWallTiles().size()))
-                    : null;
-            case HOLE -> getHoleTiles().size() > 0
-                    ? getHoleTiles().get(RANDOM.nextInt(getHoleTiles().size()))
-                    : null;
+                ? getWallTiles().get(RANDOM.nextInt(getWallTiles().size()))
+                : null;
+            case TRAP -> getTrapTiles().size() > 0
+                ? getTrapTiles().get(RANDOM.nextInt(getTrapTiles().size()))
+                : null;
             case EXIT -> getExitTiles().size() > 0
-                    ? getExitTiles().get(RANDOM.nextInt(getExitTiles().size()))
-                    : null;
+                ? getExitTiles().get(RANDOM.nextInt(getExitTiles().size()))
+                : null;
             case DOOR -> getDoorTiles().size() > 0
-                    ? getDoorTiles().get(RANDOM.nextInt(getDoorTiles().size()))
-                    : null;
+                ? getDoorTiles().get(RANDOM.nextInt(getDoorTiles().size()))
+                : null;
+
         };
     }
 

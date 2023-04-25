@@ -1,6 +1,7 @@
 package starter;
 
 import static com.badlogic.gdx.graphics.GL20.GL_COLOR_BUFFER_BIT;
+
 import static logging.LoggerConfig.initBaseLogger;
 
 import com.badlogic.gdx.Gdx;
@@ -22,21 +23,29 @@ import ecs.systems.*;
 import graphic.DungeonCamera;
 import graphic.Painter;
 import graphic.hud.PauseMenu;
+
 import java.io.IOException;
 import java.util.*;
 import java.util.logging.Logger;
+
 import level.IOnLevelLoader;
 import level.LevelAPI;
 import level.elements.ILevel;
+import level.elements.tile.ExitTile;
+import level.elements.tile.FloorTile;
 import level.elements.tile.Tile;
+import level.elements.tile.TrapTile;
 import level.generator.IGenerator;
 import level.generator.postGeneration.WallGenerator;
 import level.generator.randomwalk.RandomWalkGenerator;
+import level.tools.LevelElement;
 import level.tools.LevelSize;
 import tools.Constants;
 import tools.Point;
 
-/** The heart of the framework. From here all strings are pulled. */
+/**
+ * The heart of the framework. From here all strings are pulled.
+ */
 public class Game extends ScreenAdapter implements IOnLevelLoader {
 
     private final LevelSize LEVELSIZE = LevelSize.SMALL;
@@ -47,28 +56,42 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
      */
     protected SpriteBatch batch;
 
-    /** Contains all Controller of the Dungeon */
+    /**
+     * Contains all Controller of the Dungeon
+     */
     protected List<AbstractController<?>> controller;
 
     public static DungeonCamera camera;
-    /** Draws objects */
+    /**
+     * Draws objects
+     */
     protected Painter painter;
 
     protected LevelAPI levelAPI;
-    /** Generates the level */
+    /**
+     * Generates the level
+     */
     protected IGenerator generator;
 
     private boolean doSetup = true;
     private static boolean paused = false;
 
-    /** All entities that are currently active in the dungeon */
+    /**
+     * All entities that are currently active in the dungeon
+     */
     private static final Set<Entity> entities = new HashSet<>();
-    /** All entities to be removed from the dungeon in the next frame */
+    /**
+     * All entities to be removed from the dungeon in the next frame
+     */
     private static final Set<Entity> entitiesToRemove = new HashSet<>();
-    /** All entities to be added from the dungeon in the next frame */
+    /**
+     * All entities to be added from the dungeon in the next frame
+     */
     private static final Set<Entity> entitiesToAdd = new HashSet<>();
 
-    /** List of all Systems in the ECS */
+    /**
+     * List of all Systems in the ECS
+     */
     public static SystemController systems;
 
     public static ILevel currentLevel;
@@ -104,10 +127,11 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         camera.update();
 
 
-
     }
 
-    /** Called once at the beginning of the game. */
+    /**
+     * Called once at the beginning of the game.
+     */
     protected void setup() {
         doSetup = false;
         controller = new ArrayList<>();
@@ -127,15 +151,68 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         createSystems();
     }
 
-    /** Called at the beginning of each frame. Before the controllers call <code>update</code>. */
+    /**
+     * Called at the beginning of each frame. Before the controllers call <code>update</code>.
+     */
     protected void frame() {
         setCameraFocus();
         manageEntitiesSets();
         getHero().ifPresent(this::loadNextLevelIfEntityIsOnEndTile);
+
         hero.sprintSkill.update(hero);
-        hero.healingSkill.update(hero);
-        if (Gdx.input.isKeyJustPressed(Input.Keys.P)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
             togglePause();
+        }
+
+        for (TrapTile tile : currentLevel.getTrapTiles()) {
+
+            if (hero.isCollidingWithTrapTile(tile) && tile.name.equals("LAVATRAP")&& !tile.activated) {
+                int duration = 2;
+                int damage = (int) (Math.random() * 4);
+                while (duration >= 0) {
+                    hero.healthComponent.setCurrentHealthpoints(hero.healthComponent.getCurrentHealthpoints() - damage);
+                    duration -= 1;
+                }
+                duration = 2;
+
+                tile.setTexturePath("dungeon/default/floor/floor_lava_deactivated.png");
+                tile.activated = true;
+            }
+            if (hero.isCollidingWithTrapTile(tile) && tile.name.equals("POISONTRAP") && !tile.activated)  {
+                int duration = 2;
+                int damage = (int) (Math.random() * 2);
+                while (duration >= 0) {
+                    hero.healthComponent.setCurrentHealthpoints(hero.healthComponent.getCurrentHealthpoints() - damage);
+                    duration -= 1;
+                }
+                duration = 2;
+
+                tile.setTexturePath("dungeon/default/floor/floor_poison_deactivated.png");
+                tile.activated = true;
+
+
+            }
+            if (hero.isCollidingWithTrapTile(tile) && tile.name.equals("MOUSETRAP") && !tile.activated) {
+
+                int duration = 100000;
+                while (duration > 0) {
+                    hero.velocityComponent.setCurrentYVelocity(0);
+                    hero.velocityComponent.setCurrentXVelocity(0);
+                    duration -= 1;
+                    System.out.println(duration);
+                }
+                if(duration==0){
+                    tile.activated =true;
+                }
+
+
+                tile.setTexturePath("dungeon/default/floor/floor_mouseTrap_deactivated.png");
+
+
+
+            }
+
+
         }
 
 
@@ -146,6 +223,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         currentLevel = levelAPI.getCurrentLevel();
         entities.clear();
         getHero().ifPresent(this::placeOnLevelStart);
+
     }
 
     private void manageEntitiesSets() {
@@ -164,14 +242,14 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     private void setCameraFocus() {
         if (getHero().isPresent()) {
             PositionComponent pc =
-                    (PositionComponent)
-                            getHero()
-                                    .get()
-                                    .getComponent(PositionComponent.class)
-                                    .orElseThrow(
-                                            () ->
-                                                    new MissingComponentException(
-                                                            "PositionComponent"));
+                (PositionComponent)
+                    getHero()
+                        .get()
+                        .getComponent(PositionComponent.class)
+                        .orElseThrow(
+                            () ->
+                                new MissingComponentException(
+                                    "PositionComponent"));
             camera.setFocusPoint(pc.getPosition());
 
         } else camera.setFocusPoint(new Point(0, 0));
@@ -180,37 +258,38 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     private void loadNextLevelIfEntityIsOnEndTile(Entity h) {
         if (isOnEndTile(hero)) {
             levelAPI.loadLevel(LEVELSIZE);
-            if(hero.healingSkill.potion <hero.healingSkill.MAX_POTIONAMOUNT){
+            if (hero.healingSkill.potion < hero.healingSkill.MAX_POTIONAMOUNT) {
                 hero.healingSkill.addPotion();
-                System.out.println(hero.healingSkill.potion);
             }
 
         }
     }
 
 
-
     private boolean isOnEndTile(Entity entity) {
         PositionComponent pc =
-                (PositionComponent)
-                        entity.getComponent(PositionComponent.class)
-                                .orElseThrow(
-                                        () -> new MissingComponentException("PositionComponent"));
+            (PositionComponent)
+                entity.getComponent(PositionComponent.class)
+                    .orElseThrow(
+                        () -> new MissingComponentException("PositionComponent"));
         Tile currentTile = currentLevel.getTileAt(pc.getPosition().toCoordinate());
         return currentTile.equals(currentLevel.getEndTile());
     }
 
+
     private void placeOnLevelStart(Entity hero) {
         entities.add(hero);
         PositionComponent pc =
-                (PositionComponent)
-                        hero.getComponent(PositionComponent.class)
-                                .orElseThrow(
-                                        () -> new MissingComponentException("PositionComponent"));
+            (PositionComponent)
+                hero.getComponent(PositionComponent.class)
+                    .orElseThrow(
+                        () -> new MissingComponentException("PositionComponent"));
         pc.setPosition(currentLevel.getStartTile().getCoordinate().toPoint());
     }
 
-    /** Toggle between pause and run */
+    /**
+     * Toggle between pause and run
+     */
     public static void togglePause() {
         paused = !paused;
         if (systems != null) {

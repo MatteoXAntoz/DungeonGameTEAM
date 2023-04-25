@@ -6,8 +6,14 @@ import ecs.components.AnimationComponent;
 import ecs.components.PositionComponent;
 import ecs.components.VelocityComponent;
 import ecs.components.skill.*;
+import ecs.damage.Damage;
+import ecs.damage.DamageType;
 import ecs.systems.HealthSystem;
 import graphic.Animation;
+import level.elements.TileLevel;
+import level.elements.tile.Tile;
+import level.elements.tile.TrapTile;
+import level.tools.LevelElement;
 
 
 /**
@@ -17,8 +23,10 @@ import graphic.Animation;
 public class Hero extends Entity {
 
 
+
     public float xSpeed = 0.3f;
     public float ySpeed = 0.3f;
+
 
     private final String pathToIdleLeft = "knight/idleLeft";
     private final String pathToIdleRight = "knight/idleRight";
@@ -26,29 +34,41 @@ public class Hero extends Entity {
     private final String pathToRunRight = "knight/runRight";
     public SprintSkill sprintSkill;
     public HealingSkill healingSkill;
+    SkillComponent skillComponent = new SkillComponent(this);
 
     public VelocityComponent velocityComponent;
 
+    public HitboxComponent hitboxComponent;
+
+
+
 
     public HealthComponent healthComponent = new HealthComponent(this);
+
+    public PositionComponent positionComponent = new PositionComponent(this);
+
 
     /**
      * Entity with Components
      */
     public Hero() {
         super();
-        new PositionComponent(this);
+
         setupVelocityComponent();
         setupAnimationComponent();
         setupHitboxComponent();
         PlayableComponent pc = new PlayableComponent(this);
+
+
         setupSprintSkill();
         setupHealingSkill();
         pc.setSkillSlot1(sprintSkill);
         pc.setSkillSlot2(healingSkill);
-
+        skillComponent.addSkill(sprintSkill);
+        skillComponent.addSkill(healingSkill);
         healthComponent.setMaximalHealthpoints(100);
         healthComponent.setCurrentHealthpoints(100);
+
 
     }
 
@@ -57,6 +77,7 @@ public class Hero extends Entity {
         Animation moveLeft = AnimationBuilder.buildAnimation(pathToRunLeft);
         velocityComponent = new VelocityComponent(this, xSpeed, ySpeed, moveLeft, moveRight);
     }
+
 
     private void setupAnimationComponent() {
         Animation idleRight = AnimationBuilder.buildAnimation(pathToIdleRight);
@@ -71,7 +92,7 @@ public class Hero extends Entity {
             public void execute(Entity entity) {
                 sprintSkill.active = true;
             }
-        }, 1);
+        }, 5);
     }
 
     private void setupHealingSkill() {
@@ -79,17 +100,34 @@ public class Hero extends Entity {
             @Override
             public void execute(Entity entity) {
 
-                healingSkill.active = true;
-
+                if (healingSkill.potion > 0) {
+                    healthComponent.setCurrentHealthpoints(healthComponent.getCurrentHealthpoints() + healingSkill.healingBoost);
+                    healingSkill.removePotion();
+                }
 
             }
-        }, 1);
+        }, 2);
     }
 
     private void setupHitboxComponent() {
-        new HitboxComponent(
+        hitboxComponent = new HitboxComponent(
             this,
             (you, other, direction) -> System.out.println("heroCollisionEnter"),
             (you, other, direction) -> System.out.println("heroCollisionLeave"));
+
     }
+
+    public boolean isCollidingWithTrapTile(TrapTile tile) {
+        float SCALE = 0.6f;
+
+        return (positionComponent.getPosition().x + SCALE > tile.getCoordinateAsPoint().x &&
+            positionComponent.getPosition().x < tile.getCoordinateAsPoint().x + SCALE &&
+            positionComponent.getPosition().y + SCALE > tile.getCoordinateAsPoint().y &&
+            positionComponent.getPosition().y < tile.getCoordinateAsPoint().y + SCALE);
+    }
+
+
+
+
+
 }

@@ -16,7 +16,7 @@ public class TileFactory {
         return switch (elementType) {
             case FLOOR -> new FloorTile(texturePath, coordinate, designLabel, level);
             case WALL -> new WallTile(texturePath, coordinate, designLabel, level);
-            case HOLE -> new HoleTile(texturePath, coordinate, designLabel, level);
+            case TRAP -> new TrapTile(texturePath, coordinate, designLabel, level);
             case DOOR -> new DoorTile(texturePath, coordinate, designLabel, level);
             case EXIT -> new ExitTile(texturePath, coordinate, designLabel, level);
             case SKIP -> new SkipTile(texturePath, coordinate, designLabel, level);

@@ -4,6 +4,8 @@ import ecs.components.Component;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.logging.Logger;
+
+import ecs.components.PositionComponent;
 import semanticAnalysis.types.DSLContextPush;
 import semanticAnalysis.types.DSLType;
 import starter.Game;
@@ -16,6 +18,8 @@ public class Entity {
     public final int id = nextId++;
     private HashMap<Class, Component> components;
     private final Logger entityLogger;
+
+    public PositionComponent positionComponent;
 
     public Entity() {
         components = new HashMap<>();

@@ -8,8 +8,8 @@ public class HealingSkill extends Skill {
 
 
     public boolean active;
-    public final int healingBoost = 25;
-    public int potion;
+    public  int healingBoost = 25;
+    public int potion =0;
 
     public final int MAX_POTIONAMOUNT = 5;
 
@@ -30,9 +30,5 @@ public class HealingSkill extends Skill {
     }
 
 
-    public void update(Hero hero) {
-        if (active) {
-            hero.healthComponent.setCurrentHealthpoints(hero.healthComponent.getCurrentHealthpoints() - healingBoost);
-        }
-    }
+
 }
