@@ -607,13 +607,13 @@ public class TileLevelTest {
                         DesignLabel.DEFAULT);
         Tile tile =
                 TileFactory.createTile(
-                        "", new Coordinate(1, 0), LevelElement.HOLE, DesignLabel.DEFAULT);
+                        "", new Coordinate(1, 0), LevelElement.TRAP, DesignLabel.DEFAULT);
         level.removeTile(level.getLayout()[0][1]);
         level.getLayout()[0][1] = tile;
         level.addTile(tile);
         assertTrue(
                 "tile needs to be added to specific Tile list",
-                level.getHoleTiles().contains(tile));
+                level.getTrapTiles().contains(tile));
         assertEquals(0, tile.getIndex());
         assertTrue(
                 "All neighbouring tiles need to be informed about the new tile",
