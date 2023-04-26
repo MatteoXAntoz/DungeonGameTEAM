@@ -4,7 +4,7 @@ import ecs.entities.Hero;
 
 public class SprintSkill extends Skill {
 
-
+//Matteo
     public final float xBoost = 0.6f;
     public final float yBoost = 0.6f;
 

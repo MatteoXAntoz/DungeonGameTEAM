@@ -158,7 +158,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         setCameraFocus();
         manageEntitiesSets();
         getHero().ifPresent(this::loadNextLevelIfEntityIsOnEndTile);
-
+//Matteo
         hero.sprintSkill.update(hero);
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
             togglePause();

@@ -6,7 +6,7 @@ import ecs.entities.Hero;
 
 public class HealingSkill extends Skill {
 
-
+//Matteo
 
     public final int healingBoost = 25;
     public int potion = 0;
