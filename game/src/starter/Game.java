@@ -164,9 +164,11 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
             togglePause();
         }
 
+//Mazlum
+
         for (TrapTile tile : currentLevel.getTrapTiles()) {
 
-            if (hero.isCollidingWithTrapTile(tile) && tile.name.equals("LAVATRAP")&& !tile.activated) {
+            if (hero.isCollidingWithTrapTile(tile) && tile.name.equals("LAVATRAP") && !tile.activated) {
                 int duration = 2;
                 int damage = 4;
                 while (duration >= 0) {
@@ -178,9 +180,9 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
                 tile.setTexturePath("dungeon/default/floor/floor_lava_deactivated.png");
                 tile.activated = true;
             }
-            if (hero.isCollidingWithTrapTile(tile) && tile.name.equals("POISONTRAP") && !tile.activated)  {
+            if (hero.isCollidingWithTrapTile(tile) && tile.name.equals("POISONTRAP") && !tile.activated) {
                 int duration = 2;
-                int damage = (int) (Math.random()*5);
+                int damage = (int) (Math.random() * 5);
                 while (duration >= 0) {
                     hero.healthComponent.setCurrentHealthpoints(hero.healthComponent.getCurrentHealthpoints() - damage);
                     duration -= 1;
@@ -200,13 +202,12 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
                     hero.velocityComponent.setCurrentXVelocity(0);
                     duration -= 0.0001;
                 }
-                if(duration==0){
-                    tile.activated =true;
+                if (duration == 0) {
+                    tile.activated = true;
                 }
 
 
                 tile.setTexturePath("dungeon/default/floor/floor_mouseTrap_deactivated.png");
-
 
 
             }
@@ -254,6 +255,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         } else camera.setFocusPoint(new Point(0, 0));
     }
 
+    //
     private void loadNextLevelIfEntityIsOnEndTile(Entity h) {
         if (isOnEndTile(hero)) {
             levelAPI.loadLevel(LEVELSIZE);

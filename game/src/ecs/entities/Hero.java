@@ -32,7 +32,12 @@ public class Hero extends Entity {
     private final String pathToIdleRight = "knight/idleRight";
     private final String pathToRunLeft = "knight/runLeft";
     private final String pathToRunRight = "knight/runRight";
+
+
+    //
     public SprintSkill sprintSkill;
+
+    //
     public HealingSkill healingSkill;
     public SkillComponent skillComponent = new SkillComponent(this);
 
@@ -62,10 +67,13 @@ public class Hero extends Entity {
 
         setupSprintSkill();
         setupHealingSkill();
+
         pc.setSkillSlot1(sprintSkill);
         pc.setSkillSlot2(healingSkill);
+
         skillComponent.addSkill(sprintSkill);
         skillComponent.addSkill(healingSkill);
+
         healthComponent.setMaximalHealthpoints(100);
         healthComponent.setCurrentHealthpoints(100);
 
@@ -96,6 +104,7 @@ public class Hero extends Entity {
     }
 
     private void setupHealingSkill() {
+
         healingSkill = new HealingSkill(new ISkillFunction() {
             @Override
             public void execute(Entity entity) {
@@ -110,20 +119,19 @@ public class Hero extends Entity {
     }
 
     private void setupHitboxComponent() {
-        hitboxComponent = new HitboxComponent(
-            this,
+        hitboxComponent = new HitboxComponent(this,
             (you, other, direction) -> System.out.println("heroCollisionEnter"),
             (you, other, direction) -> System.out.println("heroCollisionLeave"));
 
     }
 
     public boolean isCollidingWithTrapTile(TrapTile tile) {
-        float SCALE = 0.6f;
+        float hitBoxScale = 0.6f;
 
-        return (positionComponent.getPosition().x + SCALE > tile.getCoordinateAsPoint().x &&
-            positionComponent.getPosition().x < tile.getCoordinateAsPoint().x + SCALE &&
-            positionComponent.getPosition().y + SCALE > tile.getCoordinateAsPoint().y &&
-            positionComponent.getPosition().y < tile.getCoordinateAsPoint().y + SCALE);
+        return (positionComponent.getPosition().x + hitBoxScale > tile.getCoordinateAsPoint().x &&
+            positionComponent.getPosition().x < tile.getCoordinateAsPoint().x + hitBoxScale &&
+            positionComponent.getPosition().y + hitBoxScale > tile.getCoordinateAsPoint().y &&
+            positionComponent.getPosition().y < tile.getCoordinateAsPoint().y + hitBoxScale);
     }
 
 

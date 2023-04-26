@@ -100,6 +100,7 @@ public class TileTextureFactory {
     }
 
 
+    //Moritz
     private static String findTexturePathFloor(LevelPart levelPart) {
         if (levelPart.element() == LevelElement.SKIP) {
             return "floor/empty";
@@ -117,6 +118,7 @@ public class TileTextureFactory {
         return null;
     }
 
+    //Moritz
     private static String getRandomTrap() {
         int ranValue = (int) (Math.random() * 3);
 

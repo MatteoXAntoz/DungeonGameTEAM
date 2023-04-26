@@ -27,6 +27,8 @@ public class TrapTile extends FloorTile {
 
 
 
+    //Texturen der Fallen
+
     String mouseTrap = "dungeon/default/floor/floor_mouseTrap.png";
     String poisonTrap = "dungeon/default/floor/floor_poison.png";
     String lavaTrap = "dungeon/default/floor/floor_lava.png";
@@ -34,7 +36,7 @@ public class TrapTile extends FloorTile {
     public TrapTile(
         String texturePath, Coordinate globalPosition, DesignLabel designLabel, ILevel level) {
         super(texturePath, globalPosition, designLabel, level);
-        getName();
+        getName(); // dem Objekt wird anhand der zugewiesenen Textur einen Namen zugewiesen
         levelElement = LevelElement.TRAP;
 
     }

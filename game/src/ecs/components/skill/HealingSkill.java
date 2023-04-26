@@ -7,9 +7,9 @@ import ecs.entities.Hero;
 public class HealingSkill extends Skill {
 
 
-    public boolean active;
-    public  int healingBoost = 25;
-    public int potion =0;
+
+    public final int healingBoost = 25;
+    public int potion = 0;
 
     public final int MAX_POTIONAMOUNT = 5;
 
