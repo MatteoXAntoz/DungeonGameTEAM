@@ -168,7 +168,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
 
             if (hero.isCollidingWithTrapTile(tile) && tile.name.equals("LAVATRAP")&& !tile.activated) {
                 int duration = 2;
-                int damage = (int) (Math.random() * 4);
+                int damage = 4;
                 while (duration >= 0) {
                     hero.healthComponent.setCurrentHealthpoints(hero.healthComponent.getCurrentHealthpoints() - damage);
                     duration -= 1;
@@ -180,7 +180,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
             }
             if (hero.isCollidingWithTrapTile(tile) && tile.name.equals("POISONTRAP") && !tile.activated)  {
                 int duration = 2;
-                int damage = (int) (Math.random() * 2);
+                int damage = (int) (Math.random()*5);
                 while (duration >= 0) {
                     hero.healthComponent.setCurrentHealthpoints(hero.healthComponent.getCurrentHealthpoints() - damage);
                     duration -= 1;
@@ -194,12 +194,11 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
             }
             if (hero.isCollidingWithTrapTile(tile) && tile.name.equals("MOUSETRAP") && !tile.activated) {
 
-                int duration = 100000;
+                int duration = 100000000;
                 while (duration > 0) {
                     hero.velocityComponent.setCurrentYVelocity(0);
                     hero.velocityComponent.setCurrentXVelocity(0);
-                    duration -= 1;
-                    System.out.println(duration);
+                    duration -= 0.0001;
                 }
                 if(duration==0){
                     tile.activated =true;

@@ -34,7 +34,7 @@ public class Hero extends Entity {
     private final String pathToRunRight = "knight/runRight";
     public SprintSkill sprintSkill;
     public HealingSkill healingSkill;
-    SkillComponent skillComponent = new SkillComponent(this);
+    public SkillComponent skillComponent = new SkillComponent(this);
 
     public VelocityComponent velocityComponent;
 
