@@ -89,9 +89,9 @@ public class TileTextureFactoryTest {
         layout[7][3] = LevelElement.EXIT;
 
         // holes
-        layout[6][7] = LevelElement.HOLE;
-        layout[7][6] = LevelElement.HOLE;
-        layout[7][7] = LevelElement.HOLE;
+        layout[6][7] = LevelElement.TRAP;
+        layout[7][6] = LevelElement.TRAP;
+        layout[7][7] = LevelElement.TRAP;
 
         // doors
         layout[1][5] = LevelElement.DOOR;
