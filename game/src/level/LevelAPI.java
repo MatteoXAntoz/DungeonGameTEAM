@@ -1,19 +1,29 @@
 package level;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import ecs.entities.Entity;
+import ecs.entities.Hero;
 import graphic.Painter;
 import graphic.PainterConfig;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.logging.Logger;
+
 import level.elements.ILevel;
 import level.elements.tile.Tile;
 import level.generator.IGenerator;
+import level.myQuest.LevelManager;
+import level.myQuest.MyQuestConfig;
 import level.tools.DesignLabel;
 import level.tools.LevelElement;
 import level.tools.LevelSize;
+import starter.Game;
 
-/** Manages the level. */
+/**
+ * Manages the level.
+ */
 public class LevelAPI {
     private final SpriteBatch batch;
     private final Painter painter;
@@ -22,33 +32,53 @@ public class LevelAPI {
     private ILevel currentLevel;
     private final Logger levelAPI_logger = Logger.getLogger(this.getClass().getName());
 
+    public int levelID;
+
+    MyQuestConfig myQuestConfig;
+    LevelManager levelManager;
+
+
     /**
-     * @param batch Batch on which to draw.
-     * @param painter Who draws?
-     * @param generator Level generator
+     * @param batch         Batch on which to draw.
+     * @param painter       Who draws?
+     * @param generator     Level generator
      * @param onLevelLoader Object that implements the onLevelLoad method.
      */
+
+
+
+
     public LevelAPI(
-            SpriteBatch batch,
-            Painter painter,
-            IGenerator generator,
-            IOnLevelLoader onLevelLoader) {
+        SpriteBatch batch,
+        Painter painter,
+        IGenerator generator,
+        IOnLevelLoader onLevelLoader) {
         this.gen = generator;
         this.batch = batch;
         this.painter = painter;
         this.onLevelLoader = onLevelLoader;
+        levelManager = LevelManager.getInstance();
+
+
     }
 
     /**
      * Load a new Level
      *
-     * @param size The size that the level should have
+     * @param size  The size that the level should have
      * @param label The design that the level should have
      */
     public void loadLevel(LevelSize size, DesignLabel label) {
         currentLevel = gen.getLevel(label, size);
         onLevelLoader.onLevelLoad();
-        levelAPI_logger.info("A new level was loaded.");
+        //levelAPI_logger.info("A new level was loaded.")
+
+
+        levelID += 1;
+        levelAPI_logger.info("Level " + levelID + " was loaded.");
+
+        levelManager.setLevelSurvivedWithoutDamage(levelManager.getLevelSurvivedWithoutDamage() + 1);
+        levelAPI_logger.info(levelManager.getLevelSurvivedWithoutDamage() + " Level" + " survived");
     }
 
     /**
@@ -69,14 +99,20 @@ public class LevelAPI {
         loadLevel(size, DesignLabel.randomDesign());
     }
 
-    /** Load a new level with random size and random design. */
+    /**
+     * Load a new level with random size and random design.
+     */
     public void loadLevel() {
         loadLevel(LevelSize.randomSize(), DesignLabel.randomDesign());
     }
 
-    /** Draw level */
+    /**
+     * Draw level
+     */
     public void update() {
         drawLevel();
+        levelManager.update();
+
     }
 
     /**
@@ -86,7 +122,10 @@ public class LevelAPI {
         return currentLevel;
     }
 
-    protected void drawLevel() {
+    protected void
+
+
+    drawLevel() {
         Map<String, PainterConfig> mapping = new HashMap<>();
 
         Tile[][] layout = currentLevel.getLayout();
@@ -99,7 +138,7 @@ public class LevelAPI {
                         mapping.put(texturePath, new PainterConfig(texturePath));
                     }
                     painter.draw(
-                            t.getCoordinate().toPoint(), texturePath, mapping.get(texturePath));
+                        t.getCoordinate().toPoint(), texturePath, mapping.get(texturePath));
                 }
             }
         }

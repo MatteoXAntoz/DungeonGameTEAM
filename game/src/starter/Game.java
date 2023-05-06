@@ -13,10 +13,8 @@ import configuration.Configuration;
 import configuration.KeyboardConfig;
 import controller.AbstractController;
 import controller.SystemController;
-import ecs.components.Component;
 import ecs.components.MissingComponentException;
 import ecs.components.PositionComponent;
-import ecs.components.skill.HealingSkill;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
 import ecs.systems.*;
@@ -31,14 +29,12 @@ import java.util.logging.Logger;
 import level.IOnLevelLoader;
 import level.LevelAPI;
 import level.elements.ILevel;
-import level.elements.tile.ExitTile;
-import level.elements.tile.FloorTile;
 import level.elements.tile.Tile;
 import level.elements.tile.TrapTile;
 import level.generator.IGenerator;
 import level.generator.postGeneration.WallGenerator;
 import level.generator.randomwalk.RandomWalkGenerator;
-import level.tools.LevelElement;
+
 import level.tools.LevelSize;
 import tools.Constants;
 import tools.Point;
@@ -81,15 +77,15 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     /**
      * All entities that are currently active in the dungeon
      */
-    private static final Set<Entity> entities = new HashSet<>();
+    public static final Set<Entity> entities = new HashSet<>();
     /**
      * All entities to be removed from the dungeon in the next frame
      */
-    private static final Set<Entity> entitiesToRemove = new HashSet<>();
+    public static final Set<Entity> entitiesToRemove = new HashSet<>();
     /**
      * All entities to be added from the dungeon in the next frame
      */
-    private static final Set<Entity> entitiesToAdd = new HashSet<>();
+    public static final Set<Entity> entitiesToAdd = new HashSet<>();
 
     /**
      * List of all Systems in the ECS
@@ -98,8 +94,12 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
 
     public static ILevel currentLevel;
     private static PauseMenu<Actor> pauseMenu;
-    private static Hero hero;
+    public static Hero hero;
     private Logger gameLogger;
+
+
+
+
 
     public static void main(String[] args) {
         // start the game
@@ -148,9 +148,11 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         pauseMenu = new PauseMenu<>();
         controller.add(pauseMenu);
         hero = new Hero();
+
         levelAPI = new LevelAPI(batch, painter, new WallGenerator(new RandomWalkGenerator()), this);
         levelAPI.loadLevel(LEVELSIZE);
         createSystems();
+
     }
 
     /**
@@ -160,13 +162,12 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         setCameraFocus();
         manageEntitiesSets();
         getHero().ifPresent(this::loadNextLevelIfEntityIsOnEndTile);
-//Matteo
+
         hero.sprintSkill.update(hero);
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
             togglePause();
         }
 
-//Mazlum
 
         for (TrapTile tile : currentLevel.getTrapTiles()) {
 
@@ -218,6 +219,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         }
 
 
+
     }
 
     @Override
@@ -225,7 +227,6 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         currentLevel = levelAPI.getCurrentLevel();
         entities.clear();
         getHero().ifPresent(this::placeOnLevelStart);
-
     }
 
     private void manageEntitiesSets() {
@@ -334,6 +335,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
      */
     public static Set<Entity> getEntitiesToAdd() {
         return entitiesToAdd;
+
     }
 
     /**
@@ -388,4 +390,6 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         new SkillSystem();
         new ProjectileSystem();
     }
+
+
 }

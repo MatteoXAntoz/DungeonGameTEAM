@@ -9,11 +9,15 @@ import ecs.components.skill.*;
 import ecs.damage.Damage;
 import ecs.damage.DamageType;
 import ecs.systems.HealthSystem;
+import ecs.systems.PlayerSystem;
 import graphic.Animation;
 import level.elements.TileLevel;
 import level.elements.tile.Tile;
 import level.elements.tile.TrapTile;
-import level.tools.LevelElement;
+
+import starter.Game;
+
+import java.util.Scanner;
 
 
 /**
@@ -23,8 +27,8 @@ import level.tools.LevelElement;
 public class Hero extends Entity {
 
 
-//Matteo
-
+   Game game;
+   PlayerSystem playerSystem;
     public float xSpeed = 0.3f;
     public float ySpeed = 0.3f;
 
@@ -47,11 +51,13 @@ public class Hero extends Entity {
     public HitboxComponent hitboxComponent;
 
 
-
-
     public HealthComponent healthComponent = new HealthComponent(this);
 
     public PositionComponent positionComponent = new PositionComponent(this);
+
+    public InventoryComponent inventoryComponent = new InventoryComponent(this,5);
+
+
 
 
     /**
@@ -134,6 +140,7 @@ public class Hero extends Entity {
             positionComponent.getPosition().y + hitBoxScale > tile.getCoordinateAsPoint().y &&
             positionComponent.getPosition().y < tile.getCoordinateAsPoint().y + hitBoxScale);
     }
+
 
 
 

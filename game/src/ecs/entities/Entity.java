@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 import ecs.components.PositionComponent;
+import level.elements.tile.TrapTile;
 import semanticAnalysis.types.DSLContextPush;
 import semanticAnalysis.types.DSLType;
 import starter.Game;
@@ -55,4 +56,23 @@ public class Entity {
     public Optional<Component> getComponent(Class klass) {
         return Optional.ofNullable(components.get(klass));
     }
+    public boolean gotHitByTrap(){
+        for(TrapTile e: Game.currentLevel.getTrapTiles()){
+            if(isCollidingWithTrapTile(e)){
+                return true;
+            }
+        }
+        return false;
+
+    }
+    public boolean isCollidingWithTrapTile(TrapTile tile) {
+        float hitBoxScale = 0.6f;
+
+        return (positionComponent.getPosition().x + hitBoxScale > tile.getCoordinateAsPoint().x &&
+            positionComponent.getPosition().x < tile.getCoordinateAsPoint().x + hitBoxScale &&
+            positionComponent.getPosition().y + hitBoxScale > tile.getCoordinateAsPoint().y &&
+            positionComponent.getPosition().y < tile.getCoordinateAsPoint().y + hitBoxScale);
+    }
+
+
 }

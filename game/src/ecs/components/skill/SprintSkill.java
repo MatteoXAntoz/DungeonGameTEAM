@@ -33,7 +33,7 @@ public class SprintSkill extends Skill {
             hero.velocityComponent.setYVelocity(0.3f);
         }
 
-        System.out.println(hero.healthComponent.getCurrentHealthpoints());
+
 
     }
 
