@@ -53,9 +53,6 @@ public class PlayerSystem extends ECS_System {
             hero.healthComponent.setCurrentHealthpoints(100);
         }
 
-        System.out.println((hero.healthComponent.getCurrentHealthpoints()));
-
-
 
         //Quests
         if (quests_open) {

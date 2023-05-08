@@ -31,15 +31,8 @@ import static ecs.components.ai.idle.PatrouilleWalk.*;
 public class Ghost extends Entity implements IInteraction,IIdleAI{
 
 
-    Animation idleLeft,idleRight,idleFront,idleBack;
-    VelocityComponent velocityComponent;
-    AIComponent aiComponent;
-
-    IIdleAI iIdleAI;
-    IFightAI iFightAI;
+    Animation idleLeft,idleRight;
     InteractionComponent interactionComponent;
-
-
 
     Hero hero = Game.hero;
 
@@ -49,8 +42,7 @@ public class Ghost extends Entity implements IInteraction,IIdleAI{
 
     private final String pathToIdleLeft = "ghost/idleLeft";
     private final String pathToIdleRight = "ghost/idleRight";
-    private final String pathToIdleFront = "ghost/idleRight";
-    private final String pathToIdleBack = "ghost/idleRight";
+
 
 
 
@@ -61,7 +53,7 @@ public class Ghost extends Entity implements IInteraction,IIdleAI{
         setupInteraction();
 
 
-        new VelocityComponent(this,0.04f,0.04F,idleLeft,idleRight);
+        new VelocityComponent(this,0.04f,0.04F,idleLeft,idleLeft);
             setupAi();
 
 
@@ -85,6 +77,7 @@ public class Ghost extends Entity implements IInteraction,IIdleAI{
          idleRight = AnimationBuilder.buildAnimation(pathToIdleRight);
          idleLeft = AnimationBuilder.buildAnimation(pathToIdleLeft);
         new AnimationComponent(this, idleLeft, idleRight);
+
 
 
     }
