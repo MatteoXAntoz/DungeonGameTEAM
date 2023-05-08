@@ -17,6 +17,8 @@ import ecs.components.MissingComponentException;
 import ecs.components.PositionComponent;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
+import ecs.entities.NPCs.Ghost;
+import ecs.items.Item;
 import ecs.systems.*;
 import graphic.DungeonCamera;
 import graphic.Painter;
@@ -29,6 +31,7 @@ import java.util.logging.Logger;
 import level.IOnLevelLoader;
 import level.LevelAPI;
 import level.elements.ILevel;
+import level.elements.tile.Grave;
 import level.elements.tile.Tile;
 import level.elements.tile.TrapTile;
 import level.generator.IGenerator;
@@ -97,6 +100,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     public static Hero hero;
     private Logger gameLogger;
 
+   public static ArrayList<Item> items = new ArrayList<>();
 
 
 
@@ -152,6 +156,11 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         levelAPI = new LevelAPI(batch, painter, new WallGenerator(new RandomWalkGenerator()), this);
         levelAPI.loadLevel(LEVELSIZE);
         createSystems();
+
+
+
+
+
 
     }
 

@@ -8,13 +8,20 @@ import ecs.components.PlayableComponent;
 import ecs.components.VelocityComponent;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
+import ecs.items.*;
 import ecs.tools.interaction.InteractionTool;
+import jdk.dynalink.linker.GuardingDynamicLinker;
 import level.LevelAPI;
+import level.elements.tile.TrapTile;
 import level.myQuest.*;
 
+import level.tools.LevelElement;
 import starter.Game;
 
-import static starter.Game.togglePause;
+import java.nio.file.attribute.FileAttribute;
+import java.security.Key;
+
+import static starter.Game.*;
 
 
 /**
@@ -23,7 +30,9 @@ import static starter.Game.togglePause;
 public class PlayerSystem extends ECS_System {
 
     boolean quests_open = false;
-    int choice = 0;
+    boolean inventory_open = false;
+    int questChoice = 0;
+    int inventoryChoice = 0;
 
     LevelManager levelManager = LevelManager.getInstance();
 
@@ -38,34 +47,89 @@ public class PlayerSystem extends ECS_System {
             .map(pc -> buildDataObject((PlayableComponent) pc))
             .forEach(this::checkKeystroke);
 
+        if(hero.isGodMode()&&LevelAPI.COUNTLEVEL(3)){
+            hero.setGodMode(false);
+        }else if(hero.isGodMode() && !LevelAPI.COUNTLEVEL(3)){
+            hero.healthComponent.setCurrentHealthpoints(100);
+        }
+
+        System.out.println((hero.healthComponent.getCurrentHealthpoints()));
+
+
+
+        //Quests
         if (quests_open) {
-            if (quests_open) {
-                if (Gdx.input.isKeyJustPressed(KeyboardConfig.QUEST_DOWN.get())
-                    && choice < levelManager.myQuests.size()-1) {
-                    choice++;
-                    System.out.println("Your choice: " + choice);
-                }
+            //Zum auswählen der Quest
+            if (Gdx.input.isKeyJustPressed(KeyboardConfig.QUEST_DOWN.get())
+                && questChoice < levelManager.myQuests.size() - 1) {
+                questChoice++;
+                System.out.println("Your choice: " + questChoice);
             }
-            if (Gdx.input.isKeyJustPressed(KeyboardConfig.QUEST_UP.get())&& choice>0) {
-                choice--;
-                System.out.println("Your choice: " + choice);
+            //Zum auswählen der Quest
+            else if (Gdx.input.isKeyJustPressed(KeyboardConfig.QUEST_UP.get()) && questChoice > 0) {
+                questChoice--;
+                System.out.println("Your choice: " + questChoice);
             }
-
-
             //Quest kann angenommen werden.
-            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ) {
-               if(!levelManager.myQuests.get(choice).isAgreed() && !levelManager.myQuests.get(choice).isAccomplished() ){
-                   levelManager.myQuests.get(choice).setAgreed(true);
-               }
-                if(levelManager.myQuests.get(choice).isAgreed()){
-                    levelManager.myQuests.get(choice).setAgreed(true);
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                if (!levelManager.myQuests.get(questChoice).isAgreed() && !levelManager.myQuests.get(questChoice).isAccomplished()) {
+                    levelManager.myQuests.get(questChoice).setAgreed(true);
+                } else if (levelManager.myQuests.get(questChoice).isAgreed()) {
+                    levelManager.myQuests.get(questChoice).setAgreed(false);
                 }
 
+                System.out.println(questChoice + " was your choice!");
+
+                quests_open = false;
+                questChoice = 0;
+
             }
-            //Wurde die Quest angenommen, so kann sie wieder abgelehnt werden.
+        }
+
+
+        //Inventory
+        if (inventory_open) {
+            //Zum auswählen
+            if (Gdx.input.isKeyJustPressed(KeyboardConfig.ITEM_DOWN.get())
+                && inventoryChoice < hero.getMyInventory().getItemAmount() - 1) {
+                inventoryChoice++;
+                System.out.println("Your choice: " + inventoryChoice);
+            }
+            //Zum auswählen
+            else if (Gdx.input.isKeyJustPressed(KeyboardConfig.ITEM_UP.get()) && inventoryChoice > 0) {
+                inventoryChoice--;
+                System.out.println("Your choice: " + inventoryChoice);
+            }
+
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) &&
+                hero.getMyInventory().isInInventory("Nahrung") && hero.getMyInventory().getInventoryItems().get(inventoryChoice).equals("Nahrung")){
+                Nahrung.HEALPLAYER();
+                hero.getMyInventory().getInventoryItems().remove(inventoryChoice);
+                System.out.println("Player was healed");
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) &&
+                hero.getMyInventory().isInInventory("Trank") &&
+                hero.getMyInventory().getInventoryItems().get(inventoryChoice).equals("Trank")){
+                hero.getMyInventory().getInventoryItems().remove(inventoryChoice);
+                Trank.SETGODMODE();
+                System.out.println("You have godMode for 3 Levels");
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) &&
+                hero.getMyInventory().isInInventory("Zauberstab") &&
+                hero.getMyInventory().getInventoryItems().get(inventoryChoice).equals("Zauberstab")){
+                hero.getMyInventory().getInventoryItems().remove(inventoryChoice);
+                Zauberstab.REMOVETRAPS();
+                System.out.println("All Traps have been removed");
+
+            }
+
 
         }
+
+
     }
+
 
     private void checkKeystroke(KSData ksd) {
         if (Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_UP.get()))
@@ -80,20 +144,42 @@ public class PlayerSystem extends ECS_System {
         if (Gdx.input.isKeyPressed(KeyboardConfig.INTERACT_WORLD.get()))
             InteractionTool.interactWithClosestInteractable(ksd.e);
 
-        //Quests
+
+        //Quests werden geöffnet
         if (Gdx.input.isKeyJustPressed(KeyboardConfig.OPEN_QUEST.get())) {
             quests_open = true;
             levelManager.printQuestInfo();
-            System.out.println("Your choice: " + choice);
+            System.out.println("Your choice: " + questChoice);
+        }
+
+        //Inventory wird geöffnet
+        if (Gdx.input.isKeyJustPressed(KeyboardConfig.INVENTORY_OPEN.get())) {
+            inventory_open = true;
+            hero.getMyInventory().showInventory();
+            System.out.println("Your choice: " + inventoryChoice);
+        }
+
+
+        hero.getMyInventory().setMaxSpace(5);
+
+
+        for (Item item : items) {
+            if (Gdx.input.isKeyJustPressed(KeyboardConfig.ITEM_COLLECT.get()) && hero.isCollidingWithItems(item)) {
+                Game.removeEntity(item);
+                hero.getMyInventory().addItems(item.getName());
+            }
+
+
         }
 
 
         // check skills
-        else if (Gdx.input.isKeyPressed(KeyboardConfig.FIRST_SKILL.get()))
+        if (Gdx.input.isKeyPressed(KeyboardConfig.FIRST_SKILL.get())) {
             ksd.pc.getSkillSlot1().ifPresent(skill -> skill.execute(ksd.e));
-        else if (Gdx.input.isKeyPressed(KeyboardConfig.SECOND_SKILL.get()))
+        }
+        if (Gdx.input.isKeyPressed(KeyboardConfig.SECOND_SKILL.get())) {
             ksd.pc.getSkillSlot2().ifPresent(skill -> skill.execute(ksd.e));
-
+        }
 
     }
 

@@ -8,6 +8,7 @@ import ecs.components.VelocityComponent;
 import ecs.components.skill.*;
 import ecs.damage.Damage;
 import ecs.damage.DamageType;
+import ecs.items.*;
 import ecs.systems.HealthSystem;
 import ecs.systems.PlayerSystem;
 import graphic.Animation;
@@ -16,6 +17,7 @@ import level.elements.tile.Tile;
 import level.elements.tile.TrapTile;
 
 import starter.Game;
+import tools.Constants;
 
 import java.util.Scanner;
 
@@ -26,12 +28,15 @@ import java.util.Scanner;
  */
 public class Hero extends Entity {
 
+    private boolean godMode = false;
+
 
    Game game;
    PlayerSystem playerSystem;
     public float xSpeed = 0.3f;
     public float ySpeed = 0.3f;
 
+    private MyInventory myInventory;
 
     private final String pathToIdleLeft = "knight/idleLeft";
     private final String pathToIdleRight = "knight/idleRight";
@@ -55,7 +60,7 @@ public class Hero extends Entity {
 
     public PositionComponent positionComponent = new PositionComponent(this);
 
-    public InventoryComponent inventoryComponent = new InventoryComponent(this,5);
+
 
 
 
@@ -66,6 +71,7 @@ public class Hero extends Entity {
     public Hero() {
         super();
 
+        setupInventory();
         setupVelocityComponent();
         setupAnimationComponent();
         setupHitboxComponent();
@@ -83,6 +89,7 @@ public class Hero extends Entity {
 
         healthComponent.setMaximalHealthpoints(100);
         healthComponent.setCurrentHealthpoints(100);
+
 
 
     }
@@ -141,9 +148,33 @@ public class Hero extends Entity {
             positionComponent.getPosition().y < tile.getCoordinateAsPoint().y + hitBoxScale);
     }
 
+    public boolean isCollidingWithItems(Item item ) {
+        float hitBoxScale = 0.6f;
+        return (positionComponent.getPosition().x + hitBoxScale > item.getPositionComponent().getPosition().x &&
+            positionComponent.getPosition().x < item.getPositionComponent().getPosition().x + hitBoxScale &&
+            positionComponent.getPosition().y + hitBoxScale > item.getPositionComponent().getPosition().y &&
+            positionComponent.getPosition().y < item.getPositionComponent().getPosition().y + hitBoxScale);
+    }
+
+    private void setupInventory(){
+        myInventory = new MyInventory();
 
 
+    }
 
+    public MyInventory getMyInventory() {
+        return myInventory;
+    }
 
+    public void setMyInventory(MyInventory myInventory) {
+        this.myInventory = myInventory;
+    }
 
+    public boolean isGodMode() {
+        return godMode;
+    }
+
+    public void setGodMode(boolean godMode) {
+        this.godMode = godMode;
+    }
 }

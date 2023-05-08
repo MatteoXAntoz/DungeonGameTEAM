@@ -3,15 +3,16 @@ package level;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
+import ecs.entities.NPCs.Ghost;
+import ecs.items.*;
 import graphic.Painter;
 import graphic.PainterConfig;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.logging.Logger;
 
 import level.elements.ILevel;
+import level.elements.tile.Grave;
 import level.elements.tile.Tile;
 import level.generator.IGenerator;
 import level.myQuest.LevelManager;
@@ -20,6 +21,7 @@ import level.tools.DesignLabel;
 import level.tools.LevelElement;
 import level.tools.LevelSize;
 import starter.Game;
+import tools.Point;
 
 /**
  * Manages the level.
@@ -32,10 +34,13 @@ public class LevelAPI {
     private ILevel currentLevel;
     private final Logger levelAPI_logger = Logger.getLogger(this.getClass().getName());
 
-    public int levelID;
+    public static int levelID;
+
 
     MyQuestConfig myQuestConfig;
     LevelManager levelManager;
+
+    Grave grave;
 
 
     /**
@@ -79,6 +84,12 @@ public class LevelAPI {
 
         levelManager.setLevelSurvivedWithoutDamage(levelManager.getLevelSurvivedWithoutDamage() + 1);
         levelAPI_logger.info(levelManager.getLevelSurvivedWithoutDamage() + " Level" + " survived");
+
+        grave = new Grave();
+        grave.positionComponent.setPosition(currentLevel.getRandomFloorTile().getCoordinateAsPoint());
+
+        spawnRandomItems();
+
     }
 
     /**
@@ -169,4 +180,31 @@ public class LevelAPI {
         currentLevel = level;
         onLevelLoader.onLevelLoad();
     }
+
+    public void spawnRandomItems() {
+
+
+        int maxItems = 5;
+        for(int i = 0;i<maxItems;i++){
+            Game.items.add(Item.ranItem());
+        }
+
+
+
+
+
+
+    }
+
+    public static boolean COUNTLEVEL(int amount){
+        int summe = 0;
+        summe+=levelID;
+        System.out.println(levelID);
+        if(summe==amount){
+            return true;
+        }
+
+        return false;
+    }
+
 }

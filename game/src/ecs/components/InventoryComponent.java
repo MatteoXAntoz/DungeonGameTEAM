@@ -1,6 +1,7 @@
 package ecs.components;
 
 import ecs.entities.Entity;
+import ecs.items.Item;
 import ecs.items.ItemData;
 import java.util.ArrayList;
 import java.util.List;
