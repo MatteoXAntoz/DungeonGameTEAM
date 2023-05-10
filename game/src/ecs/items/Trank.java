@@ -30,11 +30,10 @@ public class Trank extends Item {
         positionComponent.setPosition(position);
     }
 
-    public static void SETGODMODE() {
+    public static void INCREASEMAXHEALTH() {
         Hero hero = Game.hero;
-        System.out.println("GodMode ist an");
-        hero.setGodMode(true);
-
+        int boost = 4;
+        hero.healthComponent.setMaximalHealthpoints(hero.healthComponent.getMaximalHealthpoints()+boost);
 }
 
 

@@ -3,6 +3,7 @@ package ecs.items;
 import dslToGame.AnimationBuilder;
 import ecs.components.AnimationComponent;
 import ecs.components.HitboxComponent;
+import ecs.components.MyInventory;
 import ecs.components.PositionComponent;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
@@ -19,16 +20,18 @@ public class Item extends Entity  {
     protected String path;
     public String name;
 
+    //Verhindert den Bug beim einsammeln der Items
+    public boolean collected = false;
+
+
 
     Animation animation;
 
     public Item() {
         super();
+        setupPositionComponent();
 
     }
-
-
-
 
 
     protected void setupAnimation() {
@@ -37,9 +40,14 @@ public class Item extends Entity  {
     }
 
     protected void setupPositionComponent() {
-        positionComponent = new PositionComponent(this);
+        if(positionComponent==null){
+            positionComponent = new PositionComponent(this);
+        }
+
     }
 
+
+    //statische Funktion liefert uns ein zufaelliges Item
     public static Item ranItem() {
         int ranValue = (int) (Math.random() * 4);
         if (ranValue == 0) {

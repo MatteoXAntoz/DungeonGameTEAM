@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class MyInventory {
 
-
+//Moritz
     private int maxSpace;
     private ArrayList<String> inventoryItems;
 
@@ -59,6 +59,13 @@ public class MyInventory {
             if(inventoryItems.get(i).equals(name)){
                 return true;
             }
+        }
+        return false;
+    }
+
+    public boolean isFull(){
+        if(getItemAmount()==getMaxSpace()){
+            return true;
         }
         return false;
     }

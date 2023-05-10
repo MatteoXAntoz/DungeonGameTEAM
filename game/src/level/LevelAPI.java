@@ -27,6 +27,8 @@ import tools.Point;
  * Manages the level.
  */
 public class LevelAPI {
+
+
     private final SpriteBatch batch;
     private final Painter painter;
     private final IOnLevelLoader onLevelLoader;
@@ -181,30 +183,15 @@ public class LevelAPI {
         onLevelLoader.onLevelLoad();
     }
 
+    //Laesst bei jedem Levelaufruf neue Items spawnen
     public void spawnRandomItems() {
-
 
         int maxItems = 5;
         for(int i = 0;i<maxItems;i++){
             Game.items.add(Item.ranItem());
         }
 
-
-
-
-
-
     }
 
-    public static boolean COUNTLEVEL(int amount){
-        int summe = 0;
-        summe+=levelID;
-        System.out.println(levelID);
-        if(summe==amount){
-            return true;
-        }
-
-        return false;
-    }
 
 }

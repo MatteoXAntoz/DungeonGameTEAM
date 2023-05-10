@@ -1,13 +1,22 @@
 package ecs.items;
 
+import ecs.components.MyInventory;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
 import tools.Point;
 
 import java.util.ArrayList;
 
+
+/**
+ * Bag superclass is for subclasses: FoodBag and PotionBag
+@param myInventory
+@param position
+ */
+
 public class Bag  extends Item {
-   public ArrayList<String> space = new ArrayList<>();
+   private MyInventory myInventory;
+
 
 
     public Bag(){
@@ -29,6 +38,15 @@ public class Bag  extends Item {
         positionComponent.setPosition(position);
     }
 
+    protected void setupInventory(){
+        myInventory = new MyInventory();
+    }
 
+    public MyInventory getMyInventory() {
+        return myInventory;
+    }
 
+    public void setMyInventory(MyInventory myInventory) {
+        this.myInventory = myInventory;
+    }
 }

@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 
 public class MyQuestConfig {
 
+    //MyQuestConfig
     private final String PATH ="game/src/level/myQuest/MyQuestData.txt";
     private boolean isAgreed;
 
@@ -25,6 +26,7 @@ public class MyQuestConfig {
     public ArrayList<Integer> questID = new ArrayList<>();
     public ArrayList<String> questDescription = new ArrayList<>();
     public ArrayList<String> questReward = new ArrayList<>();
+
 
     private final static MyQuestConfig myQuestConfig = new MyQuestConfig();
 
@@ -41,8 +43,6 @@ public class MyQuestConfig {
 
 
         List<String> files;
-
-
 
 
         try {

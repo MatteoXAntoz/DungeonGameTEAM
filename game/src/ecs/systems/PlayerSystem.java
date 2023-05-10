@@ -17,6 +17,7 @@ import level.myQuest.*;
 
 import level.tools.LevelElement;
 import starter.Game;
+import tools.Point;
 
 import java.nio.file.attribute.FileAttribute;
 import java.security.Key;
@@ -29,10 +30,13 @@ import static starter.Game.*;
  */
 public class PlayerSystem extends ECS_System {
 
+    //Matteo
+
     boolean quests_open = false;
     boolean inventory_open = false;
     int questChoice = 0;
     int inventoryChoice = 0;
+
 
     LevelManager levelManager = LevelManager.getInstance();
 
@@ -47,14 +51,20 @@ public class PlayerSystem extends ECS_System {
             .map(pc -> buildDataObject((PlayableComponent) pc))
             .forEach(this::checkKeystroke);
 
-        if(hero.isGodMode()&&LevelAPI.COUNTLEVEL(3)){
-            hero.setGodMode(false);
-        }else if(hero.isGodMode() && !LevelAPI.COUNTLEVEL(3)){
-            hero.healthComponent.setCurrentHealthpoints(100);
+
+        //Benutzen wir einen Trank, so erhoehen wir unser Maximale Leben um 10 Leben
+        //Haben wir weniger als 100 leben, so wird das Maximale Leben wieder
+        // Auf 100 zurueckgesetzt
+        if (hero.healthComponent.getCurrentHealthpoints() < 100) {
+            hero.healthComponent.setMaximalHealthpoints(100);
         }
 
 
-        //Quests
+        if(hero.getMyInventory().isInInventory("PotionBag") || hero.getMyInventory().isInInventory("FoodBag")){
+            hero.playerHasBag = true;
+        }
+
+        //Wenn Quests geöffnet werden
         if (quests_open) {
             //Zum auswählen der Quest
             if (Gdx.input.isKeyJustPressed(KeyboardConfig.QUEST_DOWN.get())
@@ -81,10 +91,15 @@ public class PlayerSystem extends ECS_System {
                 questChoice = 0;
 
             }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                quests_open = false;
+                System.out.println("Eingabe wurde abgebrochen");
+            }
         }
 
 
         //Inventory
+        // Wenn das Inventar geöffnet wird.
         if (inventory_open) {
             //Zum auswählen
             if (Gdx.input.isKeyJustPressed(KeyboardConfig.ITEM_DOWN.get())
@@ -97,30 +112,83 @@ public class PlayerSystem extends ECS_System {
                 inventoryChoice--;
                 System.out.println("Your choice: " + inventoryChoice);
             }
-
-
+            /////////////////////////////////////////////////////////////////////////////
+            //Auswahl der Items
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) &&
-                hero.getMyInventory().isInInventory("Nahrung") && hero.getMyInventory().getInventoryItems().get(inventoryChoice).equals("Nahrung")){
+                hero.getMyInventory().isInInventory("Nahrung") && hero.getMyInventory().getInventoryItems().get(inventoryChoice).equals("Nahrung")) {
                 Nahrung.HEALPLAYER();
                 hero.getMyInventory().getInventoryItems().remove(inventoryChoice);
                 System.out.println("Player was healed");
-            }
-            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) &&
+                inventory_open = false;
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) &&
                 hero.getMyInventory().isInInventory("Trank") &&
-                hero.getMyInventory().getInventoryItems().get(inventoryChoice).equals("Trank")){
+                hero.getMyInventory().getInventoryItems().get(inventoryChoice).equals("Trank")) {
                 hero.getMyInventory().getInventoryItems().remove(inventoryChoice);
-                Trank.SETGODMODE();
-                System.out.println("You have godMode for 3 Levels");
-            }
-            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) &&
+                Trank.INCREASEMAXHEALTH();
+                System.out.println("Your MaxLife has increased");
+                inventory_open = false;
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) &&
                 hero.getMyInventory().isInInventory("Zauberstab") &&
-                hero.getMyInventory().getInventoryItems().get(inventoryChoice).equals("Zauberstab")){
+                hero.getMyInventory().getInventoryItems().get(inventoryChoice).equals("Zauberstab")) {
                 hero.getMyInventory().getInventoryItems().remove(inventoryChoice);
                 Zauberstab.REMOVETRAPS();
                 System.out.println("All Traps have been removed");
+                inventory_open = false;
 
             }
 
+            //Eingabe kann abgebrochen werden
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                inventory_open = false;
+                System.out.println("Eingabe wurde abgebrochen");
+            }
+            //////////////////////////////////////////////////
+
+            ///Items koennen wieder fallengelassen werden
+            if (hero.getMyInventory().getInventoryItems().size() > 0)
+                if (Gdx.input.isKeyJustPressed(Input.Keys.F) &&
+                    hero.getMyInventory().getInventoryItems().get(inventoryChoice).equals("Nahrung") &&
+                    hero.getMyInventory().isInInventory("Nahrung")) {
+                    hero.getMyInventory().getInventoryItems().remove("Nahrung");
+                    Nahrung nahrung = new Nahrung();
+                    Game.items.add(nahrung);
+                    nahrung.positionComponent.setPosition(hero.positionComponent.getPosition());
+                    inventory_open = false;
+                } else if (Gdx.input.isKeyJustPressed(Input.Keys.F) &&
+                    hero.getMyInventory().getInventoryItems().get(inventoryChoice).equals("Trank") &&
+                    hero.getMyInventory().isInInventory("Trank")) {
+                    hero.getMyInventory().getInventoryItems().remove("Trank");
+                    Trank trank = new Trank();
+                    Game.items.add(trank);
+                    trank.positionComponent.setPosition(hero.positionComponent.getPosition());
+                    inventory_open = false;
+                } else if (Gdx.input.isKeyJustPressed(Input.Keys.F) &&
+                    hero.getMyInventory().getInventoryItems().get(inventoryChoice).equals("FoodBag") &&
+                    hero.getMyInventory().isInInventory("FoodBag")) {
+                    hero.getMyInventory().getInventoryItems().remove("FoodBag");
+                    FoodBag foodBag = new FoodBag();
+                    Game.items.add(foodBag);
+                    foodBag.positionComponent.setPosition(hero.positionComponent.getPosition());
+                    inventory_open = false;
+                } else if (Gdx.input.isKeyJustPressed(Input.Keys.F) &&
+                    hero.getMyInventory().getInventoryItems().get(inventoryChoice).equals("PotionBag") &&
+                    hero.getMyInventory().isInInventory("PotionBag")) {
+                    hero.getMyInventory().getInventoryItems().remove("PotionBag");
+                    PotionBag potionBag = new PotionBag();
+                    Game.items.add(potionBag);
+                    potionBag.positionComponent.setPosition(hero.positionComponent.getPosition());
+                    inventory_open = false;
+                } else if (Gdx.input.isKeyJustPressed(Input.Keys.F) &&
+                    hero.getMyInventory().getInventoryItems().get(inventoryChoice).equals("Zauberstab") &&
+                    hero.getMyInventory().isInInventory("Zauberstab")) {
+                    hero.getMyInventory().getInventoryItems().remove("Zauberstab");
+                    Zauberstab zauberstab = new Zauberstab();
+                    Game.items.add(zauberstab);
+                    zauberstab.positionComponent.setPosition(hero.positionComponent.getPosition());
+                    inventory_open = false;
+                }
+
+            /////////////////////////////////////////////////////////////////////////////////////////
 
         }
 
@@ -152,22 +220,25 @@ public class PlayerSystem extends ECS_System {
         //Inventory wird geöffnet
         if (Gdx.input.isKeyJustPressed(KeyboardConfig.INVENTORY_OPEN.get())) {
             inventory_open = true;
+            System.out.println("HeroInventory:");
             hero.getMyInventory().showInventory();
             System.out.println("Your choice: " + inventoryChoice);
         }
 
 
-        hero.getMyInventory().setMaxSpace(5);
-
-
         for (Item item : items) {
-            if (Gdx.input.isKeyJustPressed(KeyboardConfig.ITEM_COLLECT.get()) && hero.isCollidingWithItems(item)) {
+            if (Gdx.input.isKeyJustPressed(KeyboardConfig.ITEM_COLLECT.get())
+                && !item.collected
+                && !hero.getMyInventory().isFull() &&
+                hero.isCollidingWithItems(item)) {
+                item.collected = true;
                 Game.removeEntity(item);
                 hero.getMyInventory().addItems(item.getName());
             }
 
-
         }
+
+
 
 
         // check skills

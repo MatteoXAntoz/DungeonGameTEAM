@@ -85,13 +85,18 @@ public class Ghost extends Entity implements IInteraction,IIdleAI{
 
     @Override
     public void onInteraction(Entity entity) {
-        int randomValue = (int) (Math.random()*10);
-        int damage = 20;
+        int randomValue = (int) (Math.random()*2+1);
 
-           Zauberstab zauberstab = new Zauberstab();
-           zauberstab.positionComponent.setPosition(hero.positionComponent.getPosition());
-           Game.items.add(zauberstab);
-           Game.removeEntity(this);
+        if(randomValue==1){
+            Game.removeEntity(this);
+        }else if (randomValue==2){
+            Zauberstab zauberstab = new Zauberstab();
+            zauberstab.positionComponent.setPosition(hero.positionComponent.getPosition());
+            Game.items.add(zauberstab);
+            Game.removeEntity(this);
+        }
+
+
 
     }
 
@@ -99,9 +104,10 @@ public class Ghost extends Entity implements IInteraction,IIdleAI{
     @Override
     public void idle(Entity entity) {
         if(path==null){
-            path = AITools.calculatePathToHero(this);
+            path = AITools.calculatePathToHero(entity);
         }
         AITools.move(this,path);
+
     }
 
     private void setupAi(){

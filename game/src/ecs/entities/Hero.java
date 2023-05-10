@@ -28,7 +28,7 @@ import java.util.Scanner;
  */
 public class Hero extends Entity {
 
-    private boolean godMode = false;
+   public boolean playerHasBag;
 
 
    Game game;
@@ -38,6 +38,7 @@ public class Hero extends Entity {
 
     private MyInventory myInventory;
 
+    public String bagName;
     private final String pathToIdleLeft = "knight/idleLeft";
     private final String pathToIdleRight = "knight/idleRight";
     private final String pathToRunLeft = "knight/runLeft";
@@ -54,6 +55,7 @@ public class Hero extends Entity {
     public VelocityComponent velocityComponent;
 
     public HitboxComponent hitboxComponent;
+
 
 
     public HealthComponent healthComponent = new HealthComponent(this);
@@ -89,6 +91,10 @@ public class Hero extends Entity {
 
         healthComponent.setMaximalHealthpoints(100);
         healthComponent.setCurrentHealthpoints(100);
+
+        //Der Inventarplatz vom Spieler wird auf wird auf 10 gesetzt
+        getMyInventory().setMaxSpace(10);
+
 
 
 
@@ -170,11 +176,7 @@ public class Hero extends Entity {
         this.myInventory = myInventory;
     }
 
-    public boolean isGodMode() {
-        return godMode;
-    }
 
-    public void setGodMode(boolean godMode) {
-        this.godMode = godMode;
-    }
+
+
 }
