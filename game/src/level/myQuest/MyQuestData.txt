@@ -1,3 +1,3 @@
 QuestID@QuestDescription@QuestReward
 0@Survive at least 5 levels without taking damage from a monster or trap@2 magic potions
-1@Collect 3 foods and 2 potions@Your reward will be doubled.
+1@Collect 3 Potions@Your reward will be doubled.

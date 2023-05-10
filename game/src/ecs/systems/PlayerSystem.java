@@ -52,27 +52,34 @@ public class PlayerSystem extends ECS_System {
             .forEach(this::checkKeystroke);
 
 
-        //Benutzen wir einen Trank, so erhoehen wir unser Maximale Leben um 10 Leben
-        //Haben wir weniger als 100 leben, so wird das Maximale Leben wieder
-        // Auf 100 zurueckgesetzt
+        /**
+         *  Benutzen wir einen Trank, so erhoehen wir unser Maximale Leben um 10 Leben
+         */
+
+
         if (hero.healthComponent.getCurrentHealthpoints() < 100) {
             hero.healthComponent.setMaximalHealthpoints(100);
         }
 
 
-        if(hero.getMyInventory().isInInventory("PotionBag") || hero.getMyInventory().isInInventory("FoodBag")){
+        if (hero.getMyInventory().isInInventory("PotionBag") || hero.getMyInventory().isInInventory("FoodBag")) {
             hero.playerHasBag = true;
         }
 
-        //Wenn Quests geöffnet werden
+        /**Quests öffnen
+         *
+         */
         if (quests_open) {
-            //Zum auswählen der Quest
+
             if (Gdx.input.isKeyJustPressed(KeyboardConfig.QUEST_DOWN.get())
                 && questChoice < levelManager.myQuests.size() - 1) {
                 questChoice++;
                 System.out.println("Your choice: " + questChoice);
             }
-            //Zum auswählen der Quest
+            /**
+             * Zum auswählen der Quest
+             */
+
             else if (Gdx.input.isKeyJustPressed(KeyboardConfig.QUEST_UP.get()) && questChoice > 0) {
                 questChoice--;
                 System.out.println("Your choice: " + questChoice);
@@ -98,8 +105,14 @@ public class PlayerSystem extends ECS_System {
         }
 
 
-        //Inventory
-        // Wenn das Inventar geöffnet wird.
+        /**
+         * Inventory
+         */
+
+        /**
+         * Wenn das Inventar geöffnet wird.
+         */
+
         if (inventory_open) {
             //Zum auswählen
             if (Gdx.input.isKeyJustPressed(KeyboardConfig.ITEM_DOWN.get())
@@ -137,14 +150,18 @@ public class PlayerSystem extends ECS_System {
 
             }
 
-            //Eingabe kann abgebrochen werden
+            /**
+             * Eingabe kann abgebrochen werden
+             */
             if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 inventory_open = false;
                 System.out.println("Eingabe wurde abgebrochen");
             }
             //////////////////////////////////////////////////
 
-            ///Items koennen wieder fallengelassen werden
+            /**Items koennen wieder fallengelassen werden*
+             **/
+
             if (hero.getMyInventory().getInventoryItems().size() > 0)
                 if (Gdx.input.isKeyJustPressed(Input.Keys.F) &&
                     hero.getMyInventory().getInventoryItems().get(inventoryChoice).equals("Nahrung") &&
@@ -210,14 +227,17 @@ public class PlayerSystem extends ECS_System {
             InteractionTool.interactWithClosestInteractable(ksd.e);
 
 
-        //Quests werden geöffnet
+        /**Quests werden geöffnet**/
+
         if (Gdx.input.isKeyJustPressed(KeyboardConfig.OPEN_QUEST.get())) {
             quests_open = true;
             levelManager.printQuestInfo();
             System.out.println("Your choice: " + questChoice);
         }
 
-        //Inventory wird geöffnet
+        /**Inventory wird geöffnet**/
+
+
         if (Gdx.input.isKeyJustPressed(KeyboardConfig.INVENTORY_OPEN.get())) {
             inventory_open = true;
             System.out.println("HeroInventory:");
@@ -237,8 +257,6 @@ public class PlayerSystem extends ECS_System {
             }
 
         }
-
-
 
 
         // check skills
