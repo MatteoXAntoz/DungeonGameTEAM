@@ -8,11 +8,11 @@ import tools.Point;
 /**
  * class Nahrung ("food") to create food which the player can take
  */
-public class Nahrung extends Item {
+public class Food extends Item {
 
     //Erstmal nur eine Klasse
     //Wird spaeter zu einer Superklasse für andere Nahrungen
-    public Nahrung(){
+    public Food(){
         super();
         name ="Nahrung";
         path = "apple_no_background.png";

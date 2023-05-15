@@ -2,17 +2,11 @@ package level.elements.tile;
 
 import dslToGame.AnimationBuilder;
 import ecs.components.*;
-import ecs.components.ai.AIComponent;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
 import ecs.entities.NPCs.Ghost;
-import ecs.items.Nahrung;
-import ecs.items.Zauberstab;
 import graphic.Animation;
 import starter.Game;
-import tools.Point;
-
-import static starter.Game.currentLevel;
 
 
 public class Grave extends Entity implements IInteraction {

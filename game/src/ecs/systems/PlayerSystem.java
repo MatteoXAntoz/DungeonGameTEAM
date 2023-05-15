@@ -7,20 +7,11 @@ import ecs.components.MissingComponentException;
 import ecs.components.PlayableComponent;
 import ecs.components.VelocityComponent;
 import ecs.entities.Entity;
-import ecs.entities.Hero;
 import ecs.items.*;
 import ecs.tools.interaction.InteractionTool;
-import jdk.dynalink.linker.GuardingDynamicLinker;
-import level.LevelAPI;
-import level.elements.tile.TrapTile;
 import level.myQuest.*;
 
-import level.tools.LevelElement;
 import starter.Game;
-import tools.Point;
-
-import java.nio.file.attribute.FileAttribute;
-import java.security.Key;
 
 import static starter.Game.*;
 
@@ -129,7 +120,7 @@ public class PlayerSystem extends ECS_System {
             //Auswahl der Items
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) &&
                 hero.getMyInventory().isInInventory("Nahrung") && hero.getMyInventory().getInventoryItems().get(inventoryChoice).equals("Nahrung")) {
-                Nahrung.HEALPLAYER();
+                Food.HEALPLAYER();
                 hero.getMyInventory().getInventoryItems().remove(inventoryChoice);
                 System.out.println("Player was healed");
                 inventory_open = false;
@@ -167,7 +158,7 @@ public class PlayerSystem extends ECS_System {
                     hero.getMyInventory().getInventoryItems().get(inventoryChoice).equals("Nahrung") &&
                     hero.getMyInventory().isInInventory("Nahrung")) {
                     hero.getMyInventory().getInventoryItems().remove("Nahrung");
-                    Nahrung nahrung = new Nahrung();
+                    Food nahrung = new Food();
                     Game.items.add(nahrung);
                     nahrung.positionComponent.setPosition(hero.positionComponent.getPosition());
                     inventory_open = false;

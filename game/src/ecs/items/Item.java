@@ -5,10 +5,6 @@ import ecs.components.AnimationComponent;
 import ecs.components.PositionComponent;
 import ecs.entities.Entity;
 import graphic.Animation;
-import tools.Point;
-
-import javax.swing.*;
-import java.util.Map;
 
 /**
  * Die Klasse Item repräsentiert ein Item in der Spielwelt.
@@ -81,7 +77,7 @@ public class Item extends Entity {
             return new PotionBag();
         }
         if (ranValue == 2) {
-            return new Nahrung();
+            return new Food();
         }
         if (ranValue == 3) {
             return new Trank();
