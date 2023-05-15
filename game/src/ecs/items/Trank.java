@@ -7,6 +7,9 @@ import level.LevelAPI;
 import starter.Game;
 import tools.Point;
 
+/**
+ * class potion to create potion that the player can use
+ */
 public class Trank extends Item {
 
     public Trank() {
