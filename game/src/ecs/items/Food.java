@@ -6,7 +6,7 @@ import starter.Game;
 import tools.Point;
 
 /**
- * class Nahrung ("food") to create food which the player can take
+ * class Nahrung ("food") to create food that the player can take
  */
 public class Food extends Item {
 
