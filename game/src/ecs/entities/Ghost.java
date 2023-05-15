@@ -28,6 +28,9 @@ import java.util.regex.Matcher;
 
 import static ecs.components.ai.idle.PatrouilleWalk.*;
 
+/**
+ *class to create a friendly npc ghost in the dungeon
+*/
 public class Ghost extends Entity implements IInteraction,IIdleAI{
 
 
