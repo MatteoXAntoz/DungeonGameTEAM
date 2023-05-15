@@ -10,8 +10,6 @@ import java.util.ArrayList;
 
 /**
  * Bag superclass is for subclasses: FoodBag and PotionBag
-@param myInventory
-@param position
  */
 
 public class Bag  extends Item {
