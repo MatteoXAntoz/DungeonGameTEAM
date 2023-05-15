@@ -1,18 +1,16 @@
 package ecs.items;
 
-import ecs.components.HealthComponent;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
-import level.LevelAPI;
 import starter.Game;
 import tools.Point;
 
 /**
  * class potion to create potion that the player can use
  */
-public class Trank extends Item {
+public class Potion extends Item {
 
-    public Trank() {
+    public Potion() {
         super();
         name = "Trank";
         path = "potion_blue_no_background.png";

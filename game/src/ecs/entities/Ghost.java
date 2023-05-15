@@ -2,31 +2,18 @@ package ecs.entities.NPCs;
 
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import dslToGame.AnimationBuilder;
-import dslToGame.graph.Graph;
 import ecs.components.*;
 import ecs.components.ai.AIComponent;
 import ecs.components.ai.AITools;
 import ecs.components.ai.fight.IFightAI;
 import ecs.components.ai.idle.IIdleAI;
-import ecs.components.ai.idle.PatrouilleWalk;
-import ecs.components.ai.idle.RadiusWalk;
 import ecs.components.ai.transition.ITransition;
-import ecs.components.ai.transition.RangeTransition;
-import ecs.components.collision.ICollide;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
-import ecs.items.Trank;
 import ecs.items.Zauberstab;
-import ecs.systems.AISystem;
 import graphic.Animation;
 import level.elements.tile.Tile;
-import level.generator.randomwalk.RandomWalkGenerator;
 import starter.Game;
-
-import java.util.Random;
-import java.util.regex.Matcher;
-
-import static ecs.components.ai.idle.PatrouilleWalk.*;
 
 /**
  *class to create a friendly npc ghost in the dungeon

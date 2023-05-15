@@ -128,7 +128,7 @@ public class PlayerSystem extends ECS_System {
                 hero.getMyInventory().isInInventory("Trank") &&
                 hero.getMyInventory().getInventoryItems().get(inventoryChoice).equals("Trank")) {
                 hero.getMyInventory().getInventoryItems().remove(inventoryChoice);
-                Trank.INCREASEMAXHEALTH();
+                Potion.INCREASEMAXHEALTH();
                 System.out.println("Your MaxLife has increased");
                 inventory_open = false;
             } else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) &&
@@ -166,7 +166,7 @@ public class PlayerSystem extends ECS_System {
                     hero.getMyInventory().getInventoryItems().get(inventoryChoice).equals("Trank") &&
                     hero.getMyInventory().isInInventory("Trank")) {
                     hero.getMyInventory().getInventoryItems().remove("Trank");
-                    Trank trank = new Trank();
+                    Potion trank = new Potion();
                     Game.items.add(trank);
                     trank.positionComponent.setPosition(hero.positionComponent.getPosition());
                     inventory_open = false;

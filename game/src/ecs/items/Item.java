@@ -80,7 +80,7 @@ public class Item extends Entity {
             return new Food();
         }
         if (ranValue == 3) {
-            return new Trank();
+            return new Potion();
         }
         return new Item();
     }
