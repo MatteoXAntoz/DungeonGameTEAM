@@ -5,6 +5,9 @@ import ecs.entities.Hero;
 import starter.Game;
 import tools.Point;
 
+/**
+ * class Nahrung ("food") to create food which the player can take
+ */
 public class Nahrung extends Item {
 
     //Erstmal nur eine Klasse
