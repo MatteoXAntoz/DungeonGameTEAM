@@ -58,7 +58,7 @@ public class Hero extends Entity {
 
 
 
-    public HealthComponent healthComponent = new HealthComponent(this);
+    public HealthComponent healthComponent;
 
     public PositionComponent positionComponent = new PositionComponent(this);
 
@@ -77,6 +77,7 @@ public class Hero extends Entity {
         setupVelocityComponent();
         setupAnimationComponent();
         setupHitboxComponent();
+        setUpHealthComponent();
         PlayableComponent pc = new PlayableComponent(this);
 
 
@@ -88,9 +89,6 @@ public class Hero extends Entity {
 
         skillComponent.addSkill(sprintSkill);
         skillComponent.addSkill(healingSkill);
-
-        healthComponent.setMaximalHealthpoints(100);
-        healthComponent.setCurrentHealthpoints(100);
 
         //Der Inventarplatz vom Spieler wird auf wird auf 10 gesetzt
         getMyInventory().setMaxSpace(10);
@@ -143,6 +141,13 @@ public class Hero extends Entity {
             (you, other, direction) -> System.out.println("heroCollisionEnter"),
             (you, other, direction) -> System.out.println("heroCollisionLeave"));
 
+    }
+
+    private void setUpHealthComponent() {
+        healthComponent = new HealthComponent(this);
+        healthComponent.setMaximalHealthpoints(100);
+        healthComponent.setCurrentHealthpoints(100);
+        healthComponent.setOnDeath(entity -> Game.toggleGameOverMenu());
     }
 
     public boolean isCollidingWithTrapTile(TrapTile tile) {

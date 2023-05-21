@@ -166,7 +166,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
 
         hero.sprintSkill.update(hero);
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
-            togglePause();
+            togglePauseMenu();
         }
 
         for (TrapTile tile : currentLevel.getTrapTiles()) {
@@ -282,14 +282,28 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     /**
      * Toggle between pause and run
      */
-    public static void togglePause() {
+    public static void togglePauseMenu() {
+        if(gameOverMenu.isVisible()){return;}
+        togglePause();
+        if (pauseMenu != null) {
+            if (paused) pauseMenu.showMenu();
+            else pauseMenu.hideMenu();
+        }
+    }
+
+    public static void toggleGameOverMenu() {
+        if(pauseMenu.isVisible()){return;}
+        togglePause();
+        if (gameOverMenu != null) {
+            if (paused) gameOverMenu.showMenu();
+            else gameOverMenu.hideMenu();
+        }
+    }
+
+    private static void togglePause() {
         paused = !paused;
         if (systems != null) {
             systems.forEach(ECS_System::toggleRun);
-        }
-        if (pauseMenu != null) {
-            if (paused) gameOverMenu.showMenu();
-            else gameOverMenu.hideMenu();
         }
     }
 

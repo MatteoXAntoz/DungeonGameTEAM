@@ -15,6 +15,7 @@ import tools.Constants;
  */
 public class ScreenController<T extends Actor> extends AbstractController<T> {
     protected Stage stage;
+    protected boolean visible = false;
 
     /**
      * Creates a Screencontroller with a ScalingViewport which stretches the ScreenElements on
@@ -71,4 +72,18 @@ public class ScreenController<T extends Actor> extends AbstractController<T> {
         e.remove();
         return super.remove(e);
     }
+
+    /** shows the Menu */
+    public void showMenu() {
+        this.forEach((Actor s) -> s.setVisible(true));
+        visible = true;
+    }
+
+    /** hides the Menu */
+    public void hideMenu() {
+        this.forEach((Actor s) -> s.setVisible(false));
+        visible = false;
+    }
+
+    public boolean isVisible(){return visible;}
 }

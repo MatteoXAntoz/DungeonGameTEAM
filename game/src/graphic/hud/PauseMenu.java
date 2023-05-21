@@ -19,29 +19,19 @@ public class PauseMenu<T extends Actor> extends ScreenController<T> {
     public PauseMenu(SpriteBatch batch) {
         super(batch);
         ScreenText screenText =
-                new ScreenText(
-                        "Paused",
-                        new Point(0, 0),
-                        3,
-                        new LabelStyleBuilder(FontBuilder.DEFAULT_FONT)
-                                .setFontcolor(Color.RED)
-                                .build());
+            new ScreenText(
+                "Paused",
+                new Point(0, 0),
+                3,
+                new LabelStyleBuilder(FontBuilder.DEFAULT_FONT)
+                    .setFontcolor(Color.RED)
+                    .build());
         screenText.setFontScale(3);
         screenText.setPosition(
-                (Constants.WINDOW_WIDTH) / 2f - screenText.getWidth(),
-                (Constants.WINDOW_HEIGHT) / 1.5f + screenText.getHeight(),
-                Align.center | Align.bottom);
+            (Constants.WINDOW_WIDTH) / 2f - screenText.getWidth(),
+            (Constants.WINDOW_HEIGHT) / 1.5f + screenText.getHeight(),
+            Align.center | Align.bottom);
         add((T) screenText);
         hideMenu();
-    }
-
-    /** shows the Menu */
-    public void showMenu() {
-        this.forEach((Actor s) -> s.setVisible(true));
-    }
-
-    /** hides the Menu */
-    public void hideMenu() {
-        this.forEach((Actor s) -> s.setVisible(false));
     }
 }

@@ -79,13 +79,11 @@ public class GameOverMenu<T extends Actor> extends ScreenController<T> {
         hideMenu();
     }
 
-    private TextButtonListener restartGame()
-    {
+    private TextButtonListener restartGame() {
         return new TextButtonListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                hideMenu();
-                Game.togglePause();
+                Game.toggleGameOverMenu();
                 System.out.println("restart");
                 Game.setHero(new Hero());
                 levelAPI.setLevelID(0);
@@ -95,23 +93,12 @@ public class GameOverMenu<T extends Actor> extends ScreenController<T> {
         };
     }
 
-    private TextButtonListener exitGame()
-    {
+    private TextButtonListener exitGame() {
         return new TextButtonListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.exit(0);
             }
         };
-    }
-
-    /** shows the Menu */
-    public void showMenu() {
-        this.forEach((Actor s) -> s.setVisible(true));
-    }
-
-    /** hides the Menu */
-    public void hideMenu() {
-        this.forEach((Actor s) -> s.setVisible(false));
     }
 }
