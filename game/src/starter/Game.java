@@ -22,6 +22,7 @@ import ecs.items.Item;
 import ecs.systems.*;
 import graphic.DungeonCamera;
 import graphic.Painter;
+import graphic.hud.GameOverMenu;
 import graphic.hud.PauseMenu;
 
 import java.io.IOException;
@@ -49,7 +50,7 @@ import tools.Point;
  */
 public class Game extends ScreenAdapter implements IOnLevelLoader {
 
-    private final LevelSize LEVELSIZE = LevelSize.SMALL;
+    private final LevelSize LEVELSIZE = LevelSize.MEDIUM;
 
     /**
      * The batch is necessary to draw ALL the stuff. Every object that uses draw need to know the
@@ -97,13 +98,11 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
 
     public static ILevel currentLevel;
     private static PauseMenu<Actor> pauseMenu;
+    private static GameOverMenu<Actor> gameOverMenu;
     public static Hero hero;
     private Logger gameLogger;
 
    public static ArrayList<Item> items = new ArrayList<>();
-
-
-
 
     public static void main(String[] args) {
         // start the game
@@ -131,8 +130,6 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         levelAPI.update();
         controller.forEach(AbstractController::update);
         camera.update();
-
-
     }
 
     /**
@@ -150,18 +147,14 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         systems = new SystemController();
         controller.add(systems);
         pauseMenu = new PauseMenu<>();
+        gameOverMenu = new GameOverMenu<>();
         controller.add(pauseMenu);
+        controller.add(gameOverMenu);
         hero = new Hero();
 
         levelAPI = new LevelAPI(batch, painter, new WallGenerator(new RandomWalkGenerator()), this);
         levelAPI.loadLevel(LEVELSIZE);
         createSystems();
-
-
-
-
-
-
     }
 
     /**
@@ -176,7 +169,6 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
             togglePause();
         }
-
 
         for (TrapTile tile : currentLevel.getTrapTiles()) {
 
@@ -203,8 +195,6 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
 
                 tile.setTexturePath("dungeon/default/floor/floor_poison_deactivated.png");
                 tile.activated = true;
-
-
             }
             if (hero.isCollidingWithTrapTile(tile) && tile.name.equals("MOUSETRAP") && !tile.activated) {
 
@@ -217,18 +207,9 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
                 if (duration == 0) {
                     tile.activated = true;
                 }
-
-
                 tile.setTexturePath("dungeon/default/floor/floor_mouseTrap_deactivated.png");
-
-
             }
-
-
         }
-
-
-
     }
 
     @Override
@@ -309,8 +290,8 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
             systems.forEach(ECS_System::toggleRun);
         }
         if (pauseMenu != null) {
-            if (paused) pauseMenu.showMenu();
-            else pauseMenu.hideMenu();
+            if (paused) gameOverMenu.showMenu();
+            else gameOverMenu.hideMenu();
         }
     }
 
