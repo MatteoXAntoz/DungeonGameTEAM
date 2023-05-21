@@ -36,7 +36,7 @@ public class LevelAPI {
     private ILevel currentLevel;
     private final Logger levelAPI_logger = Logger.getLogger(this.getClass().getName());
 
-    public static int levelID;
+    public int levelID;
 
 
     MyQuestConfig myQuestConfig;
@@ -192,6 +192,8 @@ public class LevelAPI {
         }
 
     }
+
+    public void setLevelID(int levelID) {this.levelID = levelID;}
 
 
 }

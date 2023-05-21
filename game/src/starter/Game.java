@@ -50,7 +50,7 @@ import tools.Point;
  */
 public class Game extends ScreenAdapter implements IOnLevelLoader {
 
-    private final LevelSize LEVELSIZE = LevelSize.MEDIUM;
+    public static final LevelSize LEVELSIZE = LevelSize.MEDIUM;
 
     /**
      * The batch is necessary to draw ALL the stuff. Every object that uses draw need to know the
@@ -141,18 +141,17 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         setupCameras();
         painter = new Painter(batch, camera);
         generator = new RandomWalkGenerator();
-        levelAPI = new LevelAPI(batch, painter, generator, this);
+        levelAPI = new LevelAPI(batch, painter, new WallGenerator(new RandomWalkGenerator()), this);
         initBaseLogger();
         gameLogger = Logger.getLogger(this.getClass().getName());
         systems = new SystemController();
         controller.add(systems);
         pauseMenu = new PauseMenu<>();
-        gameOverMenu = new GameOverMenu<>();
+        gameOverMenu = new GameOverMenu<>(levelAPI);
         controller.add(pauseMenu);
         controller.add(gameOverMenu);
         hero = new Hero();
 
-        levelAPI = new LevelAPI(batch, painter, new WallGenerator(new RandomWalkGenerator()), this);
         levelAPI.loadLevel(LEVELSIZE);
         createSystems();
     }
@@ -255,7 +254,6 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
             if (hero.healingSkill.potion < hero.healingSkill.MAX_POTIONAMOUNT) {
                 hero.healingSkill.addPotion();
             }
-
         }
     }
 

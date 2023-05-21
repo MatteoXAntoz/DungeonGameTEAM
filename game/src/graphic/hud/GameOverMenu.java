@@ -6,15 +6,21 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.utils.Align;
 import controller.ScreenController;
+import ecs.entities.Hero;
+import level.IOnLevelLoader;
+import level.LevelAPI;
 import org.w3c.dom.Text;
+import starter.Game;
 import tools.Constants;
 import tools.Point;
 
 public class GameOverMenu<T extends Actor> extends ScreenController<T> {
+    private LevelAPI levelAPI;
 
     /** Creates a new PauseMenu with a new Spritebatch */
-    public GameOverMenu() {
+    public GameOverMenu(LevelAPI levelAPI) {
         this(new SpriteBatch());
+        this.levelAPI = levelAPI;
     }
 
     /** Creates a new PauseMenu with a given Spritebatch */
@@ -70,7 +76,7 @@ public class GameOverMenu<T extends Actor> extends ScreenController<T> {
             (Constants.WINDOW_HEIGHT) / 2f + exit.getHeight()/2,
             Align.center | Align.bottom);
         add((T) exit);
-//        hideMenu();
+        hideMenu();
     }
 
     private TextButtonListener restartGame()
@@ -78,7 +84,12 @@ public class GameOverMenu<T extends Actor> extends ScreenController<T> {
         return new TextButtonListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                hideMenu();
+                Game.togglePause();
                 System.out.println("restart");
+                Game.setHero(new Hero());
+                levelAPI.setLevelID(0);
+                levelAPI.loadLevel(Game.LEVELSIZE);
 
             }
         };
