@@ -280,7 +280,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     }
 
     /**
-     * Toggle between pause and run
+     * Toggle between showing the PauseMenu
      */
     public static void togglePauseMenu() {
         if(gameOverMenu.isVisible()){return;}
@@ -291,6 +291,9 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         }
     }
 
+    /**
+     * Toggle between showing the GameOverMenu
+     */
     public static void toggleGameOverMenu() {
         if(pauseMenu.isVisible()){return;}
         togglePause();

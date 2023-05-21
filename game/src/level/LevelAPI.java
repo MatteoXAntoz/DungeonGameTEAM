@@ -36,6 +36,7 @@ public class LevelAPI {
     private ILevel currentLevel;
     private final Logger levelAPI_logger = Logger.getLogger(this.getClass().getName());
 
+    /** Counts the progress in the Game */
     public int levelID;
 
 
@@ -193,6 +194,11 @@ public class LevelAPI {
 
     }
 
+    /** 
+     * sets the LevelID
+     *
+     * @param levelID value the Attribute <code>lvelID</code> is set to
+     */
     public void setLevelID(int levelID) {this.levelID = levelID;}
 
 

@@ -14,16 +14,25 @@ import starter.Game;
 import tools.Constants;
 import tools.Point;
 
+/**
+ * Menu for exiting and restarting the Game
+ *
+ * <p> When the Player dies the <code>GameOverMenu</code> is set Visible.
+ * Two <code>ScreenButton</code> restart and exit are being shown. When pressing on Exit the game Closes
+ * and when pressed on restart the player is being reset and a new level is being loaded.
+ *
+ * @param <T> Elements of the GameOverMenu
+ */
 public class GameOverMenu<T extends Actor> extends ScreenController<T> {
     private LevelAPI levelAPI;
 
-    /** Creates a new PauseMenu with a new Spritebatch */
+    /** Creates a new GameOverMenu with a new Spritebatch */
     public GameOverMenu(LevelAPI levelAPI) {
         this(new SpriteBatch());
         this.levelAPI = levelAPI;
     }
 
-    /** Creates a new PauseMenu with a given Spritebatch */
+    /** Creates a new GameOverMenu with a given Spritebatch */
     public GameOverMenu(SpriteBatch batch) {
         super(batch);
 
