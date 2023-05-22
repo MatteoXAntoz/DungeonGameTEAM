@@ -23,6 +23,8 @@ import level.tools.LevelSize;
 import starter.Game;
 import tools.Point;
 
+import javax.xml.parsers.SAXParser;
+
 /**
  * Manages the level.
  */
@@ -53,8 +55,6 @@ public class LevelAPI {
      */
 
 
-
-
     public LevelAPI(
         SpriteBatch batch,
         Painter painter,
@@ -78,9 +78,6 @@ public class LevelAPI {
     public void loadLevel(LevelSize size, DesignLabel label) {
         currentLevel = gen.getLevel(label, size);
         onLevelLoader.onLevelLoad();
-        //levelAPI_logger.info("A new level was loaded.")
-
-
         levelID += 1;
         levelAPI_logger.info("Level " + levelID + " was loaded.");
 
@@ -90,7 +87,21 @@ public class LevelAPI {
         grave = new Grave();
         grave.positionComponent.setPosition(currentLevel.getRandomFloorTile().getCoordinateAsPoint());
 
+
         spawnRandomItems();
+        if(levelID==1&&SaveLoadGame.isEmpty(SaveLoadGame.PATH,SaveLoadGame.ITEM_DATA)){
+
+            SaveLoadGame.saveItems();
+        } else if (!SaveLoadGame.isEmpty(SaveLoadGame.PATH,SaveLoadGame.ITEM_DATA)) {
+           Game.items = SaveLoadGame.loadItems();
+        }else{
+            spawnRandomItems();
+            SaveLoadGame.saveItems();
+        }
+
+        SaveLoadGame.saveHeroHealth();
+        System.out.println(Game.hero.healthComponent.getCurrentHealthpoints());
+
 
     }
 
@@ -125,6 +136,7 @@ public class LevelAPI {
     public void update() {
         drawLevel();
         levelManager.update();
+
 
     }
 
@@ -186,10 +198,11 @@ public class LevelAPI {
     //Laesst bei jedem Levelaufruf neue Items spawnen
     public void spawnRandomItems() {
 
-        int maxItems = 5;
-        for(int i = 0;i<maxItems;i++){
+        int maxItems = 2;
+        for (int i = 0; i < maxItems; i++) {
             Game.items.add(Item.ranItem());
         }
+        Game.items = new ArrayList<>();
 
     }
 

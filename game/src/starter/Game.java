@@ -30,6 +30,7 @@ import java.util.logging.Logger;
 
 import level.IOnLevelLoader;
 import level.LevelAPI;
+import level.SaveLoadGame;
 import level.elements.ILevel;
 import level.elements.tile.Grave;
 import level.elements.tile.Tile;
@@ -41,7 +42,6 @@ import level.generator.randomwalk.RandomWalkGenerator;
 import level.tools.LevelSize;
 import tools.Constants;
 import tools.Point;
-
 
 
 /**
@@ -100,9 +100,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     public static Hero hero;
     private Logger gameLogger;
 
-   public static ArrayList<Item> items = new ArrayList<>();
-
-
+    public static ArrayList<Item> items;
 
 
     public static void main(String[] args) {
@@ -139,12 +137,18 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
      * Called once at the beginning of the game.
      */
     protected void setup() {
+
         doSetup = false;
         controller = new ArrayList<>();
         setupCameras();
         painter = new Painter(batch, camera);
         generator = new RandomWalkGenerator();
+
+
+        items = new ArrayList<>();
         levelAPI = new LevelAPI(batch, painter, generator, this);
+
+
         initBaseLogger();
         gameLogger = Logger.getLogger(this.getClass().getName());
         systems = new SystemController();
@@ -153,13 +157,14 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         controller.add(pauseMenu);
         hero = new Hero();
 
+
+
         levelAPI = new LevelAPI(batch, painter, new WallGenerator(new RandomWalkGenerator()), this);
         levelAPI.loadLevel(LEVELSIZE);
+
+
+
         createSystems();
-
-
-
-
 
 
     }
@@ -228,7 +233,6 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         }
 
 
-
     }
 
     @Override
@@ -236,12 +240,15 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         currentLevel = levelAPI.getCurrentLevel();
         entities.clear();
         getHero().ifPresent(this::placeOnLevelStart);
+
+
     }
 
     private void manageEntitiesSets() {
         entities.removeAll(entitiesToRemove);
         entities.addAll(entitiesToAdd);
         for (Entity entity : entitiesToRemove) {
+
             gameLogger.info("Entity '" + entity.getClass().getSimpleName() + "' was deleted.");
         }
         for (Entity entity : entitiesToAdd) {
@@ -276,6 +283,11 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
             }
 
         }
+
+
+
+
+
     }
 
 
@@ -338,6 +350,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     public static Set<Entity> getEntities() {
         return entities;
     }
+
 
     /**
      * @return Set with all entities that will be added to the game next frame

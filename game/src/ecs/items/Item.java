@@ -5,6 +5,7 @@ import ecs.components.AnimationComponent;
 import ecs.components.PositionComponent;
 import ecs.entities.Entity;
 import graphic.Animation;
+import starter.Game;
 
 /**
  * Die Klasse Item repräsentiert ein Item in der Spielwelt.
@@ -60,6 +61,7 @@ public class Item extends Entity {
     protected void setupPositionComponent() {
         if (positionComponent == null) {
             positionComponent = new PositionComponent(this);
+
         }
     }
 

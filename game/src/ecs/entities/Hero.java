@@ -12,6 +12,7 @@ import ecs.items.*;
 import ecs.systems.HealthSystem;
 import ecs.systems.PlayerSystem;
 import graphic.Animation;
+import level.SaveLoadGame;
 import level.elements.TileLevel;
 import level.elements.tile.Tile;
 import level.elements.tile.TrapTile;
@@ -28,11 +29,11 @@ import java.util.Scanner;
  */
 public class Hero extends Entity {
 
-   public boolean playerHasBag;
+    public boolean playerHasBag;
 
 
-   Game game;
-   PlayerSystem playerSystem;
+    Game game;
+    PlayerSystem playerSystem;
     public float xSpeed = 0.3f;
     public float ySpeed = 0.3f;
 
@@ -57,14 +58,9 @@ public class Hero extends Entity {
     public HitboxComponent hitboxComponent;
 
 
-
-    public HealthComponent healthComponent = new HealthComponent(this);
+    public HealthComponent healthComponent;
 
     public PositionComponent positionComponent = new PositionComponent(this);
-
-
-
-
 
 
     /**
@@ -89,13 +85,11 @@ public class Hero extends Entity {
         skillComponent.addSkill(sprintSkill);
         skillComponent.addSkill(healingSkill);
 
-        healthComponent.setMaximalHealthpoints(100);
-        healthComponent.setCurrentHealthpoints(100);
+        setupHealthComponent();
+
 
         //Der Inventarplatz vom Spieler wird auf wird auf 10 gesetzt
         getMyInventory().setMaxSpace(10);
-
-
 
 
     }
@@ -145,6 +139,21 @@ public class Hero extends Entity {
 
     }
 
+    private void setupHealthComponent() {
+        healthComponent = new HealthComponent(this);
+
+        healthComponent.setMaximalHealthpoints(100);
+
+        if(!SaveLoadGame.isEmpty(SaveLoadGame.PATH,SaveLoadGame.PLAYER_DATA)){
+            healthComponent.setCurrentHealthpoints(SaveLoadGame.loadHeroHealth());
+        }else{
+            healthComponent.setCurrentHealthpoints(100);
+        }
+
+
+
+    }
+
     public boolean isCollidingWithTrapTile(TrapTile tile) {
         float hitBoxScale = 0.6f;
 
@@ -154,7 +163,7 @@ public class Hero extends Entity {
             positionComponent.getPosition().y < tile.getCoordinateAsPoint().y + hitBoxScale);
     }
 
-    public boolean isCollidingWithItems(Item item ) {
+    public boolean isCollidingWithItems(Item item) {
         float hitBoxScale = 0.6f;
         return (positionComponent.getPosition().x + hitBoxScale > item.getPositionComponent().getPosition().x &&
             positionComponent.getPosition().x < item.getPositionComponent().getPosition().x + hitBoxScale &&
@@ -162,7 +171,7 @@ public class Hero extends Entity {
             positionComponent.getPosition().y < item.getPositionComponent().getPosition().y + hitBoxScale);
     }
 
-    private void setupInventory(){
+    private void setupInventory() {
         myInventory = new MyInventory();
 
 
@@ -175,8 +184,6 @@ public class Hero extends Entity {
     public void setMyInventory(MyInventory myInventory) {
         this.myInventory = myInventory;
     }
-
-
 
 
 }
