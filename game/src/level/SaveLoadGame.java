@@ -17,10 +17,7 @@ public class SaveLoadGame implements Serializable {
     public static String PATH = "game/src/level";
     public static String PLAYER_DATA = "PlayerData.txt";
     public static String ITEM_DATA = "ItemData.txt";
-    public static ArrayList<String> items = new ArrayList<>();
-
-
-
+    public static ArrayList<String> tempName = new ArrayList<>();
 
 
     public static void saveHeroHealth() {
@@ -66,59 +63,57 @@ public class SaveLoadGame implements Serializable {
 
 
     public static void saveItems() {
-        for (Entity entity : Game.getEntitiesToAdd()) {
-            if (!entity.getClass().getSimpleName().equals("Hero") && !entity.getClass().getSimpleName().equals("Grave")) {
-                items.add(entity.getClass().getSimpleName());
+        ArrayList<String> itemNames = new ArrayList<>();
 
-            }
+        for (Item item : Game.items) {
+            itemNames.add(item.getClass().getSimpleName());
+            System.out.println(itemNames.getClass().getSimpleName());
+
         }
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(PATH + ITEM_DATA);
             try {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-                objectOutputStream.writeObject(items);
+                objectOutputStream.writeObject(itemNames);
                 objectOutputStream.close();
-
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
-    public static ArrayList<Item> loadItems(){
-        ArrayList<Item> temp = new ArrayList<>();
-        ArrayList<String> tempName = new ArrayList<>();
+    public static ArrayList<Item> loadItems() {
+        ArrayList<Item> newItems = new ArrayList<>();
+        ObjectInputStream objectInputStream;
 
         try {
-            FileInputStream fileInputStream = new FileInputStream(PATH+ITEM_DATA);
+            FileInputStream fileInputStream = new FileInputStream(PATH + ITEM_DATA);
             try {
-                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+                objectInputStream = new ObjectInputStream(fileInputStream);
                 try {
+
                     tempName = (ArrayList<String>) objectInputStream.readObject();
+                    objectInputStream.close();
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
-                for(String st:tempName){
-                    if(st.equals("Food")){
-                        temp.add(new Food());
-                    }else if(st.equals("Potion")){
-                        temp.add(new Potion());
+                for (String st : tempName) {
+                    if (st.equals("Food")) {
+                        newItems.add(new Food());
+                    } else if (st.equals("Potion")) {
+                        newItems.add(new Potion());
+                    } else if (st.equals("PotionBag")) {
+                        newItems.add(new PotionBag());
+                    } else if (st.equals("FoodBag")) {
+                        newItems.add(new FoodBag());
+                    } else if (st.equals("Zauberstab")) {
+                        newItems.add(new Zauberstab());
                     }
-                    else if(st.equals("PotionBag")){
-                        temp.add(new PotionBag());
-                    }
-                    else if(st.equals("FoodBag")){
-                        temp.add(new FoodBag());
-                    }
-                    else if(st.equals("Zauberstab")){
-                        temp.add(new Zauberstab());
-                    }
-                   System.out.println(st);
+
                 }
                 objectInputStream.close();
             } catch (IOException e) {
@@ -127,7 +122,9 @@ public class SaveLoadGame implements Serializable {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return temp;
+
+        return newItems;
+
     }
 
 
