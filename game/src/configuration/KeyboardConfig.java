@@ -27,8 +27,7 @@ public class KeyboardConfig {
     //Collecting Items
     public static final ConfigKey<Integer> ITEM_COLLECT =
         new ConfigKey<>(new String[]{"Item", "collect"}, new ConfigIntValue(Input.Keys.F));
-    public static final ConfigKey<Integer> ITEM_USE=
-        new ConfigKey<>(new String[]{"Item", "use"}, new ConfigIntValue(Input.Keys.X));
+
 
 
 
@@ -46,8 +45,6 @@ public class KeyboardConfig {
         new ConfigKey<>(new String[]{"choice", "down"}, new ConfigIntValue(Input.Keys.DOWN));
     public static final ConfigKey<Integer> ITEM_UP =
         new ConfigKey<>(new String[]{"choice", "up"}, new ConfigIntValue(Input.Keys.UP));
-
-
 
 
 

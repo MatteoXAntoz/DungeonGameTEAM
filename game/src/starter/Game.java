@@ -100,7 +100,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     public static Hero hero;
     private Logger gameLogger;
 
-    public static ArrayList<Item> items;
+    public static ArrayList<Item> items = new ArrayList<>();
 
 
     public static void main(String[] args) {
@@ -145,7 +145,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         generator = new RandomWalkGenerator();
 
 
-        items = new ArrayList<>();
+
         levelAPI = new LevelAPI(batch, painter, generator, this);
 
 

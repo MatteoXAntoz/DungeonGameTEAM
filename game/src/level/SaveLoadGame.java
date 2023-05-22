@@ -20,7 +20,7 @@ public class SaveLoadGame implements Serializable {
     public static ArrayList<String> items = new ArrayList<>();
 
 
-    private static final Logger SaveLoadGame_logger = Logger.getLogger(SaveLoadGame.class.getName());
+
 
 
     public static void saveHeroHealth() {
@@ -34,7 +34,7 @@ public class SaveLoadGame implements Serializable {
                 }
 
                 objectOutputStream.close();
-                SaveLoadGame_logger.info("PlayerHealth was successfully saved!");
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -53,7 +53,6 @@ public class SaveLoadGame implements Serializable {
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
                 health = objectInputStream.readInt();
                 objectInputStream.close();
-                SaveLoadGame_logger.info("PlayerHealth was successfully loaded!");
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -70,7 +69,7 @@ public class SaveLoadGame implements Serializable {
         for (Entity entity : Game.getEntitiesToAdd()) {
             if (!entity.getClass().getSimpleName().equals("Hero") && !entity.getClass().getSimpleName().equals("Grave")) {
                 items.add(entity.getClass().getSimpleName());
-                System.out.println(items.getClass().getSimpleName());
+
             }
         }
 

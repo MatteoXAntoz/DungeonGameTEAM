@@ -9,9 +9,13 @@ import ecs.components.VelocityComponent;
 import ecs.entities.Entity;
 import ecs.items.*;
 import ecs.tools.interaction.InteractionTool;
+
+import level.SaveLoadGame;
 import level.myQuest.*;
 
 import starter.Game;
+
+
 
 import static starter.Game.*;
 
@@ -30,6 +34,7 @@ public class PlayerSystem extends ECS_System {
 
 
     LevelManager levelManager = LevelManager.getInstance();
+
 
 
     private record KSData(Entity e, PlayableComponent pc, VelocityComponent vc) {
@@ -57,6 +62,8 @@ public class PlayerSystem extends ECS_System {
             hero.playerHasBag = true;
         }
 
+
+
         /**Quests öffnen
          *
          */
@@ -68,7 +75,7 @@ public class PlayerSystem extends ECS_System {
                 System.out.println("Your choice: " + questChoice);
             }
             /**
-             * Zum auswählen der Quest
+             * Zum Auswählen der Quest
              */
 
             else if (Gdx.input.isKeyJustPressed(KeyboardConfig.QUEST_UP.get()) && questChoice > 0) {
@@ -198,13 +205,25 @@ public class PlayerSystem extends ECS_System {
 
             /////////////////////////////////////////////////////////////////////////////////////////
 
+
+
         }
+
 
 
     }
 
 
     private void checkKeystroke(KSData ksd) {
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.TAB)){
+            SaveLoadGame.saveHeroHealth();
+            SaveLoadGame.saveItems();
+            System.out.println("Spiel wurde gespeichert.");
+
+        }
+
+
         if (Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_UP.get()))
             ksd.vc.setCurrentYVelocity(1 * ksd.vc.getYVelocity());
         else if (Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_DOWN.get()))
@@ -235,6 +254,8 @@ public class PlayerSystem extends ECS_System {
             hero.getMyInventory().showInventory();
             System.out.println("Your choice: " + inventoryChoice);
         }
+
+
 
 
         for (Item item : items) {
