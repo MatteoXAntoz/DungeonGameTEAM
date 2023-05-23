@@ -14,6 +14,9 @@ import starter.Game;
 import tools.Constants;
 import tools.Point;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Menu for exiting and restarting the Game
  *
@@ -26,6 +29,8 @@ import tools.Point;
 public class GameOverMenu<T extends Actor> extends ScreenController<T> {
     private LevelAPI levelAPI;
 
+    private Logger gameOverLogger;
+
     /** Creates a new GameOverMenu with a new Spritebatch */
     public GameOverMenu(LevelAPI levelAPI) {
         this(new SpriteBatch());
@@ -35,6 +40,9 @@ public class GameOverMenu<T extends Actor> extends ScreenController<T> {
     /** Creates a new GameOverMenu with a given Spritebatch */
     public GameOverMenu(SpriteBatch batch) {
         super(batch);
+
+        gameOverLogger = Logger.getLogger(this.getClass().getName());
+        gameOverLogger.setLevel(Level.ALL);
 
         // GameOver text
         ScreenText gameOverText =
@@ -92,8 +100,8 @@ public class GameOverMenu<T extends Actor> extends ScreenController<T> {
         return new TextButtonListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                gameOverLogger.info("Restarting Game.");
                 Game.toggleGameOverMenu();
-                System.out.println("restart");
                 Game.setHero(new Hero());
                 levelAPI.setLevelID(0);
                 levelAPI.loadLevel(Game.LEVELSIZE);
@@ -106,8 +114,15 @@ public class GameOverMenu<T extends Actor> extends ScreenController<T> {
         return new TextButtonListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                gameOverLogger.info("Exit Game.");
                 System.exit(0);
             }
         };
+    }
+    @Override
+    public void showMenu()
+    {
+        gameOverLogger.info(this.getClass().getSimpleName() + " is toggled to Visible.");
+        super.showMenu();
     }
 }
