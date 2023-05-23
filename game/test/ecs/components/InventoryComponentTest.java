@@ -5,7 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import ecs.entities.Entity;
-import ecs.items.ItemData;
+import ecs.entities.items.ItemData;
 import java.util.List;
 import org.junit.Test;
 

@@ -1,9 +1,7 @@
 package level;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import ecs.entities.Entity;
-import ecs.entities.Hero;
-import ecs.entities.NPCs.Ghost;
+import ecs.entities.items.Item;
 import ecs.items.*;
 import graphic.Painter;
 import graphic.PainterConfig;
@@ -21,7 +19,6 @@ import level.tools.DesignLabel;
 import level.tools.LevelElement;
 import level.tools.LevelSize;
 import starter.Game;
-import tools.Point;
 
 /**
  * Manages the level.
@@ -194,7 +191,7 @@ public class LevelAPI {
 
     }
 
-    /** 
+    /**
      * sets the LevelID
      *
      * @param levelID value the Attribute <code>lvelID</code> is set to

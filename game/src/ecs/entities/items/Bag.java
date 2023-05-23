@@ -1,11 +1,8 @@
-package ecs.items;
+package ecs.entities.items;
 
 import ecs.components.MyInventory;
 import ecs.entities.Entity;
-import ecs.entities.Hero;
 import tools.Point;
-
-import java.util.ArrayList;
 
 
 /**

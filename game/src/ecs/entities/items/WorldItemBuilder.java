@@ -1,4 +1,4 @@
-package ecs.items;
+package ecs.entities.items;
 
 import ecs.components.AnimationComponent;
 import ecs.components.HitboxComponent;

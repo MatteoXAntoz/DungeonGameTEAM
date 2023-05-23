@@ -6,20 +6,13 @@ import ecs.components.AnimationComponent;
 import ecs.components.PositionComponent;
 import ecs.components.VelocityComponent;
 import ecs.components.skill.*;
-import ecs.damage.Damage;
-import ecs.damage.DamageType;
+import ecs.entities.items.Item;
 import ecs.items.*;
-import ecs.systems.HealthSystem;
 import ecs.systems.PlayerSystem;
 import graphic.Animation;
-import level.elements.TileLevel;
-import level.elements.tile.Tile;
 import level.elements.tile.TrapTile;
 
 import starter.Game;
-import tools.Constants;
-
-import java.util.Scanner;
 
 
 /**

@@ -1,4 +1,4 @@
-package ecs.items;
+package ecs.entities.items;
 
 import graphic.Animation;
 import java.util.List;

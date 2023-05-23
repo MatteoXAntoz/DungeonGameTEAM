@@ -1,9 +1,7 @@
-package ecs.items;
+package ecs.entities.items;
 
 import ecs.entities.Entity;
-import ecs.entities.Hero;
 import level.elements.tile.TrapTile;
-import level.tools.LevelElement;
 import starter.Game;
 import tools.Point;
 

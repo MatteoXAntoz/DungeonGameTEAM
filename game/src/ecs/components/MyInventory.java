@@ -1,11 +1,5 @@
 package ecs.components;
 
-import com.badlogic.gdx.utils.reflect.ArrayReflection;
-import configuration.ConfigKey;
-import ecs.entities.Hero;
-import ecs.items.Item;
-import starter.Game;
-
 import java.util.ArrayList;
 
 /**

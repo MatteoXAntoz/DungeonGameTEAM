@@ -1,4 +1,4 @@
-package ecs.items;
+package ecs.entities.items;
 
 public class FoodBag extends Bag{
 

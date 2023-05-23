@@ -1,4 +1,4 @@
-package ecs.items;
+package ecs.entities.items;
 
 import dslToGame.AnimationBuilder;
 import ecs.components.AnimationComponent;

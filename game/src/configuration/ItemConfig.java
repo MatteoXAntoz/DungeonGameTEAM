@@ -2,7 +2,7 @@ package configuration;
 
 import configuration.values.ConfigEnumValue;
 import configuration.values.ConfigStringValue;
-import ecs.items.ItemType;
+import ecs.entities.items.ItemType;
 
 /** The default ItemData values */
 @ConfigMap(path = {"item"})

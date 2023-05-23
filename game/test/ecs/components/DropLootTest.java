@@ -3,7 +3,7 @@ package ecs.components;
 import static org.junit.Assert.*;
 
 import ecs.entities.Entity;
-import ecs.items.ItemData;
+import ecs.entities.items.ItemData;
 import org.junit.Test;
 import starter.Game;
 import tools.Point;
