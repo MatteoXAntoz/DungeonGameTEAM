@@ -20,7 +20,7 @@ import tools.Point;
  *
  * @author Andre Matutat
  */
-public abstract class Tile  {
+public abstract class Tile implements Serializable  {
 
     public String name;
     protected final Coordinate globalPosition;

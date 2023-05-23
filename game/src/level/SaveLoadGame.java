@@ -4,6 +4,8 @@ import ecs.components.HealthComponent;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
 import ecs.items.*;
+import level.elements.tile.Tile;
+import level.elements.tile.TrapTile;
 import starter.Game;
 
 import javax.swing.plaf.PanelUI;
@@ -17,6 +19,9 @@ public class SaveLoadGame implements Serializable {
     public static String PATH = "game/src/level";
     public static String PLAYER_DATA = "PlayerData.txt";
     public static String ITEM_DATA = "ItemData.txt";
+
+    public static String TRAP_DATA = "TrapData.txt";
+    public static String MONSTER_DATA = "Monster_Data.txt";
     public static ArrayList<String> tempName = new ArrayList<>();
 
 
@@ -61,7 +66,6 @@ public class SaveLoadGame implements Serializable {
 
     }
 
-
     public static void saveItems() {
         ArrayList<String> itemNames = new ArrayList<>();
 
@@ -88,6 +92,7 @@ public class SaveLoadGame implements Serializable {
     public static ArrayList<Item> loadItems() {
         ArrayList<Item> newItems = new ArrayList<>();
         ObjectInputStream objectInputStream;
+
 
         try {
             FileInputStream fileInputStream = new FileInputStream(PATH + ITEM_DATA);
@@ -126,6 +131,27 @@ public class SaveLoadGame implements Serializable {
         return newItems;
 
     }
+
+    public static void saveTraps(){
+        ArrayList<String> trapNames = new ArrayList<>();
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(PATH+TRAP_DATA);
+            try {
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+                for (TrapTile tile : Game.currentLevel.getTrapTiles()) {
+                    trapNames.add(tile.name);
+                }
+                objectOutputStream.writeObject(trapNames);
+                objectOutputStream.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
 
     public static boolean isEmpty(String path, String data) {

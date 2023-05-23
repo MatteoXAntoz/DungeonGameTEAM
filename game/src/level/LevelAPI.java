@@ -88,18 +88,24 @@ public class LevelAPI {
         grave.positionComponent.setPosition(currentLevel.getRandomFloorTile().getCoordinateAsPoint());
 
 
-        spawnRandomItems();
-        if(levelID==1&&SaveLoadGame.isEmpty(SaveLoadGame.PATH,SaveLoadGame.ITEM_DATA)){
 
-            SaveLoadGame.saveItems();
-        } else if (!SaveLoadGame.isEmpty(SaveLoadGame.PATH,SaveLoadGame.ITEM_DATA)) {
-           Game.items = SaveLoadGame.loadItems();
+
+        if(levelID==1&&!SaveLoadGame.isEmpty(SaveLoadGame.PATH,SaveLoadGame.ITEM_DATA)){
+
+            Game.items = SaveLoadGame.loadItems();
         }else{
             spawnRandomItems();
-            SaveLoadGame.saveItems();
         }
 
-        SaveLoadGame.saveHeroHealth();
+
+
+
+
+
+
+
+
+
         System.out.println(Game.hero.healthComponent.getCurrentHealthpoints());
 
 
@@ -136,6 +142,7 @@ public class LevelAPI {
     public void update() {
         drawLevel();
         levelManager.update();
+
 
 
     }
@@ -198,11 +205,14 @@ public class LevelAPI {
     //Laesst bei jedem Levelaufruf neue Items spawnen
     public void spawnRandomItems() {
 
-        int maxItems = 2;
+        Game.items.clear();
+
+        int maxItems = 5;
         for (int i = 0; i < maxItems; i++) {
             Game.items.add(Item.ranItem());
         }
-        Game.items = new ArrayList<>();
+
+
 
     }
 

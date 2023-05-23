@@ -183,6 +183,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         }
 
 
+
         for (TrapTile tile : currentLevel.getTrapTiles()) {
 
             if (hero.isCollidingWithTrapTile(tile) && tile.name.equals("LAVATRAP") && !tile.activated) {
