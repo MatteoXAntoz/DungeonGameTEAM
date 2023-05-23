@@ -1,8 +1,10 @@
 package level.elements.tile;
 
+import level.LevelAPI;
 import level.elements.ILevel;
 import level.tools.Coordinate;
 import level.tools.DesignLabel;
+import level.tools.LevelElement;
 
 public class PoisonTrap extends TrapTile {
     /**
@@ -15,6 +17,6 @@ public class PoisonTrap extends TrapTile {
      */
     public PoisonTrap(String texturePath, Coordinate globalPosition, DesignLabel designLabel, ILevel level) {
         super(texturePath, globalPosition, designLabel, level);
-        texturePath="dungeon/default/floor/floor_poison.png";
+        levelElement = LevelElement.POISON;
     }
 }

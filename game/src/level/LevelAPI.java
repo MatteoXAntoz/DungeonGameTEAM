@@ -43,7 +43,7 @@ public class LevelAPI {
     MyQuestConfig myQuestConfig;
     LevelManager levelManager;
 
-   public ArrayList<LevelElement> trapElements = new ArrayList<>();
+    public ArrayList<LevelElement> trapElements = new ArrayList<>();
 
     Grave grave;
 
@@ -89,42 +89,8 @@ public class LevelAPI {
         grave = new Grave();
         grave.positionComponent.setPosition(currentLevel.getRandomFloorTile().getCoordinateAsPoint());
 
-
-        if (levelID == 1 && !SaveLoadGame.isEmpty(SaveLoadGame.PATH, SaveLoadGame.ITEM_DATA)) {
-            Game.items = SaveLoadGame.loadItems();
-        } else {
-            spawnRandomItems();
-        }
-
-        if(SaveLoadGame.isEmpty(SaveLoadGame.PATH,SaveLoadGame.TRAP_DATA)){
-            for (int i = 0; i < 5; i++) {
-                trapElements.add(getRandomTraps());
-            }
-
-        }else{
-            trapElements = SaveLoadGame.loadTraps();
-        }
-
-
-
-        for (int i = 0; i < 5; i++) {
-            if (trapElements.get(i) == LevelElement.MOUSETRAP) {
-                getCurrentLevel().getRandomTile(LevelElement.FLOOR).setLevelElement(trapElements.get(i));
-            } else if (trapElements.get(i) == LevelElement.LAVA) {
-                getCurrentLevel().getRandomTile(LevelElement.FLOOR).setLevelElement(trapElements.get(i));
-            } else if (trapElements.get(i) == LevelElement.POISON) {
-                getCurrentLevel().getRandomTile(LevelElement.FLOOR).setLevelElement(trapElements.get(i));
-            }
-        }
-        for (FloorTile floorTile : currentLevel.getFloorTiles()) {
-            if (floorTile.getLevelElement() == LevelElement.MOUSETRAP) {
-                floorTile.setTexturePath("dungeon/default/floor/floor_mouseTrap.png");
-            } else if (floorTile.getLevelElement() == LevelElement.POISON) {
-                floorTile.setTexturePath("dungeon/default/floor/floor_poison.png");
-            } else if (floorTile.getLevelElement() == LevelElement.LAVA) {
-                floorTile.setTexturePath("dungeon/default/floor/floor_lava.png");
-            }
-        }
+        spawnItems();
+        spawnTraps();
 
 
         System.out.println(Game.hero.healthComponent.getCurrentHealthpoints());
@@ -163,6 +129,51 @@ public class LevelAPI {
     public void update() {
         drawLevel();
         levelManager.update();
+
+        for(FloorTile floorTile: Game.currentLevel.getFloorTiles()){
+            if(Game.hero.isCollidingWithTrapTile(floorTile) && floorTile.getLevelElement()== LevelElement.POISON  && !floorTile.isActivated()){
+                int duration = 2;
+                int damage = (int) (Math.random() * 5);
+                while (duration >= 0) {
+                    Game.hero.healthComponent.setCurrentHealthpoints(Game.hero.healthComponent.getCurrentHealthpoints() - damage);
+                    duration -= 1;
+                }
+                duration = 2;
+
+                floorTile.setTexturePath("dungeon/default/floor/floor_poison_deactivated.png");
+                floorTile.setActivated(true);
+
+            }
+            else if(Game.hero.isCollidingWithTrapTile(floorTile) && floorTile.getLevelElement()== LevelElement.LAVA && !floorTile.isActivated()){
+                int duration = 2;
+                int damage = 4;
+                while (duration >= 0) {
+                    Game.hero.healthComponent.setCurrentHealthpoints(Game.hero.healthComponent.getCurrentHealthpoints() - damage);
+                    duration -= 1;
+                }
+                duration = 2;
+
+                floorTile.setTexturePath("dungeon/default/floor/floor_lava_deactivated.png");
+                floorTile.setActivated(true);
+
+            }
+            else if(Game.hero.isCollidingWithTrapTile(floorTile) && floorTile.getLevelElement()== LevelElement.MOUSETRAP  && !floorTile.isActivated()){
+
+                int duration = 100000000;
+                while (duration > 0) {
+                    Game.hero.velocityComponent.setCurrentYVelocity(0);
+                    Game.hero.velocityComponent.setCurrentXVelocity(0);
+                    duration -= 0.0001;
+                }
+                if (duration == 0) {
+                    floorTile.setActivated(true);
+                }
+
+
+                floorTile.setTexturePath("dungeon/default/floor/floor_mouseTrap_deactivated.png");
+
+            }
+        }
 
 
     }
@@ -248,6 +259,45 @@ public class LevelAPI {
             return LevelElement.POISON;
         }
         return LevelElement.FLOOR;
+    }
+
+    public void spawnTraps() {
+
+        if (SaveLoadGame.isEmpty(SaveLoadGame.PATH, SaveLoadGame.TRAP_DATA)) {
+            for (int i = 0; i < 5; i++) {
+                trapElements.add(getRandomTraps());
+            }
+
+        } else {
+            trapElements = SaveLoadGame.loadTraps();
+        }
+
+        for (int i = 0; i < 5; i++) {
+            if (trapElements.get(i) == LevelElement.MOUSETRAP) {
+                getCurrentLevel().getRandomTile(LevelElement.FLOOR).setLevelElement(trapElements.get(i));
+            } else if (trapElements.get(i) == LevelElement.LAVA) {
+                getCurrentLevel().getRandomTile(LevelElement.FLOOR).setLevelElement(trapElements.get(i));
+            } else if (trapElements.get(i) == LevelElement.POISON) {
+                getCurrentLevel().getRandomTile(LevelElement.FLOOR).setLevelElement(trapElements.get(i));
+            }
+        }
+        for (FloorTile floorTile : currentLevel.getFloorTiles()) {
+            if (floorTile.getLevelElement() == LevelElement.MOUSETRAP) {
+                floorTile.setTexturePath("dungeon/default/floor/floor_mouseTrap.png");
+            } else if (floorTile.getLevelElement() == LevelElement.POISON) {
+                floorTile.setTexturePath("dungeon/default/floor/floor_poison.png");
+            } else if (floorTile.getLevelElement() == LevelElement.LAVA) {
+                floorTile.setTexturePath("dungeon/default/floor/floor_lava.png");
+            }
+        }
+    }
+
+    public void spawnItems(){
+        if (levelID == 1 && !SaveLoadGame.isEmpty(SaveLoadGame.PATH, SaveLoadGame.ITEM_DATA)) {
+            Game.items = SaveLoadGame.loadItems();
+        } else {
+            spawnRandomItems();
+        }
     }
 
 

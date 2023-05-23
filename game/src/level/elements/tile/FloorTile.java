@@ -7,6 +7,7 @@ import level.tools.DesignLabel;
 import level.tools.LevelElement;
 
 public class FloorTile extends Tile {
+    protected boolean activated;
 
     /**
      * Creates a new Tile.
@@ -28,5 +29,13 @@ public class FloorTile extends Tile {
     @Override
     public boolean isAccessible() {
         return levelElement.getValue();
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
     }
 }

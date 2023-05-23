@@ -6,6 +6,8 @@ import level.tools.Coordinate;
 import level.tools.DesignLabel;
 
 public class TrapTile extends FloorTile{
+
+    protected boolean activated;
     /**
      * Creates a new Tile.
      *
@@ -27,4 +29,11 @@ public class TrapTile extends FloorTile{
             hero.positionComponent.getPosition().y < getCoordinateAsPoint().y + hitBoxScale);
     }
 
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
 }

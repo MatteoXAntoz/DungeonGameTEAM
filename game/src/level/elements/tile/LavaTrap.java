@@ -3,6 +3,7 @@ package level.elements.tile;
 import level.elements.ILevel;
 import level.tools.Coordinate;
 import level.tools.DesignLabel;
+import level.tools.LevelElement;
 
 public class LavaTrap extends TrapTile{
     /**
@@ -15,6 +16,6 @@ public class LavaTrap extends TrapTile{
      */
     public LavaTrap(String texturePath, Coordinate globalPosition, DesignLabel designLabel, ILevel level) {
         super(texturePath, globalPosition, designLabel, level);
-        texturePath="dungeon/default/floor/floor_lava.png";
+        levelElement = LevelElement.LAVA;
     }
 }

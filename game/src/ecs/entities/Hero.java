@@ -10,8 +10,10 @@ import ecs.items.*;
 import ecs.systems.PlayerSystem;
 import graphic.Animation;
 import level.SaveLoadGame;
+import level.elements.tile.FloorTile;
 import level.elements.tile.HoleTile;
 
+import level.elements.tile.Tile;
 import starter.Game;
 
 
@@ -146,7 +148,7 @@ public class Hero extends Entity {
 
     }
 
-    public boolean isCollidingWithTrapTile(HoleTile tile) {
+    public boolean isCollidingWithTrapTile(FloorTile tile) {
         float hitBoxScale = 0.6f;
 
         return (positionComponent.getPosition().x + hitBoxScale > tile.getCoordinateAsPoint().x &&
