@@ -88,18 +88,17 @@ public class LevelAPI {
         grave = new Grave();
         grave.positionComponent.setPosition(currentLevel.getRandomFloorTile().getCoordinateAsPoint());
 
+
+
+
         spawnItems();
         spawnTraps();
-
-
-
-
+        spawnMonsters();
 
 
         System.out.println(Game.hero.healthComponent.getCurrentHealthpoints());
-
-
     }
+
 
     /**
      * Load a new level with random size and the given desing
@@ -133,7 +132,6 @@ public class LevelAPI {
         drawLevel();
         levelManager.update();
         updateTrapCollider();
-
 
 
 
@@ -314,6 +312,15 @@ public class LevelAPI {
 
             }
         }
+    }
+
+    public void spawnMonsters(){
+        if(!SaveLoadGame.isEmpty(SaveLoadGame.PATH,SaveLoadGame.MONSTER_DATA) && levelID==1){
+            levelManager.monster = SaveLoadGame.loadMonsters();
+        }else{
+            levelManager.setMonster(levelID);
+        }
+
     }
 
 

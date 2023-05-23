@@ -53,6 +53,7 @@ public class FollowHeroOrEatItem implements IIdleAI {
         AITools.move(entity,goToPlayer);
 
 
+
     }
 
     private void performAction2(Entity entity) {

@@ -220,6 +220,7 @@ public class PlayerSystem extends ECS_System {
             SaveLoadGame.saveHeroHealth();
             SaveLoadGame.saveItems();
             SaveLoadGame.saveTraps(Game.levelAPI);
+            SaveLoadGame.saveMonsters(levelAPI);
             System.out.println("Spiel wurde gespeichert.");
 
         }

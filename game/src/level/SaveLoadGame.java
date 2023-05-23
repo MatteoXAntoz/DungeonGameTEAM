@@ -1,8 +1,13 @@
 package level;
 
 import ecs.components.HealthComponent;
+import ecs.entities.Chort;
+import ecs.entities.Demon;
+import ecs.entities.Entity;
+import ecs.entities.Mouse;
 import ecs.items.*;
 import level.elements.tile.HoleTile;
+import level.myQuest.LevelManager;
 import level.tools.LevelElement;
 import starter.Game;
 
@@ -21,6 +26,7 @@ public class SaveLoadGame implements Serializable {
     public static ArrayList<String> tempName = new ArrayList<>();
 
     public static ArrayList<LevelElement> tempTraps = new ArrayList<>();
+
 
 
     public static void saveHeroHealth() {
@@ -137,7 +143,7 @@ public class SaveLoadGame implements Serializable {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
                 objectOutputStream.writeObject(levelAPI.trapElements);
                 for(LevelElement levelElement: levelAPI.trapElements){
-                    System.out.println(levelElement+"falle"+" wurde gespeichert!");
+                    System.out.println(levelElement+"FALLE"+" wurde gespeichert!");
                 }
                 objectOutputStream.close();
             } catch (IOException e) {
@@ -146,6 +152,70 @@ public class SaveLoadGame implements Serializable {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    public static void saveMonsters(LevelAPI levelAPI){
+        ArrayList<String> monsterNames = new ArrayList<>();
+        LevelManager levelManager = LevelManager.getInstance();
+
+        for (Entity entity : levelManager.monster) {
+            monsterNames.add(entity.getClass().getSimpleName());
+            System.out.println(entity.getClass().getSimpleName()+" wurde gespeichert!");
+
+        }
+
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(PATH + MONSTER_DATA);
+            try {
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+                objectOutputStream.writeObject(monsterNames);
+                objectOutputStream.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static ArrayList<Entity> loadMonsters() {
+        ArrayList<Entity> newMonsters = new ArrayList<>();
+        ObjectInputStream objectInputStream;
+
+
+        try {
+            FileInputStream fileInputStream = new FileInputStream(PATH + MONSTER_DATA);
+            try {
+
+                objectInputStream = new ObjectInputStream(fileInputStream);
+                try {
+
+                    tempName = (ArrayList<String>) objectInputStream.readObject();
+                    objectInputStream.close();
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                for (String st : tempName) {
+                    if (st.equals("Mouse")) {
+                        newMonsters.add(new Mouse());
+                    } else if (st.equals("Chort")) {
+                        newMonsters.add(new Chort());
+                    } else if (st.equals("Demon")) {
+                        newMonsters.add(new Demon());
+                    }
+
+                }
+                objectInputStream.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return newMonsters;
+
     }
 
     public static ArrayList<LevelElement> loadTraps(){
@@ -157,7 +227,7 @@ public class SaveLoadGame implements Serializable {
                 try {
                     tempTraps = (ArrayList<LevelElement>) objectInputStream.readObject();
                     for(LevelElement levelElement: tempTraps){
-                        System.out.println(levelElement+"falle"+ "wurde geladen!");
+                        System.out.println(levelElement+"FALLE"+ "wurde geladen!");
                     }
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);

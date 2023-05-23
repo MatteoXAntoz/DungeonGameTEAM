@@ -2,11 +2,9 @@ package level.myQuest;
 
 import com.badlogic.gdx.Gdx;
 import configuration.KeyboardConfig;
-import ecs.entities.Demon;
-import ecs.entities.Entity;
-import ecs.entities.Monster;
-import ecs.entities.Mouse;
+import ecs.entities.*;
 import ecs.items.Item;
+import level.SaveLoadGame;
 import starter.Game;
 
 import java.util.ArrayList;
@@ -29,6 +27,7 @@ public class LevelManager {
 
     /**
      * Gibt eine Instanz des LevelManagers zurück.
+     *
      * @return Instanz des LevelManagers
      */
     public static LevelManager getInstance() {
@@ -68,17 +67,35 @@ public class LevelManager {
 
     }
 
-    public void setMonster(int level){
-    addMonster(level,Monster.getRandomMonster());
-    }
-    public void clearMonster(){
-        monster.clear();
-    }
-    public void addMonster(int value, Monster mo){
+    public void setMonster(int level) {
 
-        for(int i = 0;i<value;i++){
-            monster.add(mo);
+            monster.clear();
+            addMonster(level);
+
+    }
+
+
+    public void addMonster(int value) {
+        int maxAmount = 10;
+        if (value > 0 && value <= 2) {
+            for (int i = 0; i < Math.random() * value; i++) {
+                monster.add(new Mouse());
+            }
+        } else if (value > 2 && value <= 4) {
+            for (int i = 0; i < Math.random() * value; i++) {
+                monster.add(new Chort());
+            }
+        } else if (value > 4 && value <= 5) {
+            for (int i = 0; i < Math.random() * value; i++) {
+                monster.add(new Demon());
+            }
+        } else {
+            for (int i = 0; i < Math.random() * maxAmount; i++) {
+                monster.add(Monster.getRandomMonster());
+            }
         }
+
+
     }
 
     /**
@@ -93,6 +110,7 @@ public class LevelManager {
 
     /**
      * Überprüft, ob eine bestimmte Anzahl von Leveln ohne Schaden überlebt wurde.
+     *
      * @param amount Anzahl der Level ohne Schaden
      * @return true, wenn die Anzahl erreicht wurde, ansonsten false
      */
@@ -106,6 +124,7 @@ public class LevelManager {
 
     /**
      * Überprüft, ob eine bestimmte Anzahl von Tränken gesammelt wurde.
+     *
      * @param amountPotion Anzahl der zu sammelnden Tränke
      * @return true, wenn die Anzahl erreicht wurde, ansonsten false
      */
@@ -125,6 +144,7 @@ public class LevelManager {
 
     /**
      * Überprüft, ob eine bestimmte Anzahl von Nahrung gesammelt wurde.
+     *
      * @param amountNahrung Anzahl der zu sammelnden Nahrung
      * @return true, wenn die Anzahl erreicht wurde, ansonsten false
      */
@@ -144,6 +164,7 @@ public class LevelManager {
 
     /**
      * Gibt die Anzahl der Level zurück, die ohne Schaden überlebt wurden.
+     *
      * @return Anzahl der Level ohne Schaden
      */
     public int getLevelSurvivedWithoutDamage() {
@@ -152,6 +173,7 @@ public class LevelManager {
 
     /**
      * Legt die Anzahl der Level ohne Schaden fest.
+     *
      * @param levelSurvivedWithoutDamage Anzahl der Level ohne Schaden
      */
     public void setLevelSurvivedWithoutDamage(int levelSurvivedWithoutDamage) {

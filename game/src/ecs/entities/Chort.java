@@ -62,12 +62,13 @@ public class Chort extends Monster {
     @Override
     protected void setupPosition() {
         positionComponent = new PositionComponent(this);
+        positionComponent.setPosition(Game.currentLevel.getRandomFloorTile().getCoordinateAsPoint());
     }
 
     @Override
     protected void setupVelocity() {
-        xSpeed = 0.2f;
-        ySpeed = 0.2f;
+        xSpeed = 0.02f;
+        ySpeed = 0.02f;
         velocityComponent = new VelocityComponent(this, xSpeed, ySpeed, idleLeft, idleRight);
     }
 }
