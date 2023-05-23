@@ -209,37 +209,41 @@ public class LevelAPI {
 
     public LevelElement getRandomTraps() {
         int ranValue = (int) (Math.random() * 3 + 1);
-
         if (ranValue == 1) {
+          //  System.out.println("Lava");
             return LevelElement.LAVA;
         }
         if (ranValue == 2) {
+            //System.out.println("MOUSETRAP");
             return LevelElement.MOUSETRAP;
         }
         if (ranValue == 3) {
+          //  System.out.println("POISON");
             return LevelElement.POISON;
         }
-        return LevelElement.FLOOR;
+        return null;
     }
 
     public void spawnTraps() {
 
-        if (SaveLoadGame.isEmpty(SaveLoadGame.PATH, SaveLoadGame.TRAP_DATA)|| trapElements.isEmpty()) {
-            for (int i = 0; i < 2; i++) {
+        trapElements.clear();
+        if(!SaveLoadGame.isEmpty(SaveLoadGame.PATH,SaveLoadGame.TRAP_DATA) && levelID==1){
+            trapElements = SaveLoadGame.loadTraps();
+        }else{
+            for(int i = 0;i<2;i++){
                 trapElements.add(getRandomTraps());
             }
-
-        } else {
-            trapElements = SaveLoadGame.loadTraps();
         }
+
+
 
         for (int i = 0; i < trapElements.size(); i++) {
             if (trapElements.get(i) == LevelElement.MOUSETRAP) {
-                getCurrentLevel().getRandomTile(LevelElement.FLOOR).setLevelElement(trapElements.get(i));
+                getCurrentLevel().getRandomTile(LevelElement.FLOOR).setLevelElement(LevelElement.MOUSETRAP);
             } else if (trapElements.get(i) == LevelElement.LAVA) {
-                getCurrentLevel().getRandomTile(LevelElement.FLOOR).setLevelElement(trapElements.get(i));
+                getCurrentLevel().getRandomTile(LevelElement.FLOOR).setLevelElement(LevelElement.LAVA);
             } else if (trapElements.get(i) == LevelElement.POISON) {
-                getCurrentLevel().getRandomTile(LevelElement.FLOOR).setLevelElement(trapElements.get(i));
+                getCurrentLevel().getRandomTile(LevelElement.FLOOR).setLevelElement(LevelElement.POISON);
             }
         }
         for (FloorTile floorTile : currentLevel.getFloorTiles()) {
@@ -252,7 +256,7 @@ public class LevelAPI {
             }
         }
 
-        trapElements.clear();
+
 
 
     }

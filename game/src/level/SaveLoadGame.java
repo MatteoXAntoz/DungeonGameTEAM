@@ -69,7 +69,7 @@ public class SaveLoadGame implements Serializable {
 
         for (Item item : Game.items) {
             itemNames.add(item.getClass().getSimpleName());
-            System.out.println(itemNames.getClass().getSimpleName());
+            System.out.println(item.getClass().getSimpleName()+" wurde gespeichert!");
 
         }
 
@@ -136,6 +136,9 @@ public class SaveLoadGame implements Serializable {
             try {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
                 objectOutputStream.writeObject(levelAPI.trapElements);
+                for(LevelElement levelElement: levelAPI.trapElements){
+                    System.out.println(levelElement+"falle"+" wurde gespeichert!");
+                }
                 objectOutputStream.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -153,6 +156,9 @@ public class SaveLoadGame implements Serializable {
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
                 try {
                     tempTraps = (ArrayList<LevelElement>) objectInputStream.readObject();
+                    for(LevelElement levelElement: tempTraps){
+                        System.out.println(levelElement+"falle"+ "wurde geladen!");
+                    }
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
