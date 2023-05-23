@@ -15,23 +15,23 @@ import ecs.components.ai.transition.ITransition;
 import level.elements.tile.Tile;
 import starter.Game;
 
-public class Demon extends Monster {
+public class Mouse extends Monster {
 
     boolean collide;
 
     GraphPath<Tile> path;
 
 
-    public Demon() {
+    public Mouse() {
 
-        pathToIdleLeft = "demon/idleLeft";
-        pathToIdleRight = "demon/idleRight";
+        pathToIdleLeft = "mouse/idleLeft";
+        pathToIdleRight = "mouse/idleRight";
 
         setupAnimation();
         setupPosition();
         setupVelocity();
         setupAi();
-        damage = 10;
+        damage = 2;
 
 
     }
@@ -45,12 +45,12 @@ public class Demon extends Monster {
 
     @Override
     public void idle(Entity entity) {
-      if(path==null){
-          path =  AITools.calculatePathToHero(entity);
-      }
+        if(path==null){
+            path =  AITools.calculatePathToHero(entity);
+        }
+        AITools.move(entity,path);
 
-      AITools.move(entity,path);
-      path =null;
+        path =null;
 
     }
 
@@ -75,8 +75,8 @@ public class Demon extends Monster {
 
     @Override
     protected void setupVelocity() {
-        xSpeed = 0.05f;
-        ySpeed = 0.05f;
+        xSpeed = 0.02f;
+        ySpeed = 0.02f;
         velocityComponent = new VelocityComponent(this, xSpeed, ySpeed, idleLeft, idleRight);
     }
 }

@@ -1,10 +1,7 @@
 package level;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import ecs.entities.Chort;
-import ecs.entities.Entity;
-import ecs.entities.Hero;
-import ecs.entities.Demon;
+import ecs.entities.*;
 import ecs.entities.NPCs.Ghost;
 import ecs.items.*;
 import graphic.Painter;
@@ -96,6 +93,7 @@ public class LevelAPI {
 
         new Demon();
         new Chort();
+        new Mouse();
 
         System.out.println(Game.hero.healthComponent.getCurrentHealthpoints());
 
