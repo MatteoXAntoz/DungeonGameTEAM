@@ -1,8 +1,10 @@
 package level;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import ecs.entities.Chort;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
+import ecs.entities.Demon;
 import ecs.entities.NPCs.Ghost;
 import ecs.items.*;
 import graphic.Painter;
@@ -92,6 +94,8 @@ public class LevelAPI {
         spawnItems();
         spawnTraps();
 
+        new Demon();
+        new Chort();
 
         System.out.println(Game.hero.healthComponent.getCurrentHealthpoints());
 
@@ -129,51 +133,9 @@ public class LevelAPI {
     public void update() {
         drawLevel();
         levelManager.update();
-
-        for(FloorTile floorTile: Game.currentLevel.getFloorTiles()){
-            if(Game.hero.isCollidingWithTrapTile(floorTile) && floorTile.getLevelElement()== LevelElement.POISON  && !floorTile.isActivated()){
-                int duration = 2;
-                int damage = (int) (Math.random() * 5);
-                while (duration >= 0) {
-                    Game.hero.healthComponent.setCurrentHealthpoints(Game.hero.healthComponent.getCurrentHealthpoints() - damage);
-                    duration -= 1;
-                }
-                duration = 2;
-
-                floorTile.setTexturePath("dungeon/default/floor/floor_poison_deactivated.png");
-                floorTile.setActivated(true);
-
-            }
-            else if(Game.hero.isCollidingWithTrapTile(floorTile) && floorTile.getLevelElement()== LevelElement.LAVA && !floorTile.isActivated()){
-                int duration = 2;
-                int damage = 4;
-                while (duration >= 0) {
-                    Game.hero.healthComponent.setCurrentHealthpoints(Game.hero.healthComponent.getCurrentHealthpoints() - damage);
-                    duration -= 1;
-                }
-                duration = 2;
-
-                floorTile.setTexturePath("dungeon/default/floor/floor_lava_deactivated.png");
-                floorTile.setActivated(true);
-
-            }
-            else if(Game.hero.isCollidingWithTrapTile(floorTile) && floorTile.getLevelElement()== LevelElement.MOUSETRAP  && !floorTile.isActivated()){
-
-                int duration = 100000000;
-                while (duration > 0) {
-                    Game.hero.velocityComponent.setCurrentYVelocity(0);
-                    Game.hero.velocityComponent.setCurrentXVelocity(0);
-                    duration -= 0.0001;
-                }
-                if (duration == 0) {
-                    floorTile.setActivated(true);
-                }
+        updateTrapCollider();
 
 
-                floorTile.setTexturePath("dungeon/default/floor/floor_mouseTrap_deactivated.png");
-
-            }
-        }
 
 
     }
@@ -297,6 +259,53 @@ public class LevelAPI {
             Game.items = SaveLoadGame.loadItems();
         } else {
             spawnRandomItems();
+        }
+    }
+
+    public void updateTrapCollider(){
+        for(FloorTile floorTile: Game.currentLevel.getFloorTiles()){
+            if(Game.hero.isCollidingWithTrapTile(floorTile) && floorTile.getLevelElement()== LevelElement.POISON  && !floorTile.isActivated()){
+                int duration = 2;
+                int damage = (int) (Math.random() * 5);
+                while (duration >= 0) {
+                    Game.hero.healthComponent.setCurrentHealthpoints(Game.hero.healthComponent.getCurrentHealthpoints() - damage);
+                    duration -= 1;
+                }
+                duration = 2;
+
+                floorTile.setTexturePath("dungeon/default/floor/floor_poison_deactivated.png");
+                floorTile.setActivated(true);
+
+            }
+            else if(Game.hero.isCollidingWithTrapTile(floorTile) && floorTile.getLevelElement()== LevelElement.LAVA && !floorTile.isActivated()){
+                int duration = 2;
+                int damage = 4;
+                while (duration >= 0) {
+                    Game.hero.healthComponent.setCurrentHealthpoints(Game.hero.healthComponent.getCurrentHealthpoints() - damage);
+                    duration -= 1;
+                }
+                duration = 2;
+
+                floorTile.setTexturePath("dungeon/default/floor/floor_lava_deactivated.png");
+                floorTile.setActivated(true);
+
+            }
+            else if(Game.hero.isCollidingWithTrapTile(floorTile) && floorTile.getLevelElement()== LevelElement.MOUSETRAP  && !floorTile.isActivated()){
+
+                int duration = 100000000;
+                while (duration > 0) {
+                    Game.hero.velocityComponent.setCurrentYVelocity(0);
+                    Game.hero.velocityComponent.setCurrentXVelocity(0);
+                    duration -= 0.0001;
+                }
+                if (duration == 0) {
+                    floorTile.setActivated(true);
+                }
+
+
+                floorTile.setTexturePath("dungeon/default/floor/floor_mouseTrap_deactivated.png");
+
+            }
         }
     }
 

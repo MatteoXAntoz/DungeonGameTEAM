@@ -7,6 +7,7 @@ import ecs.components.ai.AIComponent;
 import ecs.components.ai.AITools;
 import ecs.components.ai.fight.IFightAI;
 import ecs.components.ai.idle.IIdleAI;
+import ecs.components.ai.idle.PatrouilleWalk;
 import ecs.components.ai.transition.ITransition;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
@@ -95,6 +96,7 @@ public class Ghost extends Entity implements IInteraction,IIdleAI{
     public void idle(Entity entity) {
         if(path==null){
             path = AITools.calculatePathToHero(entity);
+
         }
         AITools.move(this,path);
 
