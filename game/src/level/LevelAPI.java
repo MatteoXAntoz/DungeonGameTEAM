@@ -96,10 +96,15 @@ public class LevelAPI {
             spawnRandomItems();
         }
 
+        if(SaveLoadGame.isEmpty(SaveLoadGame.PATH,SaveLoadGame.TRAP_DATA)){
+            for (int i = 0; i < 5; i++) {
+                trapElements.add(getRandomTraps());
+            }
 
-        for (int i = 0; i < 5; i++) {
-            trapElements.add(getRandomTraps());
+        }else{
+            trapElements = SaveLoadGame.loadTraps();
         }
+
 
 
         for (int i = 0; i < 5; i++) {

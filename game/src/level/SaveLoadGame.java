@@ -20,6 +20,8 @@ public class SaveLoadGame implements Serializable {
     public static String MONSTER_DATA = "Monster_Data.txt";
     public static ArrayList<String> tempName = new ArrayList<>();
 
+    public static ArrayList<LevelElement> tempTraps = new ArrayList<>();
+
 
     public static void saveHeroHealth() {
         try {
@@ -129,7 +131,6 @@ public class SaveLoadGame implements Serializable {
     }
 
     public static void saveTraps(LevelAPI levelAPI){
-        ArrayList<String> trapNames = new ArrayList<>();
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(PATH+TRAP_DATA);
             try {
@@ -142,6 +143,28 @@ public class SaveLoadGame implements Serializable {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static ArrayList<LevelElement> loadTraps(){
+
+        try {
+            FileInputStream fileInputStream = new FileInputStream(PATH+TRAP_DATA);
+            try {
+                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+                try {
+                    tempTraps = (ArrayList<LevelElement>) objectInputStream.readObject();
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return tempTraps;
+
     }
 
 
