@@ -2,7 +2,6 @@ package level;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ecs.entities.items.Item;
-import ecs.items.*;
 import graphic.Painter;
 import graphic.PainterConfig;
 
@@ -10,7 +9,7 @@ import java.util.*;
 import java.util.logging.Logger;
 
 import level.elements.ILevel;
-import level.elements.tile.Grave;
+import ecs.entities.Grave;
 import level.elements.tile.Tile;
 import level.generator.IGenerator;
 import level.myQuest.LevelManager;

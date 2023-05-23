@@ -1,4 +1,4 @@
-package level.elements.tile;
+package ecs.entities;
 
 import dslToGame.AnimationBuilder;
 import ecs.components.*;
