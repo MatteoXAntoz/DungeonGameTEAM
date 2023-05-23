@@ -37,6 +37,18 @@ public abstract class Monster extends Entity implements IIdleAI {
             positionComponent.getPosition().y < hero.positionComponent.getPosition().y + hitBoxScale);
     }
 
+    public static Monster getRandomMonster(){
+        int ranValue = (int) (Math.random()*3);
+        if(ranValue==1){
+            return new Mouse();
+        }
+        if(ranValue==2){
+            return new Chort();
+        }else{
+            return new Demon();
+        }
+    }
+
 
 
 }

@@ -2,6 +2,10 @@ package level.myQuest;
 
 import com.badlogic.gdx.Gdx;
 import configuration.KeyboardConfig;
+import ecs.entities.Demon;
+import ecs.entities.Entity;
+import ecs.entities.Monster;
+import ecs.entities.Mouse;
 import ecs.items.Item;
 import starter.Game;
 
@@ -12,6 +16,7 @@ import java.util.ArrayList;
  */
 public class LevelManager {
 
+    public ArrayList<Entity> monster = new ArrayList<>();
     int collectedNahrung = 0; // Anzahl der gesammelten Nahrung
     int collectedPotion = 0; // Anzahl der gesammelten Tränke
     private int levelSurvivedWithoutDamage; // Anzahl der Level, die ohne Schaden überlebt wurden
@@ -60,6 +65,20 @@ public class LevelManager {
         }
 
         updateHeroDamage();
+
+    }
+
+    public void setMonster(int level){
+    addMonster(level,Monster.getRandomMonster());
+    }
+    public void clearMonster(){
+        monster.clear();
+    }
+    public void addMonster(int value, Monster mo){
+
+        for(int i = 0;i<value;i++){
+            monster.add(mo);
+        }
     }
 
     /**

@@ -91,9 +91,10 @@ public class LevelAPI {
         spawnItems();
         spawnTraps();
 
-        new Demon();
-        new Chort();
-        new Mouse();
+
+
+
+
 
         System.out.println(Game.hero.healthComponent.getCurrentHealthpoints());
 
@@ -223,8 +224,8 @@ public class LevelAPI {
 
     public void spawnTraps() {
 
-        if (SaveLoadGame.isEmpty(SaveLoadGame.PATH, SaveLoadGame.TRAP_DATA)) {
-            for (int i = 0; i < 5; i++) {
+        if (SaveLoadGame.isEmpty(SaveLoadGame.PATH, SaveLoadGame.TRAP_DATA)|| trapElements.isEmpty()) {
+            for (int i = 0; i < 2; i++) {
                 trapElements.add(getRandomTraps());
             }
 
@@ -232,7 +233,7 @@ public class LevelAPI {
             trapElements = SaveLoadGame.loadTraps();
         }
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < trapElements.size(); i++) {
             if (trapElements.get(i) == LevelElement.MOUSETRAP) {
                 getCurrentLevel().getRandomTile(LevelElement.FLOOR).setLevelElement(trapElements.get(i));
             } else if (trapElements.get(i) == LevelElement.LAVA) {
@@ -250,6 +251,10 @@ public class LevelAPI {
                 floorTile.setTexturePath("dungeon/default/floor/floor_lava.png");
             }
         }
+
+        trapElements.clear();
+
+
     }
 
     public void spawnItems(){

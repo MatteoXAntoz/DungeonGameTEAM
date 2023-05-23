@@ -16,6 +16,6 @@ public class MouseTrap extends TrapTile{
      */
     public MouseTrap(String texturePath, Coordinate globalPosition, DesignLabel designLabel, ILevel level) {
         super(texturePath, globalPosition, designLabel, level);
-        levelElement = LevelElement.LAVA;
+        levelElement = LevelElement.MOUSETRAP;
     }
 }

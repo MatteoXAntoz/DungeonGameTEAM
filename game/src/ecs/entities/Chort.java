@@ -42,7 +42,7 @@ public class Chort extends Monster {
     @Override
     public void idle(Entity entity) {
         followHeroOrEatItem.idle(entity);
-       
+
     }
 
     private void setupAi() {
