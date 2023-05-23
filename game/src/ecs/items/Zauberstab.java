@@ -1,8 +1,8 @@
 package ecs.items;
 
 import ecs.entities.Entity;
-import ecs.entities.Hero;
-import level.elements.tile.TrapTile;
+import level.elements.tile.FloorTile;
+import level.elements.tile.HoleTile;
 import level.tools.LevelElement;
 import starter.Game;
 import tools.Point;
@@ -32,9 +32,12 @@ public class Zauberstab extends Item {
 
 
     public static void REMOVETRAPS() {
-        for(TrapTile tile: Game.currentLevel.getTrapTiles()){
-            tile.setTexturePath("dungeon/default/floor/floor_1.png");
-            tile.name = "None";
+        for(FloorTile floorTile:Game.currentLevel.getFloorTiles()){
+           if(floorTile.getLevelElement()==LevelElement.LAVA ||floorTile.getLevelElement()==LevelElement.POISON ||
+               floorTile.getLevelElement()==LevelElement.MOUSETRAP){
+               floorTile.setLevelElement(LevelElement.FLOOR);
+               floorTile.setTexturePath("dungeon/default/floor/floor_1.png");
+            }
         }
 
     }

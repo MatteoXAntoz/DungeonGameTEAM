@@ -1,17 +1,13 @@
 package level;
 
 import ecs.components.HealthComponent;
-import ecs.entities.Entity;
-import ecs.entities.Hero;
 import ecs.items.*;
-import level.elements.tile.Tile;
-import level.elements.tile.TrapTile;
+import level.elements.tile.HoleTile;
+import level.tools.LevelElement;
 import starter.Game;
 
-import javax.swing.plaf.PanelUI;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 public class SaveLoadGame implements Serializable {
 
@@ -132,16 +128,13 @@ public class SaveLoadGame implements Serializable {
 
     }
 
-    public static void saveTraps(){
+    public static void saveTraps(LevelAPI levelAPI){
         ArrayList<String> trapNames = new ArrayList<>();
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(PATH+TRAP_DATA);
             try {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-                for (TrapTile tile : Game.currentLevel.getTrapTiles()) {
-                    trapNames.add(tile.name);
-                }
-                objectOutputStream.writeObject(trapNames);
+                objectOutputStream.writeObject(levelAPI.trapElements);
                 objectOutputStream.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);

@@ -15,13 +15,19 @@ public enum LevelElement {
     /** This field is a wall-field */
     WALL(Constants.LEVELELEMENT_IS_NOT_ACCESSIBLE),
     /** This field is a hole-field */
-    TRAP(Constants.LEVELELEMENT_IS_ACCESSIBLE),
+    HOLE(Constants.LEVELELEMENT_IS_ACCESSIBLE),
+
+    LAVA(Constants.LEVELELEMENT_IS_ACCESSIBLE),
+    POISON(Constants.LEVELELEMENT_IS_ACCESSIBLE),
+    MOUSETRAP(Constants.LEVELELEMENT_IS_ACCESSIBLE),
+
     /** This field is the exit-field to the next level */
     EXIT(Constants.LEVELELEMENT_IS_ACCESSIBLE),
 
 
 
     DOOR(Constants.LEVELELEMENT_IS_ACCESSIBLE);
+
 
 
 

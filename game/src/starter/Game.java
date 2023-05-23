@@ -17,7 +17,6 @@ import ecs.components.MissingComponentException;
 import ecs.components.PositionComponent;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
-import ecs.entities.NPCs.Ghost;
 import ecs.items.Item;
 import ecs.systems.*;
 import graphic.DungeonCamera;
@@ -30,11 +29,8 @@ import java.util.logging.Logger;
 
 import level.IOnLevelLoader;
 import level.LevelAPI;
-import level.SaveLoadGame;
 import level.elements.ILevel;
-import level.elements.tile.Grave;
 import level.elements.tile.Tile;
-import level.elements.tile.TrapTile;
 import level.generator.IGenerator;
 import level.generator.postGeneration.WallGenerator;
 import level.generator.randomwalk.RandomWalkGenerator;
@@ -68,7 +64,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
      */
     protected Painter painter;
 
-    protected LevelAPI levelAPI;
+    public static LevelAPI levelAPI;
     /**
      * Generates the level
      */
@@ -183,55 +179,6 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         }
 
 
-
-        for (TrapTile tile : currentLevel.getTrapTiles()) {
-
-            if (hero.isCollidingWithTrapTile(tile) && tile.name.equals("LAVATRAP") && !tile.activated) {
-                int duration = 2;
-                int damage = 4;
-                while (duration >= 0) {
-                    hero.healthComponent.setCurrentHealthpoints(hero.healthComponent.getCurrentHealthpoints() - damage);
-                    duration -= 1;
-                }
-                duration = 2;
-
-                tile.setTexturePath("dungeon/default/floor/floor_lava_deactivated.png");
-                tile.activated = true;
-            }
-            if (hero.isCollidingWithTrapTile(tile) && tile.name.equals("POISONTRAP") && !tile.activated) {
-                int duration = 2;
-                int damage = (int) (Math.random() * 5);
-                while (duration >= 0) {
-                    hero.healthComponent.setCurrentHealthpoints(hero.healthComponent.getCurrentHealthpoints() - damage);
-                    duration -= 1;
-                }
-                duration = 2;
-
-                tile.setTexturePath("dungeon/default/floor/floor_poison_deactivated.png");
-                tile.activated = true;
-
-
-            }
-            if (hero.isCollidingWithTrapTile(tile) && tile.name.equals("MOUSETRAP") && !tile.activated) {
-
-                int duration = 100000000;
-                while (duration > 0) {
-                    hero.velocityComponent.setCurrentYVelocity(0);
-                    hero.velocityComponent.setCurrentXVelocity(0);
-                    duration -= 0.0001;
-                }
-                if (duration == 0) {
-                    tile.activated = true;
-                }
-
-
-                tile.setTexturePath("dungeon/default/floor/floor_mouseTrap_deactivated.png");
-
-
-            }
-
-
-        }
 
 
     }

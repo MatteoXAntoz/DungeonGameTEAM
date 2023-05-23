@@ -1,21 +1,11 @@
 package level.myQuest;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import configuration.KeyboardConfig;
-import ecs.entities.Entity;
-import ecs.entities.Hero;
 import ecs.items.Item;
-import level.IOnLevelLoader;
-import level.elements.tile.TrapTile;
 import starter.Game;
 
-import javax.print.DocFlavor;
-import java.security.Key;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Optional;
-import java.util.Scanner;
 
 /**
  * Der LevelManager ist für das Verwalten der Level und Quests zuständig.

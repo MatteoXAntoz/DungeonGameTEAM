@@ -12,8 +12,7 @@ import java.util.*;
 import java.util.logging.Logger;
 
 import level.elements.ILevel;
-import level.elements.tile.Grave;
-import level.elements.tile.Tile;
+import level.elements.tile.*;
 import level.generator.IGenerator;
 import level.myQuest.LevelManager;
 import level.myQuest.MyQuestConfig;
@@ -43,6 +42,8 @@ public class LevelAPI {
 
     MyQuestConfig myQuestConfig;
     LevelManager levelManager;
+
+   public ArrayList<LevelElement> trapElements = new ArrayList<>();
 
     Grave grave;
 
@@ -76,6 +77,7 @@ public class LevelAPI {
      * @param label The design that the level should have
      */
     public void loadLevel(LevelSize size, DesignLabel label) {
+
         currentLevel = gen.getLevel(label, size);
         onLevelLoader.onLevelLoad();
         levelID += 1;
@@ -88,22 +90,36 @@ public class LevelAPI {
         grave.positionComponent.setPosition(currentLevel.getRandomFloorTile().getCoordinateAsPoint());
 
 
-
-
-        if(levelID==1&&!SaveLoadGame.isEmpty(SaveLoadGame.PATH,SaveLoadGame.ITEM_DATA)){
-
+        if (levelID == 1 && !SaveLoadGame.isEmpty(SaveLoadGame.PATH, SaveLoadGame.ITEM_DATA)) {
             Game.items = SaveLoadGame.loadItems();
-        }else{
+        } else {
             spawnRandomItems();
         }
 
 
+        for (int i = 0; i < 5; i++) {
+            trapElements.add(getRandomTraps());
+        }
 
 
-
-
-
-
+        for (int i = 0; i < 5; i++) {
+            if (trapElements.get(i) == LevelElement.MOUSETRAP) {
+                getCurrentLevel().getRandomTile(LevelElement.FLOOR).setLevelElement(trapElements.get(i));
+            } else if (trapElements.get(i) == LevelElement.LAVA) {
+                getCurrentLevel().getRandomTile(LevelElement.FLOOR).setLevelElement(trapElements.get(i));
+            } else if (trapElements.get(i) == LevelElement.POISON) {
+                getCurrentLevel().getRandomTile(LevelElement.FLOOR).setLevelElement(trapElements.get(i));
+            }
+        }
+        for (FloorTile floorTile : currentLevel.getFloorTiles()) {
+            if (floorTile.getLevelElement() == LevelElement.MOUSETRAP) {
+                floorTile.setTexturePath("dungeon/default/floor/floor_mouseTrap.png");
+            } else if (floorTile.getLevelElement() == LevelElement.POISON) {
+                floorTile.setTexturePath("dungeon/default/floor/floor_poison.png");
+            } else if (floorTile.getLevelElement() == LevelElement.LAVA) {
+                floorTile.setTexturePath("dungeon/default/floor/floor_lava.png");
+            }
+        }
 
 
         System.out.println(Game.hero.healthComponent.getCurrentHealthpoints());
@@ -142,7 +158,6 @@ public class LevelAPI {
     public void update() {
         drawLevel();
         levelManager.update();
-
 
 
     }
@@ -213,7 +228,21 @@ public class LevelAPI {
         }
 
 
+    }
 
+    public LevelElement getRandomTraps() {
+        int ranValue = (int) (Math.random() * 3 + 1);
+
+        if (ranValue == 1) {
+            return LevelElement.LAVA;
+        }
+        if (ranValue == 2) {
+            return LevelElement.MOUSETRAP;
+        }
+        if (ranValue == 3) {
+            return LevelElement.POISON;
+        }
+        return LevelElement.FLOOR;
     }
 
 

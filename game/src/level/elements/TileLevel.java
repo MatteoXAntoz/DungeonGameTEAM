@@ -1,10 +1,8 @@
 package level.elements;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import level.elements.astar.TileConnection;
 import level.elements.astar.TileHeuristic;
@@ -27,12 +25,14 @@ public class TileLevel implements ILevel {
 
     protected ArrayList<FloorTile> floorTiles = new ArrayList<>();
     protected ArrayList<WallTile> wallTiles = new ArrayList<>();
-    protected ArrayList<TrapTile> trapTiles = new ArrayList<>();
+    protected ArrayList<HoleTile> holeTiles = new ArrayList<>();
     protected ArrayList<DoorTile> doorTiles = new ArrayList<>();
     protected ArrayList<ExitTile> exitTiles = new ArrayList<>();
     protected ArrayList<SkipTile> skipTiles = new ArrayList<>();
 
-
+    protected ArrayList<MouseTrap> mouseTraps = new ArrayList<>();
+    protected ArrayList<PoisonTrap> poisonTraps = new ArrayList<>();
+    protected ArrayList<LavaTrap> lavaTraps = new ArrayList<>();
 
 
     private static final Coordinate CONNECTION_OFFSETS[] = {
@@ -136,11 +136,24 @@ public class TileLevel implements ILevel {
     }
 
     @Override
-    public void addTrapTile(TrapTile tile) {
-        trapTiles.add(tile);
+    public void addTrapTile(HoleTile tile) {
+        holeTiles.add(tile);
     }
 
+    @Override
+    public void addMouseTrap(MouseTrap tile) {
+        mouseTraps.add(tile);
+    }
 
+    @Override
+    public void addPoisonTrap(PoisonTrap tile) {
+        poisonTraps.add(tile);
+    }
+
+    @Override
+    public void addLavaTrap(LavaTrap tile) {
+       lavaTraps.add(tile);
+    }
 
 
     @Override
@@ -172,9 +185,26 @@ public class TileLevel implements ILevel {
     }
 
     @Override
-    public List<TrapTile> getTrapTiles() {
-        return trapTiles;
+    public List<MouseTrap> getMouseTrap() {
+        return mouseTraps;
     }
+
+    @Override
+    public List<LavaTrap> getLavaTrap() {
+        return lavaTraps;
+    }
+
+    @Override
+    public List<PoisonTrap> getPoisonTrap() {
+        return poisonTraps;
+    }
+
+    @Override
+    public List<HoleTile> getHoleTiles() {
+        return holeTiles;
+    }
+
+
 
 
     @Override
@@ -199,9 +229,15 @@ public class TileLevel implements ILevel {
             case SKIP -> skipTiles.remove(tile);
             case FLOOR -> floorTiles.remove(tile);
             case WALL -> wallTiles.remove(tile);
-            case TRAP -> trapTiles.remove(tile);
+            case HOLE -> holeTiles.remove(tile);
             case DOOR -> doorTiles.remove(tile);
             case EXIT -> exitTiles.remove(tile);
+
+            case LAVA -> lavaTraps.remove(tile);
+            case POISON -> poisonTraps.remove(tile);
+            case MOUSETRAP -> mouseTraps.remove(tile);
+
+
         }
 
         tile.getConnections()
@@ -227,7 +263,10 @@ public class TileLevel implements ILevel {
             case SKIP -> addSkipTile((SkipTile) tile);
             case FLOOR -> addFloorTile((FloorTile) tile);
             case WALL -> addWallTile((WallTile) tile);
-            case TRAP -> addTrapTile((TrapTile) tile);
+            case HOLE -> addTrapTile((HoleTile) tile);
+            case LAVA -> addLavaTrap((LavaTrap) tile);
+            case MOUSETRAP -> addMouseTrap((MouseTrap) tile);
+            case POISON -> addPoisonTrap((PoisonTrap) tile);
             case EXIT -> addExitTile((ExitTile) tile);
             case DOOR -> addDoorTile((DoorTile) tile);
         }

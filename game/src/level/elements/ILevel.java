@@ -22,6 +22,7 @@ public interface ILevel extends ITileable {
      */
     void setStartTile(Tile start);
 
+
     /**
      * Mark a random tile as end
      */
@@ -56,7 +57,13 @@ public interface ILevel extends ITileable {
      *
      * @param tile new hole tile
      */
-    void addTrapTile(TrapTile tile);
+    void addTrapTile(HoleTile tile);
+
+    void addMouseTrap(MouseTrap tile);
+
+    void addPoisonTrap(PoisonTrap tile);
+
+    void addLavaTrap(LavaTrap tile);
 
     /**
      * Add door tile to level.
@@ -107,12 +114,18 @@ public interface ILevel extends ITileable {
      */
     List<WallTile> getWallTiles();
 
+    List<MouseTrap> getMouseTrap();
+
+    List<LavaTrap> getLavaTrap();
+
+    List<PoisonTrap> getPoisonTrap();
+
     /**
      * Returns List of all hole tiles of the level.
      *
      * @return list of hole tiles
      */
-    List<TrapTile> getTrapTiles();
+    List<HoleTile> getHoleTiles();
 
     /**
      * Returns List of all door tiles of the level.
@@ -199,8 +212,17 @@ public interface ILevel extends ITileable {
             case WALL -> getWallTiles().size() > 0
                 ? getWallTiles().get(RANDOM.nextInt(getWallTiles().size()))
                 : null;
-            case TRAP -> getTrapTiles().size() > 0
-                ? getTrapTiles().get(RANDOM.nextInt(getTrapTiles().size()))
+            case HOLE -> getHoleTiles().size() > 0
+                ? getHoleTiles().get(RANDOM.nextInt(getHoleTiles().size()))
+                : null;
+            case LAVA -> getLavaTrap().size() > 0
+                ? getLavaTrap().get(RANDOM.nextInt(getLavaTrap().size()))
+                : null;
+            case POISON -> getPoisonTrap().size() > 0
+                ? getPoisonTrap().get(RANDOM.nextInt(getPoisonTrap().size()))
+                : null;
+            case MOUSETRAP -> getMouseTrap().size() > 0
+                ? getMouseTrap().get(RANDOM.nextInt(getMouseTrap().size()))
                 : null;
             case EXIT -> getExitTiles().size() > 0
                 ? getExitTiles().get(RANDOM.nextInt(getExitTiles().size()))

@@ -219,6 +219,7 @@ public class PlayerSystem extends ECS_System {
         if(Gdx.input.isKeyJustPressed(Input.Keys.TAB)){
             SaveLoadGame.saveHeroHealth();
             SaveLoadGame.saveItems();
+            SaveLoadGame.saveTraps(Game.levelAPI);
             System.out.println("Spiel wurde gespeichert.");
 
         }

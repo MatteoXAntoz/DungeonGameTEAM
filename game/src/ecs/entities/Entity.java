@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 import ecs.components.PositionComponent;
-import level.elements.tile.TrapTile;
+import level.elements.tile.HoleTile;
 import semanticAnalysis.types.DSLContextPush;
 import semanticAnalysis.types.DSLType;
 import starter.Game;
@@ -60,7 +60,7 @@ public class Entity implements Serializable {
         return Optional.ofNullable(components.get(klass));
     }
     public boolean gotHitByTrap(){
-        for(TrapTile e: Game.currentLevel.getTrapTiles()){
+        for(HoleTile e: Game.currentLevel.getHoleTiles()){
             if(isCollidingWithTrapTile(e)){
                 return true;
             }
@@ -68,7 +68,7 @@ public class Entity implements Serializable {
         return false;
 
     }
-    public boolean isCollidingWithTrapTile(TrapTile tile) {
+    public boolean isCollidingWithTrapTile(HoleTile tile) {
         float hitBoxScale = 0.6f;
 
         return (positionComponent.getPosition().x + hitBoxScale > tile.getCoordinateAsPoint().x &&

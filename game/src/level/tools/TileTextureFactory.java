@@ -1,13 +1,13 @@
 package level.tools;
 
 import level.elements.tile.Tile;
-import level.elements.tile.TrapTile;
+import level.elements.tile.HoleTile;
 
 
 public class TileTextureFactory {
 
-    TrapTile tile;
-    public TileTextureFactory(TrapTile tile){
+    HoleTile tile;
+    public TileTextureFactory(HoleTile tile){
         this.tile = tile;
     }
     /**
@@ -108,37 +108,17 @@ public class TileTextureFactory {
             return "floor/floor_1";
         } else if (levelPart.element() == LevelElement.EXIT) {
             return "floor/floor_ladder";
-        } else if (levelPart.element() == LevelElement.TRAP) {
+        } else if (levelPart.element() == LevelElement.HOLE) {
             if (aboveIsTrap(levelPart.position, levelPart.layout)) {
-                return getRandomTrap();
+                return "floor/floor_1";
             }else{
-                return getRandomTrap();
+                return "floor/floor_hole";
             }
         }
         return null;
     }
 
-    //Moritz
-    private static String getRandomTrap() {
-        int ranValue = (int) (Math.random() * 3);
 
-        String mouseTrap = "floor/floor_mouseTrap";
-        String lavaTrap = "floor/floor_lava";
-        String posionTrap = "floor/floor_poison";
-
-        if(ranValue==0) {
-        return mouseTrap;
-        }
-        else if(ranValue==1) {
-            return lavaTrap;
-        }
-        else if(ranValue==2) {
-            return posionTrap;
-        }
-
-
-        return "";
-    }
 
     private static String findTexturePathDoor(LevelPart levelPart) {
         if (levelPart.element() == LevelElement.DOOR) {
@@ -685,7 +665,7 @@ public class TileTextureFactory {
      */
     private static boolean aboveIsTrap(Coordinate p, LevelElement[][] layout) {
         try {
-            return layout[p.y + 1][p.x] == LevelElement.TRAP;
+            return layout[p.y + 1][p.x] == LevelElement.HOLE;
 
         } catch (ArrayIndexOutOfBoundsException e) {
             return false;
@@ -701,7 +681,7 @@ public class TileTextureFactory {
      */
     private static boolean leftIsHole(Coordinate p, LevelElement[][] layout) {
         try {
-            return layout[p.y][p.x - 1] == LevelElement.TRAP;
+            return layout[p.y][p.x - 1] == LevelElement.HOLE;
 
         } catch (ArrayIndexOutOfBoundsException e) {
             return false;
@@ -717,7 +697,7 @@ public class TileTextureFactory {
      */
     private static boolean rightIsHole(Coordinate p, LevelElement[][] layout) {
         try {
-            return layout[p.y][p.x + 1] == LevelElement.TRAP;
+            return layout[p.y][p.x + 1] == LevelElement.HOLE;
 
         } catch (ArrayIndexOutOfBoundsException e) {
             return false;
@@ -733,7 +713,7 @@ public class TileTextureFactory {
      */
     private static boolean belowIsHole(Coordinate p, LevelElement[][] layout) {
         try {
-            return layout[p.y - 1][p.x] == LevelElement.TRAP;
+            return layout[p.y - 1][p.x] == LevelElement.HOLE;
 
         } catch (ArrayIndexOutOfBoundsException e) {
             return false;
@@ -749,7 +729,7 @@ public class TileTextureFactory {
      */
     private static boolean upperRightIsHole(Coordinate p, LevelElement[][] layout) {
         try {
-            return layout[p.y + 1][p.x + 1] == LevelElement.TRAP;
+            return layout[p.y + 1][p.x + 1] == LevelElement.HOLE;
 
         } catch (ArrayIndexOutOfBoundsException e) {
             return false;
@@ -765,7 +745,7 @@ public class TileTextureFactory {
      */
     private static boolean bottomRightIsHole(Coordinate p, LevelElement[][] layout) {
         try {
-            return layout[p.y - 1][p.x + 1] == LevelElement.TRAP;
+            return layout[p.y - 1][p.x + 1] == LevelElement.HOLE;
 
         } catch (ArrayIndexOutOfBoundsException e) {
             return false;
@@ -781,7 +761,7 @@ public class TileTextureFactory {
      */
     private static boolean bottomLeftIsHole(Coordinate p, LevelElement[][] layout) {
         try {
-            return layout[p.y - 1][p.x - 1] == LevelElement.TRAP;
+            return layout[p.y - 1][p.x - 1] == LevelElement.HOLE;
 
         } catch (ArrayIndexOutOfBoundsException e) {
             return false;
@@ -797,7 +777,7 @@ public class TileTextureFactory {
      */
     private static boolean upperLeftIsHole(Coordinate p, LevelElement[][] layout) {
         try {
-            return layout[p.y + 1][p.x - 1] == LevelElement.TRAP;
+            return layout[p.y + 1][p.x - 1] == LevelElement.HOLE;
 
         } catch (ArrayIndexOutOfBoundsException e) {
             return false;
