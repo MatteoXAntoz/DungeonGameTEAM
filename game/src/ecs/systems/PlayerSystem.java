@@ -16,6 +16,7 @@ import level.myQuest.*;
 import starter.Game;
 
 
+import java.util.logging.Logger;
 
 import static starter.Game.*;
 
@@ -31,6 +32,8 @@ public class PlayerSystem extends ECS_System {
     boolean inventory_open = false;
     int questChoice = 0;
     int inventoryChoice = 0;
+
+    private final Logger playerSystem_logger = Logger.getLogger(PlayerSystem.class.getName());
 
 
     LevelManager levelManager = LevelManager.getInstance();
@@ -226,7 +229,7 @@ public class PlayerSystem extends ECS_System {
             SaveLoadGame.saveItems();
             SaveLoadGame.saveTraps(Game.levelAPI);
             SaveLoadGame.saveMonsters(levelAPI);
-            System.out.println("Spiel wurde gespeichert.");
+            playerSystem_logger.info("Game was saved.");
         }
 
 
