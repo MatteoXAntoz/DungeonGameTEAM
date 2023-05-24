@@ -29,6 +29,8 @@ public class SaveLoadGame implements Serializable {
 
     public static ArrayList<LevelElement> tempTraps = new ArrayList<>();
 
+   public static final Logger saveLoadGame_logger = Logger.getLogger(SaveLoadGame.class.getName());
+
 
 
 
@@ -83,7 +85,7 @@ public class SaveLoadGame implements Serializable {
         ArrayList<String> itemNames = new ArrayList<>();
         for (Item item : Game.items) {
             itemNames.add(item.getClass().getSimpleName());
-            System.out.println(item.getClass().getSimpleName() + " wurde gespeichert!");
+            saveLoadGame_logger.info(item.getClass().getSimpleName() + " was saved");
         }
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(PATH + ITEM_DATA);
@@ -152,7 +154,7 @@ public class SaveLoadGame implements Serializable {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
                 objectOutputStream.writeObject(levelAPI.trapElements);
                 for (LevelElement levelElement : levelAPI.trapElements) {
-                    System.out.println(levelElement + "FALLE" + " wurde gespeichert!");
+                    saveLoadGame_logger.info(levelElement + "TRAP" + " was saved!");
                 }
                 objectOutputStream.close();
             } catch (IOException e) {
@@ -173,7 +175,7 @@ public class SaveLoadGame implements Serializable {
         LevelManager levelManager = LevelManager.getInstance();
         for (Entity entity : levelManager.monster) {
             monsterNames.add(entity.getClass().getSimpleName());
-            System.out.println(entity.getClass().getSimpleName() + " wurde gespeichert!");
+            saveLoadGame_logger.info(entity.getClass().getSimpleName() + " was saved");
         }
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(PATH + MONSTER_DATA);
@@ -239,7 +241,7 @@ public class SaveLoadGame implements Serializable {
                 try {
                     tempTraps = (ArrayList<LevelElement>) objectInputStream.readObject();
                     for (LevelElement levelElement : tempTraps) {
-                        System.out.println(levelElement + "FALLE" + " wurde geladen!");
+                        saveLoadGame_logger.info(levelElement + " TRAP " + " was loaded");
                     }
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
