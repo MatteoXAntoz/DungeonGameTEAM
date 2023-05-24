@@ -214,16 +214,21 @@ public class PlayerSystem extends ECS_System {
     }
 
 
+    /**
+     * Überprüft die gedrückte Taste und führt entsprechende Aktionen aus.
+     *
+     * @param ksd Die Daten des Tastendrucks.
+     */
     private void checkKeystroke(KSData ksd) {
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.TAB)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.TAB)) {
             SaveLoadGame.saveHeroHealth();
             SaveLoadGame.saveItems();
             SaveLoadGame.saveTraps(Game.levelAPI);
             SaveLoadGame.saveMonsters(levelAPI);
             System.out.println("Spiel wurde gespeichert.");
-
         }
+
 
 
         if (Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_UP.get()))
