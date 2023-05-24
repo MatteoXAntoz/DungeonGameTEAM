@@ -67,14 +67,21 @@ public class LevelManager {
 
     }
 
+    /**
+     * Setzt die Monster für das angegebene Level.
+     *
+     * @param level Das Level, für das die Monster gesetzt werden sollen.
+     */
     public void setMonster(int level) {
-
-            monster.clear();
-            addMonster(level);
-
+        monster.clear();
+        addMonster(level);
     }
 
-
+    /**
+     * Fügt Monster basierend auf dem angegebenen Wert hinzu.
+     *
+     * @param value Der Wert, der die Anzahl und Art der hinzuzufügenden Monster bestimmt.
+     */
     public void addMonster(int value) {
         int maxAmount = 10;
         if (value > 0 && value <= 2) {
@@ -85,7 +92,7 @@ public class LevelManager {
             for (int i = 0; i < Math.random() * value; i++) {
                 monster.add(new Chort());
             }
-        } else if (value > 4 && value <= 5) {
+        } else if (value > 4 && value <= 6) {
             for (int i = 0; i < Math.random() * value; i++) {
                 monster.add(new Demon());
             }
@@ -94,9 +101,8 @@ public class LevelManager {
                 monster.add(Monster.getRandomMonster());
             }
         }
-
-
     }
+
 
     /**
      * Aktualisiert den Schaden am Helden.
