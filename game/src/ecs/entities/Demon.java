@@ -15,6 +15,9 @@ import ecs.components.ai.transition.ITransition;
 import level.elements.tile.Tile;
 import starter.Game;
 
+/**
+ * class to create a monster of the type demon
+ */
 public class Demon extends Monster {
 
     boolean collide;
@@ -43,6 +46,10 @@ public class Demon extends Monster {
         new AnimationComponent(this, idleLeft, idleRight);
     }
 
+    /**
+     * method to setup the AIComponent
+     * @param entity associated entity
+     */
     @Override
     public void idle(Entity entity) {
       if(path==null){
