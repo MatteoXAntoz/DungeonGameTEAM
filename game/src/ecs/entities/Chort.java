@@ -11,6 +11,9 @@ import ecs.components.ai.idle.FollowHeroOrEatItem;
 import ecs.components.ai.transition.ITransition;
 import starter.Game;
 
+/**
+ * class to create a monster of the type chort
+ */
 public class Chort extends Monster {
 
     boolean collide;
@@ -45,6 +48,9 @@ public class Chort extends Monster {
 
     }
 
+    /**
+     * method to setup the AIComponent
+     */
     private void setupAi() {
         new AIComponent(this, new IFightAI() {
             @Override

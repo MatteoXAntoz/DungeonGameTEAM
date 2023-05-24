@@ -5,6 +5,10 @@ import ecs.components.ai.idle.IIdleAI;
 import graphic.Animation;
 
 
+
+/**
+ * abstract class to create a template to build monster
+ */
 public abstract class Monster extends Entity implements IIdleAI {
 
     float xSpeed;
@@ -23,6 +27,11 @@ public abstract class Monster extends Entity implements IIdleAI {
 
     protected abstract void setupAnimation();
 
+    /**
+     * method to check if monster is colliding with hero
+     * @param hero
+     * @return
+     */
     protected boolean isCollidingWithHero(Hero hero) {
         float hitBoxScale = 0.6f;
 
@@ -32,6 +41,10 @@ public abstract class Monster extends Entity implements IIdleAI {
             positionComponent.getPosition().y < hero.positionComponent.getPosition().y + hitBoxScale);
     }
 
+    /**
+     * method to return a monster
+     * @return
+     */
     public static Monster getRandomMonster(){
         int ranValue = (int) (Math.random()*3);
         if(ranValue==1){

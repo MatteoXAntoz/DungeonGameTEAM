@@ -9,8 +9,11 @@ import level.elements.tile.Tile;
 import starter.Game;
 import tools.Point;
 
+import javax.management.monitor.GaugeMonitorMBean;
+
 /**
- * Eine Implementierung des IIdleAI-Interfaces, die das Verhalten steuert, wenn die Entität dem Helden folgt oder ein Item frisst.
+ * class to implement a system that let an entity follow
+ * the hero or eats an item placed in the dungeon
  */
 public class FollowHeroOrEatItem implements IIdleAI {
 

@@ -15,13 +15,19 @@ import ecs.components.ai.transition.ITransition;
 import level.elements.tile.Tile;
 import starter.Game;
 
+
+/**
+ * class to create a monster of the type mouse
+ */
 public class Mouse extends Monster {
 
     boolean collide;
 
     GraphPath<Tile> path;
 
-
+    /**
+     * constructor for class mouse
+     */
     public Mouse() {
 
         pathToIdleLeft = "mouse/idleLeft";
@@ -54,6 +60,9 @@ public class Mouse extends Monster {
 
     }
 
+    /**
+     * method to setup AIComponent
+     */
     private void setupAi() {
         new AIComponent(this, new IFightAI() {
             @Override
