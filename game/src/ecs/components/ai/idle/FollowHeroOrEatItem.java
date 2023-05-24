@@ -10,7 +10,7 @@ import level.elements.tile.Tile;
 import starter.Game;
 import tools.Point;
 
-import javax.management.monitor.GaugeMonitorMBean;
+
 
 public class FollowHeroOrEatItem implements IIdleAI {
 
@@ -37,15 +37,16 @@ public class FollowHeroOrEatItem implements IIdleAI {
     public void idle(Entity entity) {
 
         if(action==1){
-            performAction1(entity);
+            walkToPlayer(entity);
         } else if (action==2) {
-            performAction2(entity);
+            walkToItem(entity);
+
         }
 
 
     }
 
-    private void performAction1(Entity entity) {
+    private void walkToPlayer(Entity entity) {
         if(goToPlayer==null){
             goToPlayer = AITools.calculatePathToHero(entity);
 
@@ -56,7 +57,7 @@ public class FollowHeroOrEatItem implements IIdleAI {
 
     }
 
-    private void performAction2(Entity entity) {
+    private void walkToItem(Entity entity) {
         if(eatItems==null){
             eatItems = AITools.calculatePath(from,toRandomItem);
 
@@ -67,6 +68,7 @@ public class FollowHeroOrEatItem implements IIdleAI {
             if(velocityComponent.getCurrentXVelocity() == 0&& velocityComponent.getCurrentYVelocity() ==0){
                Game.removeEntity(item);
             }
+
         }
 
 
