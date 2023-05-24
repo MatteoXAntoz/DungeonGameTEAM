@@ -13,8 +13,10 @@ import starter.Game;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class SaveLoadGame implements Serializable {
+
 
 
     public static String PATH = "game/src/level";
@@ -29,6 +31,11 @@ public class SaveLoadGame implements Serializable {
 
 
 
+
+
+    /**
+     * Speichert die Gesundheit des Helden.
+     */
     public static void saveHeroHealth() {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(PATH + PLAYER_DATA);
@@ -38,19 +45,20 @@ public class SaveLoadGame implements Serializable {
                     HealthComponent healthComponent = (HealthComponent) Game.getHero().get().getComponent(HealthComponent.class).get();
                     objectOutputStream.writeInt(healthComponent.getCurrentHealthpoints());
                 }
-
                 objectOutputStream.close();
-
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
+    /**
+     * Lädt die Gesundheit des Helden.
+     *
+     * @return Die geladene Gesundheit des Helden.
+     */
     public static int loadHeroHealth() {
         int health;
         try {
@@ -59,7 +67,6 @@ public class SaveLoadGame implements Serializable {
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
                 health = objectInputStream.readInt();
                 objectInputStream.close();
-
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -67,18 +74,17 @@ public class SaveLoadGame implements Serializable {
             throw new RuntimeException(e);
         }
         return health;
-
     }
 
+    /**
+     * Speichert die Gegenstände des Spiels.
+     */
     public static void saveItems() {
         ArrayList<String> itemNames = new ArrayList<>();
-
         for (Item item : Game.items) {
             itemNames.add(item.getClass().getSimpleName());
-            System.out.println(item.getClass().getSimpleName()+" wurde gespeichert!");
-
+            System.out.println(item.getClass().getSimpleName() + " wurde gespeichert!");
         }
-
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(PATH + ITEM_DATA);
             try {
@@ -93,18 +99,19 @@ public class SaveLoadGame implements Serializable {
         }
     }
 
+    /**
+     * Lädt die Gegenstände des Spiels.
+     *
+     * @return Die geladenen Gegenstände des Spiels.
+     */
     public static ArrayList<Item> loadItems() {
         ArrayList<Item> newItems = new ArrayList<>();
         ObjectInputStream objectInputStream;
-
-
         try {
             FileInputStream fileInputStream = new FileInputStream(PATH + ITEM_DATA);
             try {
-
                 objectInputStream = new ObjectInputStream(fileInputStream);
                 try {
-
                     tempName = (ArrayList<String>) objectInputStream.readObject();
                     objectInputStream.close();
                 } catch (ClassNotFoundException e) {
@@ -122,7 +129,6 @@ public class SaveLoadGame implements Serializable {
                     } else if (st.equals("Zauberstab")) {
                         newItems.add(new Zauberstab());
                     }
-
                 }
                 objectInputStream.close();
             } catch (IOException e) {
@@ -131,19 +137,22 @@ public class SaveLoadGame implements Serializable {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-
         return newItems;
-
     }
 
-    public static void saveTraps(LevelAPI levelAPI){
+    /**
+     * Speichert die Fallen des Levels.
+     *
+     * @param levelAPI Die LevelAPI, die die Fallen enthält.
+     */
+    public static void saveTraps(LevelAPI levelAPI) {
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(PATH+TRAP_DATA);
+            FileOutputStream fileOutputStream = new FileOutputStream(PATH + TRAP_DATA);
             try {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
                 objectOutputStream.writeObject(levelAPI.trapElements);
-                for(LevelElement levelElement: levelAPI.trapElements){
-                    System.out.println(levelElement+"FALLE"+" wurde gespeichert!");
+                for (LevelElement levelElement : levelAPI.trapElements) {
+                    System.out.println(levelElement + "FALLE" + " wurde gespeichert!");
                 }
                 objectOutputStream.close();
             } catch (IOException e) {
@@ -154,17 +163,18 @@ public class SaveLoadGame implements Serializable {
         }
     }
 
-
-    public static void saveMonsters(LevelAPI levelAPI){
+    /**
+     * Speichert die Monster des Levels.
+     *
+     * @param levelAPI Die LevelAPI, die die Monster enthält.
+     */
+    public static void saveMonsters(LevelAPI levelAPI) {
         ArrayList<String> monsterNames = new ArrayList<>();
         LevelManager levelManager = LevelManager.getInstance();
-
         for (Entity entity : levelManager.monster) {
             monsterNames.add(entity.getClass().getSimpleName());
-            System.out.println(entity.getClass().getSimpleName()+" wurde gespeichert!");
-
+            System.out.println(entity.getClass().getSimpleName() + " wurde gespeichert!");
         }
-
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(PATH + MONSTER_DATA);
             try {
@@ -179,18 +189,19 @@ public class SaveLoadGame implements Serializable {
         }
     }
 
+    /**
+     * Lädt die Monster des Levels.
+     *
+     * @return Die geladenen Monster des Levels.
+     */
     public static ArrayList<Entity> loadMonsters() {
         ArrayList<Entity> newMonsters = new ArrayList<>();
         ObjectInputStream objectInputStream;
-
-
         try {
             FileInputStream fileInputStream = new FileInputStream(PATH + MONSTER_DATA);
             try {
-
                 objectInputStream = new ObjectInputStream(fileInputStream);
                 try {
-
                     tempName = (ArrayList<String>) objectInputStream.readObject();
                     objectInputStream.close();
                 } catch (ClassNotFoundException e) {
@@ -204,7 +215,6 @@ public class SaveLoadGame implements Serializable {
                     } else if (st.equals("Demon")) {
                         newMonsters.add(new Demon());
                     }
-
                 }
                 objectInputStream.close();
             } catch (IOException e) {
@@ -213,21 +223,23 @@ public class SaveLoadGame implements Serializable {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-
         return newMonsters;
-
     }
 
-    public static ArrayList<LevelElement> loadTraps(){
-
+    /**
+     * Lädt die Fallen des Levels.
+     *
+     * @return Die geladenen Fallen des Levels.
+     */
+    public static ArrayList<LevelElement> loadTraps() {
         try {
-            FileInputStream fileInputStream = new FileInputStream(PATH+TRAP_DATA);
+            FileInputStream fileInputStream = new FileInputStream(PATH + TRAP_DATA);
             try {
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
                 try {
                     tempTraps = (ArrayList<LevelElement>) objectInputStream.readObject();
-                    for(LevelElement levelElement: tempTraps){
-                        System.out.println(levelElement+"FALLE"+ "wurde geladen!");
+                    for (LevelElement levelElement : tempTraps) {
+                        System.out.println(levelElement + "FALLE" + " wurde geladen!");
                     }
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
@@ -238,14 +250,16 @@ public class SaveLoadGame implements Serializable {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-
         return tempTraps;
-
     }
 
-
-
-
+    /**
+     * Überprüft, ob eine Datei leer ist.
+     *
+     * @param path Der Pfad zur Datei.
+     * @param data Der Dateiname.
+     * @return True, wenn die Datei leer ist, ansonsten false.
+     */
     public static boolean isEmpty(String path, String data) {
         try {
             FileInputStream fileInputStream = new FileInputStream(path + data);
