@@ -12,6 +12,10 @@ import tools.Point;
 
 import javax.management.monitor.GaugeMonitorMBean;
 
+/**
+ * class to implement a system that let an entity follow
+ * the hero or eats an item placed in the dungeon
+ */
 public class FollowHeroOrEatItem implements IIdleAI {
 
 
@@ -23,7 +27,10 @@ public class FollowHeroOrEatItem implements IIdleAI {
     Entity entity;
     int action;
 
-
+    /**
+     * constructor for class FollowHeroOrEatItem
+     * @param entity
+     */
     public FollowHeroOrEatItem(Entity entity){
         this.entity = entity;
          action = (int) (Math.random()*2+1);
