@@ -4,17 +4,11 @@ import ecs.components.MyInventory;
 import ecs.entities.Entity;
 import tools.Point;
 
+/** Bag superclass is for subclasses: FoodBag and PotionBag */
+public class Bag extends Item {
+    private MyInventory myInventory;
 
-/**
- * Bag superclass is for subclasses: FoodBag and PotionBag
- */
-
-public class Bag  extends Item {
-   private MyInventory myInventory;
-
-
-
-    public Bag(){
+    public Bag() {
         super();
         path = "bag-no_background.png";
         setupAnimation();
@@ -33,7 +27,7 @@ public class Bag  extends Item {
         positionComponent.setPosition(position);
     }
 
-    protected void setupInventory(){
+    protected void setupInventory() {
         myInventory = new MyInventory();
     }
 

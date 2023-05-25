@@ -257,11 +257,11 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         pc.setPosition(currentLevel.getStartTile().getCoordinate().toPoint());
     }
 
-    /**
-     * Toggle between showing the PauseMenu
-     */
+    /** Toggle between showing the PauseMenu */
     public static void togglePauseMenu() {
-        if(gameOverMenu.isVisible()){return;}
+        if (gameOverMenu.isVisible()) {
+            return;
+        }
         togglePause();
         if (pauseMenu != null) {
             if (paused) pauseMenu.showMenu();
@@ -269,11 +269,11 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         }
     }
 
-    /**
-     * Toggle between showing the GameOverMenu
-     */
+    /** Toggle between showing the GameOverMenu */
     public static void toggleGameOverMenu() {
-        if(pauseMenu.isVisible()){return;}
+        if (pauseMenu.isVisible()) {
+            return;
+        }
         togglePause();
         if (gameOverMenu != null) {
             if (paused) gameOverMenu.showMenu();

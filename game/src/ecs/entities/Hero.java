@@ -12,7 +12,6 @@ import graphic.Animation;
 import level.elements.tile.TrapTile;
 import starter.Game;
 
-
 /**
  * The Hero is the player character. It's entity in the ECS. This class helps to setup the hero with
  * all its components and attributes .
@@ -45,8 +44,6 @@ public class Hero extends Entity {
 
     public HitboxComponent hitboxComponent;
 
-
-
     public HealthComponent healthComponent;
 
     public PositionComponent positionComponent = new PositionComponent(this);
@@ -71,7 +68,7 @@ public class Hero extends Entity {
         skillComponent.addSkill(sprintSkill);
         skillComponent.addSkill(healingSkill);
 
-        //Der Inventarplatz vom Spieler wird auf wird auf 10 gesetzt
+        // Der Inventarplatz vom Spieler wird auf wird auf 10 gesetzt
         getMyInventory().setMaxSpace(10);
     }
 

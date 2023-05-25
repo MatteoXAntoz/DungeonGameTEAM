@@ -3,13 +3,10 @@ package level.myQuest;
 import com.badlogic.gdx.Gdx;
 import configuration.KeyboardConfig;
 import ecs.entities.items.Item;
+import java.util.ArrayList;
 import starter.Game;
 
-import java.util.ArrayList;
-
-/**
- * Der LevelManager ist für das Verwalten der Level und Quests zuständig.
- */
+/** Der LevelManager ist für das Verwalten der Level und Quests zuständig. */
 public class LevelManager {
 
     int collectedNahrung = 0; // Anzahl der gesammelten Nahrung

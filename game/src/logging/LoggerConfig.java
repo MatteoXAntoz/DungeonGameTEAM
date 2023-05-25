@@ -2,8 +2,6 @@ package logging;
 
 import ecs.components.Component;
 import ecs.entities.Entity;
-import starter.Game;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,6 +13,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import starter.Game;
 
 public class LoggerConfig {
     private static Logger baseLogger;
@@ -47,8 +46,7 @@ public class LoggerConfig {
         baseLogger = Logger.getLogger("");
         baseLogger.setLevel(Level.CONFIG);
         createCustomFileHandler();
-        Arrays.stream(baseLogger.getHandlers())
-            .forEach(handler -> handler.setLevel(Level.ALL));
+        Arrays.stream(baseLogger.getHandlers()).forEach(handler -> handler.setLevel(Level.ALL));
 
         // Shutting off Game, Entity, and Component Logger
         Logger gameLogger = Logger.getLogger(Game.class.getName());

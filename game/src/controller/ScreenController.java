@@ -90,5 +90,7 @@ public class ScreenController<T extends Actor> extends AbstractController<T> {
      *
      * @return the visibility of the Menu
      */
-    public boolean isVisible(){return visible;}
+    public boolean isVisible() {
+        return visible;
+    }
 }

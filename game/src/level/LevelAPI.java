@@ -1,13 +1,13 @@
 package level;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import ecs.entities.Grave;
 import ecs.entities.items.Item;
 import graphic.Painter;
 import graphic.PainterConfig;
 import java.util.*;
 import java.util.logging.Logger;
 import level.elements.ILevel;
-import ecs.entities.Grave;
 import level.elements.tile.Tile;
 import level.generator.IGenerator;
 import level.myQuest.LevelManager;
@@ -173,7 +173,7 @@ public class LevelAPI {
      *
      * @param levelID value the Attribute <code>lvelID</code> is set to
      */
-    public void setLevelID(int levelID) {this.levelID = levelID;}
-
-
+    public void setLevelID(int levelID) {
+        this.levelID = levelID;
+    }
 }
