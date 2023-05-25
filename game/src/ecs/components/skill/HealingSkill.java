@@ -1,12 +1,8 @@
 package ecs.components.skill;
 
-
-import ecs.entities.Entity;
-import ecs.entities.Hero;
-
 public class HealingSkill extends Skill {
 
-//Matteo
+    // Matteo
 
     public final int healingBoost = 25;
     public int potion = 0;
@@ -14,7 +10,7 @@ public class HealingSkill extends Skill {
     public final int MAX_POTIONAMOUNT = 5;
 
     /**
-     * @param skillFunction     Function of this skill
+     * @param skillFunction Function of this skill
      * @param coolDownInSeconds
      */
     public HealingSkill(ISkillFunction skillFunction, float coolDownInSeconds) {
@@ -28,7 +24,4 @@ public class HealingSkill extends Skill {
     public void removePotion() {
         potion -= 1;
     }
-
-
-
 }

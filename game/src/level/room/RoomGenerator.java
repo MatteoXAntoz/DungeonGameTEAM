@@ -192,10 +192,6 @@ public class RoomGenerator {
             }
         }
 
-
-
-
-
         // add supports for large rooms
         if (baseFloor.x >= 15 && baseFloor.y >= 15) {
             addSupports(layout, baseFloorPadding, baseFloor);
