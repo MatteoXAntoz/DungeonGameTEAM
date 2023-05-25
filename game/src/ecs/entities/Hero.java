@@ -133,13 +133,6 @@ public class Hero extends Entity {
         healthComponent.setOnDeath(entity -> Game.toggleGameOverMenu());
     }
 
-    private void setUpHealthComponent() {
-        healthComponent = new HealthComponent(this);
-        healthComponent.setMaximalHealthpoints(100);
-        healthComponent.setCurrentHealthpoints(100);
-        healthComponent.setOnDeath(entity -> Game.toggleGameOverMenu());
-    }
-
     public boolean isCollidingWithTrapTile(TrapTile tile) {
         float hitBoxScale = 0.6f;
 
