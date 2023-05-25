@@ -1,17 +1,15 @@
 package ecs.items;
 
 import ecs.entities.Entity;
-import ecs.entities.Hero;
 import level.elements.tile.TrapTile;
-import level.tools.LevelElement;
 import starter.Game;
 import tools.Point;
 
 public class Zauberstab extends Item {
 
-    public Zauberstab(){
+    public Zauberstab() {
         super();
-        name ="Zauberstab";
+        name = "Zauberstab";
         path = "stab-no_background.png";
         setupAnimation();
         setupPositionComponent();
@@ -29,13 +27,10 @@ public class Zauberstab extends Item {
         positionComponent.setPosition(position);
     }
 
-
-
     public static void REMOVETRAPS() {
-        for(TrapTile tile: Game.currentLevel.getTrapTiles()){
+        for (TrapTile tile : Game.currentLevel.getTrapTiles()) {
             tile.setTexturePath("dungeon/default/floor/floor_1.png");
             tile.name = "None";
         }
-
     }
 }

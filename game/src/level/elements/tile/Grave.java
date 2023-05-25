@@ -8,17 +8,14 @@ import ecs.entities.NPCs.Ghost;
 import graphic.Animation;
 import starter.Game;
 
-
 public class Grave extends Entity implements IInteraction {
 
     ecs.entities.NPCs.Ghost ghost;
-
 
     Animation idle;
     InteractionComponent interactionComponent;
 
     Hero hero = Game.hero;
-
 
     private final String idlePath = "grave-no_background.png";
 
@@ -28,9 +25,7 @@ public class Grave extends Entity implements IInteraction {
         setupPosition();
         setupInteraction();
         setupInteractionComponent();
-
     }
-
 
     public void setupPosition() {
         positionComponent = new PositionComponent(this);
@@ -40,13 +35,11 @@ public class Grave extends Entity implements IInteraction {
         interactionComponent = new InteractionComponent(this, 0.5f, false, this);
     }
 
-
     private void setupAnimationComponent() {
 
         idle = AnimationBuilder.buildAnimation(idlePath);
 
         new AnimationComponent(this, idle);
-
     }
 
     private void setupInteractionComponent() {
@@ -57,7 +50,6 @@ public class Grave extends Entity implements IInteraction {
     public void onInteraction(Entity entity) {
 
         new Ghost();
-
     }
 
     public PositionComponent getPositionComponent() {

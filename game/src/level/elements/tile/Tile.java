@@ -46,9 +46,6 @@ public abstract class Tile {
         this.level = level;
     }
 
-
-
-
     /**
      * What happens, if someone moves on this Tile?
      *

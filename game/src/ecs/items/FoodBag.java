@@ -1,14 +1,10 @@
 package ecs.items;
 
-public class FoodBag extends Bag{
+public class FoodBag extends Bag {
 
     public FoodBag() {
-        name ="FoodBag";
+        name = "FoodBag";
 
         setupInventory();
-
-
     }
-
-
 }
