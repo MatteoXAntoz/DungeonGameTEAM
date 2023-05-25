@@ -1,13 +1,11 @@
 package ecs.entities;
 
 import ecs.components.Component;
-
+import ecs.components.PositionComponent;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.logging.Logger;
-
-import ecs.components.PositionComponent;
 import level.elements.tile.HoleTile;
 import semanticAnalysis.types.DSLContextPush;
 import semanticAnalysis.types.DSLType;
@@ -59,23 +57,22 @@ public class Entity implements Serializable {
     public Optional<Component> getComponent(Class klass) {
         return Optional.ofNullable(components.get(klass));
     }
-    public boolean gotHitByTrap(){
-        for(HoleTile e: Game.currentLevel.getHoleTiles()){
-            if(isCollidingWithTrapTile(e)){
+
+    public boolean gotHitByTrap() {
+        for (HoleTile e : Game.currentLevel.getHoleTiles()) {
+            if (isCollidingWithTrapTile(e)) {
                 return true;
             }
         }
         return false;
-
     }
+
     public boolean isCollidingWithTrapTile(HoleTile tile) {
         float hitBoxScale = 0.6f;
 
-        return (positionComponent.getPosition().x + hitBoxScale > tile.getCoordinateAsPoint().x &&
-            positionComponent.getPosition().x < tile.getCoordinateAsPoint().x + hitBoxScale &&
-            positionComponent.getPosition().y + hitBoxScale > tile.getCoordinateAsPoint().y &&
-            positionComponent.getPosition().y < tile.getCoordinateAsPoint().y + hitBoxScale);
+        return (positionComponent.getPosition().x + hitBoxScale > tile.getCoordinateAsPoint().x
+                && positionComponent.getPosition().x < tile.getCoordinateAsPoint().x + hitBoxScale
+                && positionComponent.getPosition().y + hitBoxScale > tile.getCoordinateAsPoint().y
+                && positionComponent.getPosition().y < tile.getCoordinateAsPoint().y + hitBoxScale);
     }
-
-
 }

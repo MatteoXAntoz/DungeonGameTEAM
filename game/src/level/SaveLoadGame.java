@@ -6,18 +6,14 @@ import ecs.entities.Demon;
 import ecs.entities.Entity;
 import ecs.entities.Mouse;
 import ecs.items.*;
-import level.elements.tile.HoleTile;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.logging.Logger;
 import level.myQuest.LevelManager;
 import level.tools.LevelElement;
 import starter.Game;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.logging.Logger;
-
 public class SaveLoadGame implements Serializable {
-
-
 
     public static String PATH = "game/src/level";
     public static String PLAYER_DATA = "PlayerData.txt";
@@ -29,22 +25,19 @@ public class SaveLoadGame implements Serializable {
 
     public static ArrayList<LevelElement> tempTraps = new ArrayList<>();
 
-   public static final Logger saveLoadGame_logger = Logger.getLogger(SaveLoadGame.class.getName());
+    public static final Logger saveLoadGame_logger = Logger.getLogger(SaveLoadGame.class.getName());
 
-
-
-
-
-    /**
-     * Speichert die Gesundheit des Helden.
-     */
+    /** Speichert die Gesundheit des Helden. */
     public static void saveHeroHealth() {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(PATH + PLAYER_DATA);
             try {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-                if (Game.getHero().isPresent() && Game.getHero().get().getComponent(HealthComponent.class).isPresent()) {
-                    HealthComponent healthComponent = (HealthComponent) Game.getHero().get().getComponent(HealthComponent.class).get();
+                if (Game.getHero().isPresent()
+                        && Game.getHero().get().getComponent(HealthComponent.class).isPresent()) {
+                    HealthComponent healthComponent =
+                            (HealthComponent)
+                                    Game.getHero().get().getComponent(HealthComponent.class).get();
                     objectOutputStream.writeInt(healthComponent.getCurrentHealthpoints());
                 }
                 objectOutputStream.close();
@@ -78,9 +71,7 @@ public class SaveLoadGame implements Serializable {
         return health;
     }
 
-    /**
-     * Speichert die Gegenstände des Spiels.
-     */
+    /** Speichert die Gegenstände des Spiels. */
     public static void saveItems() {
         ArrayList<String> itemNames = new ArrayList<>();
         for (Item item : Game.items) {

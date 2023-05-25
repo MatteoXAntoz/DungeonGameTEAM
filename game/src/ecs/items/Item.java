@@ -5,11 +5,8 @@ import ecs.components.AnimationComponent;
 import ecs.components.PositionComponent;
 import ecs.entities.Entity;
 import graphic.Animation;
-import starter.Game;
 
-/**
- * Die Klasse Item repräsentiert ein Item in der Spielwelt.
- */
+/** Die Klasse Item repräsentiert ein Item in der Spielwelt. */
 public class Item extends Entity {
 
     /**
@@ -19,49 +16,34 @@ public class Item extends Entity {
      */
     public PositionComponent positionComponent;
 
-    /**
-     * Der Pfad zum Bild des Items.
-     */
+    /** Der Pfad zum Bild des Items. */
     protected String path;
 
-    /**
-     * Der Name des Items.
-     */
+    /** Der Name des Items. */
     public String name;
 
-    /**
-     * Gibt an, ob das Item eingesammelt wurde.
-     */
+    /** Gibt an, ob das Item eingesammelt wurde. */
     public boolean collected = false;
 
-    /**
-     * Die Animation des Items.
-     */
+    /** Die Animation des Items. */
     Animation animation;
 
-    /**
-     * Erstellt eine neue Instanz der Item-Klasse.
-     */
+    /** Erstellt eine neue Instanz der Item-Klasse. */
     public Item() {
         super();
         setupPositionComponent();
     }
 
-    /**
-     * Bereitet die Animation des Items vor.
-     */
+    /** Bereitet die Animation des Items vor. */
     protected void setupAnimation() {
         animation = AnimationBuilder.buildAnimation(path);
         new AnimationComponent(this, animation);
     }
 
-    /**
-     * Bereitet die Positionskomponente des Items vor.
-     */
+    /** Bereitet die Positionskomponente des Items vor. */
     protected void setupPositionComponent() {
         if (positionComponent == null) {
             positionComponent = new PositionComponent(this);
-
         }
     }
 

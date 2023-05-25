@@ -1,59 +1,33 @@
 package level.myQuest;
 
-import ecs.entities.Hero;
-import level.IOnLevelLoader;
-
-import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-/**
- * Die Klasse MyQuestConfig enthält die Konfigurationsdaten für die Quests im Spiel "MyQuest".
- */
+/** Die Klasse MyQuestConfig enthält die Konfigurationsdaten für die Quests im Spiel "MyQuest". */
 public class MyQuestConfig {
 
-    /**
-     * Der Pfad zur Datei, die die Quest-Daten enthält.
-     */
+    /** Der Pfad zur Datei, die die Quest-Daten enthält. */
     private final String PATH = "game/src/level/myQuest/MyQuestData.txt";
 
-    /**
-     * Gibt an, ob der Spieler den Bedingungen der Quest zugestimmt hat.
-     */
+    /** Gibt an, ob der Spieler den Bedingungen der Quest zugestimmt hat. */
     private boolean isAgreed;
 
-    /**
-     * Die IDs der Quests.
-     */
+    /** Die IDs der Quests. */
     public ArrayList<Integer> questID = new ArrayList<>();
 
-    /**
-     * Die Beschreibungen der Quests.
-     */
+    /** Die Beschreibungen der Quests. */
     public ArrayList<String> questDescription = new ArrayList<>();
 
-    /**
-     * Die Belohnungen der Quests.
-     */
+    /** Die Belohnungen der Quests. */
     public ArrayList<String> questReward = new ArrayList<>();
 
-    /**
-     * Die einzige Instanz der MyQuestConfig-Klasse (Singleton).
-     */
-    private final static MyQuestConfig myQuestConfig = new MyQuestConfig();
+    /** Die einzige Instanz der MyQuestConfig-Klasse (Singleton). */
+    private static final MyQuestConfig myQuestConfig = new MyQuestConfig();
 
-    /**
-     * Privater Konstruktor zur Erstellung der Singleton-Instanz.
-     */
+    /** Privater Konstruktor zur Erstellung der Singleton-Instanz. */
     private MyQuestConfig() {
         readData();
     }
@@ -67,9 +41,7 @@ public class MyQuestConfig {
         return myQuestConfig;
     }
 
-    /**
-     * Liest die Quest-Daten aus der Konfigurationsdatei ein.
-     */
+    /** Liest die Quest-Daten aus der Konfigurationsdatei ein. */
     public void readData() {
         List<String> files;
         try {

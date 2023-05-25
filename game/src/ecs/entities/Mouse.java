@@ -2,32 +2,23 @@ package ecs.entities;
 
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import dslToGame.AnimationBuilder;
-import dslToGame.graph.Graph;
 import ecs.components.AnimationComponent;
 import ecs.components.PositionComponent;
 import ecs.components.VelocityComponent;
 import ecs.components.ai.AIComponent;
 import ecs.components.ai.AITools;
 import ecs.components.ai.fight.IFightAI;
-import ecs.components.ai.idle.FollowHeroOrEatItem;
-import ecs.components.ai.idle.PatrouilleWalk;
 import ecs.components.ai.transition.ITransition;
 import level.elements.tile.Tile;
-import starter.Game;
 
-
-/**
- * class to create a monster of the type mouse
- */
+/** class to create a monster of the type mouse */
 public class Mouse extends Monster {
 
     boolean collide;
 
     GraphPath<Tile> path;
 
-    /**
-     * constructor for class mouse
-     */
+    /** constructor for class mouse */
     public Mouse() {
 
         pathToIdleLeft = "mouse/idleLeft";
@@ -38,8 +29,6 @@ public class Mouse extends Monster {
         setupVelocity();
         setupAi();
         damage = 2;
-
-
     }
 
     @Override
@@ -51,30 +40,29 @@ public class Mouse extends Monster {
 
     @Override
     public void idle(Entity entity) {
-        if(path==null){
-            path =  AITools.calculatePathToHero(entity);
+        if (path == null) {
+            path = AITools.calculatePathToHero(entity);
         }
-        AITools.move(entity,path);
+        AITools.move(entity, path);
 
-        path =null;
-
+        path = null;
     }
 
-    /**
-     * method to setup AIComponent
-     */
+    /** method to setup AIComponent */
     private void setupAi() {
-        new AIComponent(this, new IFightAI() {
-            @Override
-            public void fight(Entity entity) {
-
-            }
-        }, this, new ITransition() {
-            @Override
-            public boolean isInFightMode(Entity entity) {
-                return false;
-            }
-        });
+        new AIComponent(
+                this,
+                new IFightAI() {
+                    @Override
+                    public void fight(Entity entity) {}
+                },
+                this,
+                new ITransition() {
+                    @Override
+                    public boolean isInFightMode(Entity entity) {
+                        return false;
+                    }
+                });
     }
 
     @Override

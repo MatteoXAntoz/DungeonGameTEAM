@@ -5,16 +5,17 @@ import level.tools.Coordinate;
 import level.tools.DesignLabel;
 import level.tools.LevelElement;
 
-public class LavaTrap extends TrapTile{
+public class LavaTrap extends TrapTile {
     /**
      * Creates a new Tile.
      *
-     * @param texturePath    Path to the texture of the tile.
+     * @param texturePath Path to the texture of the tile.
      * @param globalPosition Position of the tile in the global system.
-     * @param designLabel    Design of the Tile
-     * @param level          The level this Tile belongs to
+     * @param designLabel Design of the Tile
+     * @param level The level this Tile belongs to
      */
-    public LavaTrap(String texturePath, Coordinate globalPosition, DesignLabel designLabel, ILevel level) {
+    public LavaTrap(
+            String texturePath, Coordinate globalPosition, DesignLabel designLabel, ILevel level) {
         super(texturePath, globalPosition, designLabel, level);
         levelElement = LevelElement.LAVA;
     }

@@ -9,11 +9,9 @@ import level.elements.tile.Tile;
 import starter.Game;
 import tools.Point;
 
-import javax.management.monitor.GaugeMonitorMBean;
-
 /**
- * class to implement a system that let an entity follow
- * the hero or eats an item placed in the dungeon
+ * class to implement a system that let an entity follow the hero or eats an item placed in the
+ * dungeon
  */
 public class FollowHeroOrEatItem implements IIdleAI {
 
@@ -32,16 +30,16 @@ public class FollowHeroOrEatItem implements IIdleAI {
      *
      * @param entity Die Entität, für die das Verhalten gesteuert wird.
      */
-    public FollowHeroOrEatItem(Entity entity){
+    public FollowHeroOrEatItem(Entity entity) {
         this.entity = entity;
-        action = (int) (Math.random()*2+1);
-        item = Game.items.get((int) (Math.random()*Game.items.size()-1));
+        action = (int) (Math.random() * 2 + 1);
+        item = Game.items.get((int) (Math.random() * Game.items.size() - 1));
         toRandomItem = item.positionComponent.getPosition();
     }
 
     @Override
     public void idle(Entity entity) {
-        if(action == 1) {
+        if (action == 1) {
             walkToPlayer(entity);
         } else if (action == 2) {
             walkToItem(entity);
@@ -54,7 +52,7 @@ public class FollowHeroOrEatItem implements IIdleAI {
      * @param entity Die Entität, die dem Helden folgt.
      */
     private void walkToPlayer(Entity entity) {
-        if(goToPlayer == null) {
+        if (goToPlayer == null) {
             goToPlayer = AITools.calculatePathToHero(entity);
         }
         AITools.move(entity, goToPlayer);
@@ -66,13 +64,16 @@ public class FollowHeroOrEatItem implements IIdleAI {
      * @param entity Die Entität, die zu einem Item geht und es frisst.
      */
     private void walkToItem(Entity entity) {
-        if(eatItems == null) {
+        if (eatItems == null) {
             eatItems = AITools.calculatePath(from, toRandomItem);
         }
         AITools.move(entity, eatItems);
-        if(entity.getComponent(VelocityComponent.class).isPresent()) {
-            VelocityComponent velocityComponent = (VelocityComponent) entity.getComponent(VelocityComponent.class).get();
-            if(velocityComponent.getCurrentXVelocity() == 0 && velocityComponent.getCurrentYVelocity() == 0 && !stopped) {
+        if (entity.getComponent(VelocityComponent.class).isPresent()) {
+            VelocityComponent velocityComponent =
+                    (VelocityComponent) entity.getComponent(VelocityComponent.class).get();
+            if (velocityComponent.getCurrentXVelocity() == 0
+                    && velocityComponent.getCurrentYVelocity() == 0
+                    && !stopped) {
                 stopped = true;
                 Game.removeEntity(item);
             }

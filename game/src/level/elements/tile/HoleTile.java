@@ -16,33 +16,17 @@ public class HoleTile extends FloorTile {
      * @param designLabel Design of the Tile
      * @param level The level this Tile belongs to
      */
-
-
-
-
-
     public HoleTile(
-        String texturePath, Coordinate globalPosition, DesignLabel designLabel, ILevel level) {
+            String texturePath, Coordinate globalPosition, DesignLabel designLabel, ILevel level) {
         super(texturePath, globalPosition, designLabel, level);
         levelElement = LevelElement.HOLE;
-
     }
-
-
-
 
     @Override
-    public void onEntering(Entity element) {
-
-
-    }
+    public void onEntering(Entity element) {}
 
     @Override
     public boolean isAccessible() {
         return levelElement.getValue();
     }
-
-
-
-
 }

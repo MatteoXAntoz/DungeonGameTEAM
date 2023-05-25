@@ -4,14 +4,10 @@ import com.badlogic.gdx.Gdx;
 import configuration.KeyboardConfig;
 import ecs.entities.*;
 import ecs.items.Item;
-import level.SaveLoadGame;
+import java.util.ArrayList;
 import starter.Game;
 
-import java.util.ArrayList;
-
-/**
- * Der LevelManager ist für das Verwalten der Level und Quests zuständig.
- */
+/** Der LevelManager ist für das Verwalten der Level und Quests zuständig. */
 public class LevelManager {
 
     public ArrayList<Entity> monster = new ArrayList<>();
@@ -23,7 +19,7 @@ public class LevelManager {
 
     public ArrayList<MyQuest> myQuests = new ArrayList<>(); // Liste der Quests
 
-    private final static LevelManager levelManager = new LevelManager();
+    private static final LevelManager levelManager = new LevelManager();
 
     /**
      * Gibt eine Instanz des LevelManagers zurück.
@@ -34,18 +30,14 @@ public class LevelManager {
         return levelManager;
     }
 
-    /**
-     * Privater Konstruktor für den LevelManager.
-     */
+    /** Privater Konstruktor für den LevelManager. */
     private LevelManager() {
         myQuestConfig = MyQuestConfig.getInstance();
 
         questPack();
     }
 
-    /**
-     * Aktualisiert den LevelManager.
-     */
+    /** Aktualisiert den LevelManager. */
     public void update() {
 
         // Hier wird abgefragt, ob die Aufgabe erfüllt wurde.
@@ -64,7 +56,6 @@ public class LevelManager {
         }
 
         updateHeroDamage();
-
     }
 
     /**
@@ -103,10 +94,7 @@ public class LevelManager {
         }
     }
 
-
-    /**
-     * Aktualisiert den Schaden am Helden.
-     */
+    /** Aktualisiert den Schaden am Helden. */
     private void updateHeroDamage() {
         if (Game.hero.gotHitByTrap()) {
             setLevelSurvivedWithoutDamage(0);
@@ -136,8 +124,9 @@ public class LevelManager {
      */
     private boolean collectedPotion(int amountPotion) {
         for (Item item : Game.items) {
-            if (Gdx.input.isKeyJustPressed(KeyboardConfig.ITEM_COLLECT.get()) &&
-                item.getName().equals("Trank") && Game.hero.isCollidingWithItems(item)) {
+            if (Gdx.input.isKeyJustPressed(KeyboardConfig.ITEM_COLLECT.get())
+                    && item.getName().equals("Trank")
+                    && Game.hero.isCollidingWithItems(item)) {
                 collectedPotion++;
             }
         }
@@ -156,8 +145,9 @@ public class LevelManager {
      */
     private boolean collectedNahrung(int amountNahrung) {
         for (Item item : Game.items) {
-            if (Gdx.input.isKeyJustPressed(KeyboardConfig.ITEM_COLLECT.get()) &&
-                item.getName().equals("Nahrung") && Game.hero.isCollidingWithItems(item)) {
+            if (Gdx.input.isKeyJustPressed(KeyboardConfig.ITEM_COLLECT.get())
+                    && item.getName().equals("Nahrung")
+                    && Game.hero.isCollidingWithItems(item)) {
                 collectedNahrung++;
             }
         }
@@ -186,9 +176,7 @@ public class LevelManager {
         this.levelSurvivedWithoutDamage = levelSurvivedWithoutDamage;
     }
 
-    /**
-     * Erzeugt eine Gruppe von Quests.
-     */
+    /** Erzeugt eine Gruppe von Quests. */
     public void questPack() {
         myQuests.add(new MyQuest());
         myQuests.add(new MyQuest());
@@ -197,17 +185,33 @@ public class LevelManager {
         myQuests.get(1).setQuest(1);
     }
 
-    /**
-     * Gibt Informationen zu den Quests aus.
-     */
+    /** Gibt Informationen zu den Quests aus. */
     public void printQuestInfo() {
         for (MyQuest myQuest : myQuests) {
             if (myQuest.isAccomplished()) {
-                System.out.println(myQuest.getQuestID() + "|" + myQuest.getQuestDescription() + "|" + myQuest.getQuestReward() + "| Quest done!");
+                System.out.println(
+                        myQuest.getQuestID()
+                                + "|"
+                                + myQuest.getQuestDescription()
+                                + "|"
+                                + myQuest.getQuestReward()
+                                + "| Quest done!");
             } else if (myQuest.isAgreed()) {
-                System.out.println(myQuest.getQuestID() + "|" + myQuest.getQuestDescription() + "|" + myQuest.getQuestReward() + "| Quest is active!");
+                System.out.println(
+                        myQuest.getQuestID()
+                                + "|"
+                                + myQuest.getQuestDescription()
+                                + "|"
+                                + myQuest.getQuestReward()
+                                + "| Quest is active!");
             } else if (!myQuest.isAccomplished()) {
-                System.out.println(myQuest.getQuestID() + "|" + myQuest.getQuestDescription() + "|" + myQuest.getQuestReward() + "| Quest offered!");
+                System.out.println(
+                        myQuest.getQuestID()
+                                + "|"
+                                + myQuest.getQuestDescription()
+                                + "|"
+                                + myQuest.getQuestReward()
+                                + "| Quest offered!");
             }
         }
     }

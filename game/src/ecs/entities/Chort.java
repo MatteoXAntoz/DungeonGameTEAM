@@ -5,15 +5,12 @@ import ecs.components.AnimationComponent;
 import ecs.components.PositionComponent;
 import ecs.components.VelocityComponent;
 import ecs.components.ai.AIComponent;
-import ecs.components.ai.AITools;
 import ecs.components.ai.fight.IFightAI;
 import ecs.components.ai.idle.FollowHeroOrEatItem;
 import ecs.components.ai.transition.ITransition;
 import starter.Game;
 
-/**
- * class to create a monster of the type chort
- */
+/** class to create a monster of the type chort */
 public class Chort extends Monster {
 
     boolean collide;
@@ -31,8 +28,6 @@ public class Chort extends Monster {
         followHeroOrEatItem = new FollowHeroOrEatItem(this);
         followHeroOrEatItem.from = positionComponent.getPosition();
         damage = 20;
-
-
     }
 
     @Override
@@ -45,30 +40,30 @@ public class Chort extends Monster {
     @Override
     public void idle(Entity entity) {
         followHeroOrEatItem.idle(entity);
-
     }
 
-    /**
-     * method to setup the AIComponent
-     */
+    /** method to setup the AIComponent */
     private void setupAi() {
-        new AIComponent(this, new IFightAI() {
-            @Override
-            public void fight(Entity entity) {
-
-            }
-        }, this, new ITransition() {
-            @Override
-            public boolean isInFightMode(Entity entity) {
-                return false;
-            }
-        });
+        new AIComponent(
+                this,
+                new IFightAI() {
+                    @Override
+                    public void fight(Entity entity) {}
+                },
+                this,
+                new ITransition() {
+                    @Override
+                    public boolean isInFightMode(Entity entity) {
+                        return false;
+                    }
+                });
     }
 
     @Override
     protected void setupPosition() {
         positionComponent = new PositionComponent(this);
-        positionComponent.setPosition(Game.currentLevel.getRandomFloorTile().getCoordinateAsPoint());
+        positionComponent.setPosition(
+                Game.currentLevel.getRandomFloorTile().getCoordinateAsPoint());
     }
 
     @Override

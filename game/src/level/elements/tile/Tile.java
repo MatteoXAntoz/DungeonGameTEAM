@@ -3,7 +3,6 @@ package level.elements.tile;
 import com.badlogic.gdx.ai.pfa.Connection;
 import com.badlogic.gdx.utils.Array;
 import ecs.entities.Entity;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ import tools.Point;
  *
  * @author Andre Matutat
  */
-public abstract class Tile implements Serializable  {
+public abstract class Tile implements Serializable {
 
     public String name;
     protected final Coordinate globalPosition;
@@ -47,9 +46,6 @@ public abstract class Tile implements Serializable  {
         this.designLabel = designLabel;
         this.level = level;
     }
-
-
-
 
     /**
      * What happens, if someone moves on this Tile?

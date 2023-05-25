@@ -24,16 +24,7 @@ public enum LevelElement {
     /** This field is the exit-field to the next level */
     EXIT(Constants.LEVELELEMENT_IS_ACCESSIBLE),
 
-
-
     DOOR(Constants.LEVELELEMENT_IS_ACCESSIBLE);
-
-
-
-
-
-
-
 
     private final boolean value;
 

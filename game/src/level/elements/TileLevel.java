@@ -3,7 +3,6 @@ package level.elements;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import level.elements.astar.TileConnection;
 import level.elements.astar.TileHeuristic;
 import level.elements.tile.*;
@@ -34,7 +33,6 @@ public class TileLevel implements ILevel {
     protected ArrayList<PoisonTrap> poisonTraps = new ArrayList<>();
     protected ArrayList<LavaTrap> lavaTraps = new ArrayList<>();
 
-
     private static final Coordinate CONNECTION_OFFSETS[] = {
         new Coordinate(0, 1), new Coordinate(0, -1), new Coordinate(1, 0), new Coordinate(-1, 0),
     };
@@ -55,7 +53,7 @@ public class TileLevel implements ILevel {
     /**
      * Create a new Level
      *
-     * @param layout      The layout of the Level
+     * @param layout The layout of the Level
      * @param designLabel The design the level should have
      */
     public TileLevel(LevelElement[][] layout, DesignLabel designLabel) {
@@ -73,22 +71,22 @@ public class TileLevel implements ILevel {
     /**
      * Converts the given LevelElement[][] in a corresponding Tile[][]
      *
-     * @param layout      The LevelElement[][]
+     * @param layout The LevelElement[][]
      * @param designLabel The selected Design for the Tiles
      * @return The converted Tile[][]
      */
     private static Tile[][] convertLevelElementToTile(
-        LevelElement[][] layout, DesignLabel designLabel) {
+            LevelElement[][] layout, DesignLabel designLabel) {
         Tile[][] tileLayout = new Tile[layout.length][layout[0].length];
         for (int y = 0; y < layout.length; y++) {
             for (int x = 0; x < layout[0].length; x++) {
                 Coordinate coordinate = new Coordinate(x, y);
                 String texturePath =
-                    TileTextureFactory.findTexturePath(
-                        new TileTextureFactory.LevelPart(
-                            layout[y][x], designLabel, layout, coordinate));
+                        TileTextureFactory.findTexturePath(
+                                new TileTextureFactory.LevelPart(
+                                        layout[y][x], designLabel, layout, coordinate));
                 tileLayout[y][x] =
-                    TileFactory.createTile(texturePath, coordinate, layout[y][x], designLabel);
+                        TileFactory.createTile(texturePath, coordinate, layout[y][x], designLabel);
             }
         }
         return tileLayout;
@@ -112,14 +110,14 @@ public class TileLevel implements ILevel {
     public void addConnectionsToNeighbours(Tile checkTile) {
         for (Coordinate v : CONNECTION_OFFSETS) {
             Coordinate c =
-                new Coordinate(
-                    checkTile.getCoordinate().x + v.x, checkTile.getCoordinate().y + v.y);
+                    new Coordinate(
+                            checkTile.getCoordinate().x + v.x, checkTile.getCoordinate().y + v.y);
             Tile t = getTileAt(c);
             if (t != null
-                && t.isAccessible()
-                && !checkTile
-                .getConnections()
-                .contains(new TileConnection(checkTile, t), false)) {
+                    && t.isAccessible()
+                    && !checkTile
+                            .getConnections()
+                            .contains(new TileConnection(checkTile, t), false)) {
                 checkTile.addConnection(t);
             }
         }
@@ -152,9 +150,8 @@ public class TileLevel implements ILevel {
 
     @Override
     public void addLavaTrap(LavaTrap tile) {
-       lavaTraps.add(tile);
+        lavaTraps.add(tile);
     }
-
 
     @Override
     public void addDoorTile(DoorTile tile) {
@@ -204,14 +201,10 @@ public class TileLevel implements ILevel {
         return holeTiles;
     }
 
-
-
-
     @Override
     public List<DoorTile> getDoorTiles() {
         return doorTiles;
     }
-
 
     @Override
     public List<ExitTile> getExitTiles() {
@@ -236,24 +229,22 @@ public class TileLevel implements ILevel {
             case LAVA -> lavaTraps.remove(tile);
             case POISON -> poisonTraps.remove(tile);
             case MOUSETRAP -> mouseTraps.remove(tile);
-
-
         }
 
         tile.getConnections()
-            .forEach(
-                x ->
-                    x.getToNode()
-                        .getConnections()
-                        .removeValue(
-                            new TileConnection(x.getToNode(), tile), false));
+                .forEach(
+                        x ->
+                                x.getToNode()
+                                        .getConnections()
+                                        .removeValue(
+                                                new TileConnection(x.getToNode(), tile), false));
         if (tile.isAccessible()) removeIndex(tile.getIndex());
     }
 
     private void removeIndex(int index) {
         Arrays.stream(layout)
-            .flatMap(x -> Arrays.stream(x).filter(y -> y.getIndex() > index))
-            .forEach(x -> x.setIndex(x.getIndex() - 1));
+                .flatMap(x -> Arrays.stream(x).filter(y -> y.getIndex() > index))
+                .forEach(x -> x.setIndex(x.getIndex() - 1));
         nodeCount--;
     }
 
@@ -273,13 +264,13 @@ public class TileLevel implements ILevel {
         if (tile.isAccessible()) {
             this.addConnectionsToNeighbours(tile);
             tile.getConnections()
-                .forEach(
-                    x -> {
-                        if (!x.getToNode()
-                            .getConnections()
-                            .contains(new TileConnection(x.getToNode(), tile), false))
-                            x.getToNode().addConnection(tile);
-                    });
+                    .forEach(
+                            x -> {
+                                if (!x.getToNode()
+                                        .getConnections()
+                                        .contains(new TileConnection(x.getToNode(), tile), false))
+                                    x.getToNode().addConnection(tile);
+                            });
             tile.setIndex(nodeCount++);
         }
         tile.setLevel(this);
@@ -309,6 +300,4 @@ public class TileLevel implements ILevel {
     public Tile getTrapTile() {
         return null;
     }
-
-
 }

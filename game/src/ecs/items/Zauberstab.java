@@ -2,16 +2,15 @@ package ecs.items;
 
 import ecs.entities.Entity;
 import level.elements.tile.FloorTile;
-import level.elements.tile.HoleTile;
 import level.tools.LevelElement;
 import starter.Game;
 import tools.Point;
 
 public class Zauberstab extends Item {
 
-    public Zauberstab(){
+    public Zauberstab() {
         super();
-        name ="Zauberstab";
+        name = "Zauberstab";
         path = "stab-no_background.png";
         setupAnimation();
         setupPositionComponent();
@@ -29,16 +28,14 @@ public class Zauberstab extends Item {
         positionComponent.setPosition(position);
     }
 
-
-
     public static void REMOVETRAPS() {
-        for(FloorTile floorTile:Game.currentLevel.getFloorTiles()){
-           if(floorTile.getLevelElement()==LevelElement.LAVA ||floorTile.getLevelElement()==LevelElement.POISON ||
-               floorTile.getLevelElement()==LevelElement.MOUSETRAP){
-               floorTile.setLevelElement(LevelElement.FLOOR);
-               floorTile.setTexturePath("dungeon/default/floor/floor_1.png");
+        for (FloorTile floorTile : Game.currentLevel.getFloorTiles()) {
+            if (floorTile.getLevelElement() == LevelElement.LAVA
+                    || floorTile.getLevelElement() == LevelElement.POISON
+                    || floorTile.getLevelElement() == LevelElement.MOUSETRAP) {
+                floorTile.setLevelElement(LevelElement.FLOOR);
+                floorTile.setTexturePath("dungeon/default/floor/floor_1.png");
             }
         }
-
     }
 }

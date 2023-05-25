@@ -18,9 +18,9 @@ public class TileFactory {
             case WALL -> new WallTile(texturePath, coordinate, designLabel, level);
             case HOLE -> new HoleTile(texturePath, coordinate, designLabel, level);
             case DOOR -> new DoorTile(texturePath, coordinate, designLabel, level);
-            case LAVA ->  new LavaTrap(texturePath, coordinate, designLabel, level);
-            case POISON ->  new PoisonTrap(texturePath, coordinate, designLabel, level);
-            case MOUSETRAP ->  new MouseTrap(texturePath, coordinate, designLabel, level);
+            case LAVA -> new LavaTrap(texturePath, coordinate, designLabel, level);
+            case POISON -> new PoisonTrap(texturePath, coordinate, designLabel, level);
+            case MOUSETRAP -> new MouseTrap(texturePath, coordinate, designLabel, level);
             case EXIT -> new ExitTile(texturePath, coordinate, designLabel, level);
             case SKIP -> new SkipTile(texturePath, coordinate, designLabel, level);
         };

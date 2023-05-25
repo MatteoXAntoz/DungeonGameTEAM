@@ -4,7 +4,7 @@ import ecs.entities.Hero;
 
 public class SprintSkill extends Skill {
 
-//Matteo
+    // Matteo
     public final float xBoost = 0.6f;
     public final float yBoost = 0.6f;
 
@@ -13,16 +13,18 @@ public class SprintSkill extends Skill {
     public boolean active = false;
 
     /**
-     * @param skillFunction     Function of this skill
+     * @param skillFunction Function of this skill
      * @param coolDownInSeconds
      */
     public SprintSkill(ISkillFunction skillFunction, float coolDownInSeconds) {
         super(skillFunction, coolDownInSeconds);
     }
+
     public void update(Hero hero) {
         if (active) {
             duration -= 1;
-            hero.healthComponent.setCurrentHealthpoints(hero.healthComponent.getCurrentHealthpoints() - damageProTick);
+            hero.healthComponent.setCurrentHealthpoints(
+                    hero.healthComponent.getCurrentHealthpoints() - damageProTick);
             hero.velocityComponent.setXVelocity(xBoost);
             hero.velocityComponent.setYVelocity(yBoost);
         }
@@ -32,11 +34,5 @@ public class SprintSkill extends Skill {
             hero.velocityComponent.setXVelocity(0.3f);
             hero.velocityComponent.setYVelocity(0.3f);
         }
-
-
-
     }
-
-
-
 }
