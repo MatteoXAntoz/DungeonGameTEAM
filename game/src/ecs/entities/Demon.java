@@ -11,7 +11,9 @@ import ecs.components.ai.fight.IFightAI;
 import ecs.components.ai.transition.ITransition;
 import level.elements.tile.Tile;
 
-/** class to create a monster of the type demon */
+/**
+ * class to create a monster of the type demon
+ */
 public class Demon extends Monster {
 
     boolean collide;
@@ -30,6 +32,9 @@ public class Demon extends Monster {
         damage = 10;
     }
 
+    /**
+     * setup the animation component
+     */
     @Override
     protected void setupAnimation() {
         idleRight = AnimationBuilder.buildAnimation(pathToIdleRight);
@@ -39,7 +44,7 @@ public class Demon extends Monster {
 
     /**
      * method to setup the AIComponent
-     *
+     * if path is null a new path to hero will be generated
      * @param entity associated entity
      */
     @Override
@@ -52,6 +57,9 @@ public class Demon extends Monster {
         path = null;
     }
 
+    /**
+     * setup the AI component
+     */
     private void setupAi() {
         new AIComponent(
                 this,
@@ -68,11 +76,18 @@ public class Demon extends Monster {
                 });
     }
 
+    /**
+     * setup position component
+     */
     @Override
     protected void setupPosition() {
         positionComponent = new PositionComponent(this);
     }
 
+    /**
+     * setup the velocity component
+     * the velocity of a monster can be changed by change values xSpeed and ySpeed
+     */
     @Override
     protected void setupVelocity() {
         xSpeed = 0.05f;
