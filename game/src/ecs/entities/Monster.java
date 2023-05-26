@@ -4,7 +4,9 @@ import ecs.components.VelocityComponent;
 import ecs.components.ai.idle.IIdleAI;
 import graphic.Animation;
 
-/** abstract class to create a template to build monster */
+/**
+ * abstract class to create a template to build monster
+ */
 public abstract class Monster extends Entity implements IIdleAI {
 
     float xSpeed;
@@ -14,7 +16,14 @@ public abstract class Monster extends Entity implements IIdleAI {
 
     int damage;
 
+    /**
+     * String to the path of the assets for the animation
+     */
     protected String pathToIdleLeft;
+
+    /**
+     * String to the path of the assets for the animation
+     */
     protected String pathToIdleRight;
 
     protected abstract void setupPosition();
@@ -25,9 +34,8 @@ public abstract class Monster extends Entity implements IIdleAI {
 
     /**
      * method to check if monster is colliding with hero
-     *
      * @param hero
-     * @return
+     * @return position
      */
     protected boolean isCollidingWithHero(Hero hero) {
         float hitBoxScale = 0.6f;
@@ -43,9 +51,8 @@ public abstract class Monster extends Entity implements IIdleAI {
     }
 
     /**
-     * method to return a monster
-     *
-     * @return
+     * method to return a random monster either of the type demon, mouse or chort
+     * @return a monster of type Monster
      */
     public static Monster getRandomMonster() {
         int ranValue = (int) (Math.random() * 3);
