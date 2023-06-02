@@ -11,18 +11,14 @@ import ecs.components.ai.fight.IFightAI;
 import ecs.components.ai.transition.ITransition;
 import level.elements.tile.Tile;
 
-/**
- * class to create a monster of the type mouse
- */
+/** class to create a monster of the type mouse */
 public class Mouse extends Monster {
 
     boolean collide;
 
     GraphPath<Tile> path;
 
-    /**
-     * constructor for class mouse
-     */
+    /** constructor for class mouse */
     public Mouse() {
 
         pathToIdleLeft = "mouse/idleLeft";
@@ -35,9 +31,7 @@ public class Mouse extends Monster {
         damage = 2;
     }
 
-    /**
-     * setup the animation component
-     */
+    /** setup the animation component */
     @Override
     protected void setupAnimation() {
         idleRight = AnimationBuilder.buildAnimation(pathToIdleRight);
@@ -46,8 +40,8 @@ public class Mouse extends Monster {
     }
 
     /**
-     * setup the idle strategy
-     * if path is null a new path to hero will be generated
+     * setup the idle strategy if path is null a new path to hero will be generated
+     *
      * @param entity associated entity
      */
     @Override
@@ -60,9 +54,7 @@ public class Mouse extends Monster {
         path = null;
     }
 
-    /**
-     * method to setup AIComponent
-     */
+    /** method to setup AIComponent */
     private void setupAi() {
         new AIComponent(
                 this,
@@ -79,17 +71,15 @@ public class Mouse extends Monster {
                 });
     }
 
-    /**
-     * setup the position component
-     */
+    /** setup the position component */
     @Override
     protected void setupPosition() {
         positionComponent = new PositionComponent(this);
     }
 
     /**
-     * setup the velocity component
-     * the velocity of a monster can be changed by change values xSpeed and ySpeed
+     * setup the velocity component the velocity of a monster can be changed by change values xSpeed
+     * and ySpeed
      */
     @Override
     protected void setupVelocity() {
