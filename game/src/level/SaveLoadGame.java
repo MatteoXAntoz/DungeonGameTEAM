@@ -15,12 +15,12 @@ import starter.Game;
 
 public class SaveLoadGame implements Serializable {
 
-    public static String PATH = "game/src/level";
+    public static String PATH = "game/src/level/saves/";
     public static String PLAYER_DATA = "PlayerData.txt";
     public static String ITEM_DATA = "ItemData.txt";
 
     public static String TRAP_DATA = "TrapData.txt";
-    public static String MONSTER_DATA = "Monster_Data.txt";
+    public static String MONSTER_DATA = "MonsterData.txt";
     public static ArrayList<String> tempName = new ArrayList<>();
 
     public static ArrayList<LevelElement> tempTraps = new ArrayList<>();
@@ -265,7 +265,8 @@ public class SaveLoadGame implements Serializable {
                 throw new RuntimeException(e);
             }
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            saveLoadGame_logger.info("No Saves present.");
+            return true;
         }
         return false;
     }

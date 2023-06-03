@@ -24,6 +24,8 @@
 #######################
 tmp/
 temp/
+**/saves/*
+!**/saves/PlaceHolder.txt
 
 # Logging #
 ###########

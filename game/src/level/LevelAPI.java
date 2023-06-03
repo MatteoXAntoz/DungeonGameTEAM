@@ -260,7 +260,7 @@ public class LevelAPI {
     }
 
     public void updateTrapCollider() {
-        for (FloorTile floorTile : Game.currentLevel.getFloorTiles()) {
+        for (FloorTile floorTile : Game.currentLevel.getTrapTiles()) {
             if (Game.hero.isCollidingWithTrapTile(floorTile)
                     && floorTile.getLevelElement() == LevelElement.POISON
                     && !floorTile.isActivated()) {
