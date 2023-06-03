@@ -2,13 +2,15 @@ package level.myQuest;
 
 import com.badlogic.gdx.Gdx;
 import configuration.KeyboardConfig;
-import ecs.entities.items.Item;
+import ecs.entities.*;
+import ecs.items.Item;
 import java.util.ArrayList;
 import starter.Game;
 
 /** Der LevelManager ist für das Verwalten der Level und Quests zuständig. */
 public class LevelManager {
 
+    public ArrayList<Entity> monster = new ArrayList<>();
     int collectedNahrung = 0; // Anzahl der gesammelten Nahrung
     int collectedPotion = 0; // Anzahl der gesammelten Tränke
     private int levelSurvivedWithoutDamage; // Anzahl der Level, die ohne Schaden überlebt wurden
@@ -54,6 +56,42 @@ public class LevelManager {
         }
 
         updateHeroDamage();
+    }
+
+    /**
+     * Setzt die Monster für das angegebene Level.
+     *
+     * @param level Das Level, für das die Monster gesetzt werden sollen.
+     */
+    public void setMonster(int level) {
+        monster.clear();
+        addMonster(level);
+    }
+
+    /**
+     * Fügt Monster basierend auf dem angegebenen Wert hinzu.
+     *
+     * @param value Der Wert, der die Anzahl und Art der hinzuzufügenden Monster bestimmt.
+     */
+    public void addMonster(int value) {
+        int maxAmount = 10;
+        if (value > 0 && value <= 2) {
+            for (int i = 0; i < Math.random() * value; i++) {
+                monster.add(new Mouse());
+            }
+        } else if (value > 2 && value <= 4) {
+            for (int i = 0; i < Math.random() * value; i++) {
+                monster.add(new Chort());
+            }
+        } else if (value > 4 && value <= 6) {
+            for (int i = 0; i < Math.random() * value; i++) {
+                monster.add(new Demon());
+            }
+        } else {
+            for (int i = 0; i < Math.random() * maxAmount; i++) {
+                monster.add(Monster.getRandomMonster());
+            }
+        }
     }
 
     /** Aktualisiert den Schaden am Helden. */

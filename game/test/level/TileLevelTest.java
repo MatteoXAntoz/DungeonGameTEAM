@@ -137,7 +137,7 @@ public class TileLevelTest {
                 new LevelElement[][] {
                     {LevelElement.FLOOR, LevelElement.FLOOR, LevelElement.EXIT, LevelElement.SKIP},
                     {LevelElement.WALL, LevelElement.WALL, LevelElement.SKIP, LevelElement.SKIP},
-                    {LevelElement.DOOR, LevelElement.DOOR, LevelElement.TRAP, LevelElement.TRAP},
+                    {LevelElement.DOOR, LevelElement.DOOR, LevelElement.HOLE, LevelElement.HOLE},
                 };
         TileLevel tileLevel = new TileLevel(elementsLayout, DesignLabel.DEFAULT);
         assertEquals(2, tileLevel.getFloorTiles().size());
@@ -607,7 +607,7 @@ public class TileLevelTest {
                         DesignLabel.DEFAULT);
         Tile tile =
                 TileFactory.createTile(
-                        "", new Coordinate(1, 0), LevelElement.TRAP, DesignLabel.DEFAULT);
+                        "", new Coordinate(1, 0), LevelElement.HOLE, DesignLabel.DEFAULT);
         level.removeTile(level.getLayout()[0][1]);
         level.getLayout()[0][1] = tile;
         level.addTile(tile);

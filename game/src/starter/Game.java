@@ -29,7 +29,6 @@ import level.IOnLevelLoader;
 import level.LevelAPI;
 import level.elements.ILevel;
 import level.elements.tile.Tile;
-import level.elements.tile.TrapTile;
 import level.generator.IGenerator;
 import level.generator.postGeneration.WallGenerator;
 import level.generator.randomwalk.RandomWalkGenerator;
@@ -55,7 +54,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     /** Draws objects */
     protected Painter painter;
 
-    protected LevelAPI levelAPI;
+    public static LevelAPI levelAPI;
     /** Generates the level */
     protected IGenerator generator;
 
@@ -110,6 +109,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
 
     /** Called once at the beginning of the game. */
     protected void setup() {
+
         doSetup = false;
         controller = new ArrayList<>();
         setupCameras();
@@ -127,6 +127,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         hero = new Hero();
 
         levelAPI.loadLevel(LEVELSIZE);
+
         createSystems();
     }
 
@@ -139,55 +140,6 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         hero.sprintSkill.update(hero);
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
             togglePauseMenu();
-        }
-
-        for (TrapTile tile : currentLevel.getTrapTiles()) {
-
-            if (hero.isCollidingWithTrapTile(tile)
-                    && tile.name.equals("LAVATRAP")
-                    && !tile.activated) {
-                int duration = 2;
-                int damage = 4;
-                while (duration >= 0) {
-                    hero.healthComponent.setCurrentHealthpoints(
-                            hero.healthComponent.getCurrentHealthpoints() - damage);
-                    duration -= 1;
-                }
-                duration = 2;
-
-                tile.setTexturePath("dungeon/default/floor/floor_lava_deactivated.png");
-                tile.activated = true;
-            }
-            if (hero.isCollidingWithTrapTile(tile)
-                    && tile.name.equals("POISONTRAP")
-                    && !tile.activated) {
-                int duration = 2;
-                int damage = (int) (Math.random() * 5);
-                while (duration >= 0) {
-                    hero.healthComponent.setCurrentHealthpoints(
-                            hero.healthComponent.getCurrentHealthpoints() - damage);
-                    duration -= 1;
-                }
-                duration = 2;
-
-                tile.setTexturePath("dungeon/default/floor/floor_poison_deactivated.png");
-                tile.activated = true;
-            }
-            if (hero.isCollidingWithTrapTile(tile)
-                    && tile.name.equals("MOUSETRAP")
-                    && !tile.activated) {
-
-                int duration = 100000000;
-                while (duration > 0) {
-                    hero.velocityComponent.setCurrentYVelocity(0);
-                    hero.velocityComponent.setCurrentXVelocity(0);
-                    duration -= 0.0001;
-                }
-                if (duration == 0) {
-                    tile.activated = true;
-                }
-                tile.setTexturePath("dungeon/default/floor/floor_mouseTrap_deactivated.png");
-            }
         }
     }
 
@@ -202,6 +154,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         entities.removeAll(entitiesToRemove);
         entities.addAll(entitiesToAdd);
         for (Entity entity : entitiesToRemove) {
+
             gameLogger.info("Entity '" + entity.getClass().getSimpleName() + "' was deleted.");
         }
         for (Entity entity : entitiesToAdd) {

@@ -2,10 +2,11 @@ package ecs.entities;
 
 import ecs.components.Component;
 import ecs.components.PositionComponent;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.logging.Logger;
-import level.elements.tile.TrapTile;
+import level.elements.tile.HoleTile;
 import semanticAnalysis.types.DSLContextPush;
 import semanticAnalysis.types.DSLType;
 import starter.Game;
@@ -13,7 +14,7 @@ import starter.Game;
 /** Entity is a unique identifier for an object in the game world */
 @DSLType(name = "game_object")
 @DSLContextPush(name = "entity")
-public class Entity {
+public class Entity implements Serializable {
     private static int nextId = 0;
     public final int id = nextId++;
     private HashMap<Class, Component> components;
@@ -26,6 +27,7 @@ public class Entity {
         Game.addEntity(this);
         entityLogger = Logger.getLogger(this.getClass().getName());
         entityLogger.info("The entity '" + this.getClass().getSimpleName() + "' was created.");
+        positionComponent = new PositionComponent(this);
     }
 
     /**
@@ -57,7 +59,7 @@ public class Entity {
     }
 
     public boolean gotHitByTrap() {
-        for (TrapTile e : Game.currentLevel.getTrapTiles()) {
+        for (HoleTile e : Game.currentLevel.getHoleTiles()) {
             if (isCollidingWithTrapTile(e)) {
                 return true;
             }
@@ -65,7 +67,7 @@ public class Entity {
         return false;
     }
 
-    public boolean isCollidingWithTrapTile(TrapTile tile) {
+    public boolean isCollidingWithTrapTile(HoleTile tile) {
         float hitBoxScale = 0.6f;
 
         return (positionComponent.getPosition().x + hitBoxScale > tile.getCoordinateAsPoint().x

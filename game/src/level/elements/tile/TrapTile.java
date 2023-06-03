@@ -1,6 +1,6 @@
 package level.elements.tile;
 
-import ecs.entities.Entity;
+import ecs.entities.Hero;
 import level.elements.ILevel;
 import level.tools.Coordinate;
 import level.tools.DesignLabel;
@@ -8,8 +8,7 @@ import level.tools.LevelElement;
 
 public class TrapTile extends FloorTile {
 
-    public boolean activated;
-
+    protected boolean activated;
     /**
      * Creates a new Tile.
      *
@@ -21,29 +20,22 @@ public class TrapTile extends FloorTile {
     public TrapTile(
             String texturePath, Coordinate globalPosition, DesignLabel designLabel, ILevel level) {
         super(texturePath, globalPosition, designLabel, level);
-        getName(); // dem Objekt wird anhand der zugewiesenen Textur einen Namen zugewiesen
-        levelElement = LevelElement.TRAP;
     }
 
-    public void getName() {
-        String mouseTrap = "dungeon/default/floor/floor_mouseTrap.png";
-        String poisonTrap = "dungeon/default/floor/floor_poison.png";
-        String lavaTrap = "dungeon/default/floor/floor_lava.png";
+    public boolean isCollidingWithHero(Hero hero) {
+        float hitBoxScale = 0.6f;
 
-        if (getTexturePath().equals(mouseTrap)) {
-            this.name = "MOUSETRAP";
-        } else if (getTexturePath().equals(lavaTrap)) {
-            this.name = "LAVATRAP";
-        } else if (getTexturePath().equals(poisonTrap)) {
-            this.name = "POISONTRAP";
-        }
+        return (hero.positionComponent.getPosition().x + hitBoxScale > getCoordinateAsPoint().x
+                && hero.positionComponent.getPosition().x < getCoordinateAsPoint().x + hitBoxScale
+                && hero.positionComponent.getPosition().y + hitBoxScale > getCoordinateAsPoint().y
+                && hero.positionComponent.getPosition().y < getCoordinateAsPoint().y + hitBoxScale);
     }
 
-    @Override
-    public void onEntering(Entity element) {}
+    public boolean isActivated() {
+        return activated;
+    }
 
-    @Override
-    public boolean isAccessible() {
-        return levelElement.getValue();
+    public void setActivated(boolean activated) {
+        this.activated = activated;
     }
 }

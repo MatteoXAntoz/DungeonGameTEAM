@@ -3,6 +3,7 @@ package level.elements.tile;
 import com.badlogic.gdx.ai.pfa.Connection;
 import com.badlogic.gdx.utils.Array;
 import ecs.entities.Entity;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import level.elements.ILevel;
@@ -18,7 +19,7 @@ import tools.Point;
  *
  * @author Andre Matutat
  */
-public abstract class Tile {
+public abstract class Tile implements Serializable {
 
     public String name;
     protected final Coordinate globalPosition;

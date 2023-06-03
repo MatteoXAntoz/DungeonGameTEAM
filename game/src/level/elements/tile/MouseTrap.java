@@ -1,14 +1,11 @@
 package level.elements.tile;
 
-import ecs.entities.Entity;
 import level.elements.ILevel;
 import level.tools.Coordinate;
 import level.tools.DesignLabel;
 import level.tools.LevelElement;
 
-public class FloorTile extends Tile {
-    protected boolean activated;
-
+public class MouseTrap extends TrapTile {
     /**
      * Creates a new Tile.
      *
@@ -17,25 +14,9 @@ public class FloorTile extends Tile {
      * @param designLabel Design of the Tile
      * @param level The level this Tile belongs to
      */
-    public FloorTile(
+    public MouseTrap(
             String texturePath, Coordinate globalPosition, DesignLabel designLabel, ILevel level) {
         super(texturePath, globalPosition, designLabel, level);
-        levelElement = LevelElement.FLOOR;
-    }
-
-    @Override
-    public void onEntering(Entity element) {}
-
-    @Override
-    public boolean isAccessible() {
-        return levelElement.getValue();
-    }
-
-    public boolean isActivated() {
-        return activated;
-    }
-
-    public void setActivated(boolean activated) {
-        this.activated = activated;
+        levelElement = LevelElement.MOUSETRAP;
     }
 }

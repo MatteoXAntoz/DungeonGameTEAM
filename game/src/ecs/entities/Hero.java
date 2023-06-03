@@ -9,7 +9,8 @@ import ecs.components.skill.*;
 import ecs.entities.items.*;
 import ecs.systems.PlayerSystem;
 import graphic.Animation;
-import level.elements.tile.TrapTile;
+import level.SaveLoadGame;
+import level.elements.tile.FloorTile;
 import starter.Game;
 
 /**
@@ -68,7 +69,7 @@ public class Hero extends Entity {
         skillComponent.addSkill(sprintSkill);
         skillComponent.addSkill(healingSkill);
 
-        // Der Inventarplatz vom Spieler wird auf wird auf 10 gesetzt
+        //Der Inventarplatz vom Spieler wird auf wird auf 10 gesetzt
         getMyInventory().setMaxSpace(10);
     }
 
@@ -123,14 +124,19 @@ public class Hero extends Entity {
                         (you, other, direction) -> System.out.println("heroCollisionLeave"));
     }
 
-    private void setUpHealthComponent() {
+    private void setupHealthComponent() {
         healthComponent = new HealthComponent(this);
         healthComponent.setMaximalHealthpoints(100);
         healthComponent.setCurrentHealthpoints(100);
         healthComponent.setOnDeath(entity -> Game.toggleGameOverMenu());
+        if (!SaveLoadGame.isEmpty(SaveLoadGame.PATH, SaveLoadGame.PLAYER_DATA)) {
+            healthComponent.setCurrentHealthpoints(SaveLoadGame.loadHeroHealth());
+        } else {
+            healthComponent.setCurrentHealthpoints(100);
+        }
     }
 
-    public boolean isCollidingWithTrapTile(TrapTile tile) {
+    public boolean isCollidingWithTrapTile(FloorTile tile) {
         float hitBoxScale = 0.6f;
 
         return (positionComponent.getPosition().x + hitBoxScale > tile.getCoordinateAsPoint().x

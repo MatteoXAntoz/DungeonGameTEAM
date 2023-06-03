@@ -53,11 +53,11 @@ public class TileFactoryTest {
     public void createHOLETile() {
         Tile t =
                 TileFactory.createTile(
-                        "", new Coordinate(0, 0), LevelElement.TRAP, DesignLabel.DEFAULT);
-        assertEquals(TrapTile.class, t.getClass());
+                        "", new Coordinate(0, 0), LevelElement.HOLE, DesignLabel.DEFAULT);
+        assertEquals(HoleTile.class, t.getClass());
         assertEquals(0, t.getCoordinate().x);
         assertEquals(0, t.getCoordinate().y);
-        assertEquals(LevelElement.TRAP, t.getLevelElement());
+        assertEquals(LevelElement.HOLE, t.getLevelElement());
         assertEquals(DesignLabel.DEFAULT, t.getDesignLabel());
         assertNull("No Level should be set for a newly created Tile", t.getLevel());
     }

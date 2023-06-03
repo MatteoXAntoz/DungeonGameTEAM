@@ -11,6 +11,8 @@ import ecs.components.VelocityComponent;
 import ecs.entities.Entity;
 import ecs.entities.items.*;
 import ecs.tools.interaction.InteractionTool;
+import java.util.logging.Logger;
+import level.SaveLoadGame;
 import level.myQuest.*;
 import starter.Game;
 
@@ -23,6 +25,8 @@ public class PlayerSystem extends ECS_System {
     boolean inventory_open = false;
     int questChoice = 0;
     int inventoryChoice = 0;
+
+    private final Logger playerSystem_logger = Logger.getLogger(PlayerSystem.class.getName());
 
     LevelManager levelManager = LevelManager.getInstance();
 
@@ -53,7 +57,7 @@ public class PlayerSystem extends ECS_System {
                 questChoice++;
                 System.out.println("Your choice: " + questChoice);
             }
-            /** Zum auswählen der Quest */
+            /** Zum Auswählen der Quest */
             else if (Gdx.input.isKeyJustPressed(KeyboardConfig.QUEST_UP.get()) && questChoice > 0) {
                 questChoice--;
                 System.out.println("Your choice: " + questChoice);
@@ -199,7 +203,21 @@ public class PlayerSystem extends ECS_System {
         }
     }
 
+    /**
+     * Überprüft die gedrückte Taste und führt entsprechende Aktionen aus.
+     *
+     * @param ksd Die Daten des Tastendrucks.
+     */
     private void checkKeystroke(KSData ksd) {
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.TAB)) {
+            SaveLoadGame.saveHeroHealth();
+            SaveLoadGame.saveItems();
+            SaveLoadGame.saveTraps(Game.levelAPI);
+            SaveLoadGame.saveMonsters(levelAPI);
+            playerSystem_logger.info("Game was saved.");
+        }
+
         if (Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_UP.get()))
             ksd.vc.setCurrentYVelocity(1 * ksd.vc.getYVelocity());
         else if (Gdx.input.isKeyPressed(KeyboardConfig.MOVEMENT_DOWN.get()))

@@ -72,7 +72,7 @@ public class WallGenerator implements IGenerator {
                     } else if (upperRightCornerIsEmpty(y, x)) {
                         layout[y][x] = LevelElement.WALL;
                     } else {
-                        layout[y][x] = LevelElement.TRAP;
+                        layout[y][x] = LevelElement.HOLE;
                     }
                 }
             }
