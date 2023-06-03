@@ -2,7 +2,7 @@ package level;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ecs.entities.*;
-import ecs.items.*;
+import ecs.entities.items.*;
 import graphic.Painter;
 import graphic.PainterConfig;
 import java.util.*;
@@ -176,6 +176,15 @@ public class LevelAPI {
     public void setLevel(ILevel level) {
         currentLevel = level;
         onLevelLoader.onLevelLoad();
+    }
+
+    /**
+     * sets the LevelID
+     *
+     * @param levelID value the Attribute <code>lvelID</code> is set to
+     */
+    public void setLevelID(int levelID) {
+        this.levelID = levelID;
     }
 
     // Laesst bei jedem Levelaufruf neue Items spawnen

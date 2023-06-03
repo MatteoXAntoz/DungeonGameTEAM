@@ -144,6 +144,13 @@ public interface ILevel extends ITileable {
      */
     List<SkipTile> getSkipTiles();
 
+    /**
+     * Combines the getMethods of all Traps
+     *
+     * @return a List with all Lava, Poison and Mousetraps.
+     */
+    List<TrapTile> getTrapTiles();
+
     void addConnectionsToNeighbours(Tile checkTile);
 
     /**

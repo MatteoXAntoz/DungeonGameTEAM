@@ -1,5 +1,6 @@
 package level.elements;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -214,6 +215,14 @@ public class TileLevel implements ILevel {
     @Override
     public List<SkipTile> getSkipTiles() {
         return skipTiles;
+    }
+
+    @Override
+    public List<TrapTile> getTrapTiles() {
+        ArrayList<TrapTile> trapTiles = new ArrayList(mouseTraps);
+        trapTiles.addAll(poisonTraps);
+        trapTiles.addAll(lavaTraps);
+        return trapTiles;
     }
 
     @Override

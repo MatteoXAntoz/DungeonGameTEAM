@@ -4,7 +4,7 @@ import com.badlogic.gdx.ai.pfa.GraphPath;
 import ecs.components.VelocityComponent;
 import ecs.components.ai.AITools;
 import ecs.entities.Entity;
-import ecs.items.Item;
+import ecs.entities.items.Item;
 import level.elements.tile.Tile;
 import starter.Game;
 import tools.Point;

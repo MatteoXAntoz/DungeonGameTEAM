@@ -5,7 +5,7 @@ import ecs.entities.Chort;
 import ecs.entities.Demon;
 import ecs.entities.Entity;
 import ecs.entities.Mouse;
-import ecs.items.*;
+import ecs.entities.items.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.logging.Logger;
