@@ -1,4 +1,4 @@
-package ecs.items;
+package ecs.entities.items;
 
 import ecs.entities.Entity;
 import tools.Point;

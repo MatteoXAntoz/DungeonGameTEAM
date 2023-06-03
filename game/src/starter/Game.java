@@ -16,10 +16,11 @@ import ecs.components.MissingComponentException;
 import ecs.components.PositionComponent;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
-import ecs.items.Item;
+import ecs.entities.items.Item;
 import ecs.systems.*;
 import graphic.DungeonCamera;
 import graphic.Painter;
+import graphic.hud.GameOverMenu;
 import graphic.hud.PauseMenu;
 import java.io.IOException;
 import java.util.*;
@@ -39,7 +40,7 @@ import tools.Point;
 /** The heart of the framework. From here all strings are pulled. */
 public class Game extends ScreenAdapter implements IOnLevelLoader {
 
-    private final LevelSize LEVELSIZE = LevelSize.SMALL;
+    public static final LevelSize LEVELSIZE = LevelSize.MEDIUM;
 
     /**
      * The batch is necessary to draw ALL the stuff. Every object that uses draw need to know the
@@ -73,6 +74,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
 
     public static ILevel currentLevel;
     private static PauseMenu<Actor> pauseMenu;
+    private static GameOverMenu<Actor> gameOverMenu;
     public static Hero hero;
     private Logger gameLogger;
 
@@ -113,16 +115,17 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         setupCameras();
         painter = new Painter(batch, camera);
         generator = new RandomWalkGenerator();
-        levelAPI = new LevelAPI(batch, painter, generator, this);
+        levelAPI = new LevelAPI(batch, painter, new WallGenerator(new RandomWalkGenerator()), this);
         initBaseLogger();
         gameLogger = Logger.getLogger(this.getClass().getName());
         systems = new SystemController();
         controller.add(systems);
         pauseMenu = new PauseMenu<>();
+        gameOverMenu = new GameOverMenu<>(levelAPI);
         controller.add(pauseMenu);
+        controller.add(gameOverMenu);
         hero = new Hero();
 
-        levelAPI = new LevelAPI(batch, painter, new WallGenerator(new RandomWalkGenerator()), this);
         levelAPI.loadLevel(LEVELSIZE);
         createSystems();
     }
@@ -135,7 +138,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
 
         hero.sprintSkill.update(hero);
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
-            togglePause();
+            togglePauseMenu();
         }
 
         for (TrapTile tile : currentLevel.getTrapTiles()) {
@@ -183,7 +186,6 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
                 if (duration == 0) {
                     tile.activated = true;
                 }
-
                 tile.setTexturePath("dungeon/default/floor/floor_mouseTrap_deactivated.png");
             }
         }
@@ -255,15 +257,34 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         pc.setPosition(currentLevel.getStartTile().getCoordinate().toPoint());
     }
 
-    /** Toggle between pause and run */
-    public static void togglePause() {
-        paused = !paused;
-        if (systems != null) {
-            systems.forEach(ECS_System::toggleRun);
+    /** Toggle between showing the PauseMenu */
+    public static void togglePauseMenu() {
+        if (gameOverMenu.isVisible()) {
+            return;
         }
+        togglePause();
         if (pauseMenu != null) {
             if (paused) pauseMenu.showMenu();
             else pauseMenu.hideMenu();
+        }
+    }
+
+    /** Toggle between showing the GameOverMenu */
+    public static void toggleGameOverMenu() {
+        if (pauseMenu.isVisible()) {
+            return;
+        }
+        togglePause();
+        if (gameOverMenu != null) {
+            if (paused) gameOverMenu.showMenu();
+            else gameOverMenu.hideMenu();
+        }
+    }
+
+    private static void togglePause() {
+        paused = !paused;
+        if (systems != null) {
+            systems.forEach(ECS_System::toggleRun);
         }
     }
 

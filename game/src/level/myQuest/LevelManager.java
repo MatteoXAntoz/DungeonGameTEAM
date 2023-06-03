@@ -2,7 +2,7 @@ package level.myQuest;
 
 import com.badlogic.gdx.Gdx;
 import configuration.KeyboardConfig;
-import ecs.items.Item;
+import ecs.entities.items.Item;
 import java.util.ArrayList;
 import starter.Game;
 

@@ -3,8 +3,8 @@ package ecs.entities;
 import static org.junit.Assert.*;
 
 import ecs.components.*;
-import ecs.items.ItemData;
-import ecs.items.ItemDataGenerator;
+import ecs.entities.items.ItemData;
+import ecs.entities.items.ItemDataGenerator;
 import java.util.List;
 import java.util.Optional;
 import level.elements.TileLevel;

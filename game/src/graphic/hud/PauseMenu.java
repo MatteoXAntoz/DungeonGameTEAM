@@ -34,14 +34,4 @@ public class PauseMenu<T extends Actor> extends ScreenController<T> {
         add((T) screenText);
         hideMenu();
     }
-
-    /** shows the Menu */
-    public void showMenu() {
-        this.forEach((Actor s) -> s.setVisible(true));
-    }
-
-    /** hides the Menu */
-    public void hideMenu() {
-        this.forEach((Actor s) -> s.setVisible(false));
-    }
 }

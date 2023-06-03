@@ -1,8 +1,8 @@
 package ecs.entities;
 
 import ecs.components.*;
-import ecs.items.ItemData;
-import ecs.items.ItemDataGenerator;
+import ecs.entities.items.ItemData;
+import ecs.entities.items.ItemDataGenerator;
 import graphic.Animation;
 import java.util.List;
 import java.util.Random;

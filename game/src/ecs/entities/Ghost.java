@@ -10,7 +10,7 @@ import ecs.components.ai.idle.IIdleAI;
 import ecs.components.ai.transition.ITransition;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
-import ecs.items.Zauberstab;
+import ecs.entities.items.Zauberstab;
 import graphic.Animation;
 import level.elements.tile.Tile;
 import starter.Game;

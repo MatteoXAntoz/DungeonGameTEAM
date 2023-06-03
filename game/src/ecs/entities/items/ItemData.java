@@ -1,4 +1,4 @@
-package ecs.items;
+package ecs.entities.items;
 
 import configuration.ItemConfig;
 import ecs.components.AnimationComponent;

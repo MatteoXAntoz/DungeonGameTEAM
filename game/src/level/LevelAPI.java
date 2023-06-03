@@ -1,13 +1,13 @@
 package level;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import ecs.items.*;
+import ecs.entities.Grave;
+import ecs.entities.items.Item;
 import graphic.Painter;
 import graphic.PainterConfig;
 import java.util.*;
 import java.util.logging.Logger;
 import level.elements.ILevel;
-import level.elements.tile.Grave;
 import level.elements.tile.Tile;
 import level.generator.IGenerator;
 import level.myQuest.LevelManager;
@@ -27,7 +27,8 @@ public class LevelAPI {
     private ILevel currentLevel;
     private final Logger levelAPI_logger = Logger.getLogger(this.getClass().getName());
 
-    public static int levelID;
+    /** Counts the progress in the Game */
+    public int levelID;
 
     MyQuestConfig myQuestConfig;
     LevelManager levelManager;
@@ -165,5 +166,14 @@ public class LevelAPI {
         for (int i = 0; i < maxItems; i++) {
             Game.items.add(Item.ranItem());
         }
+    }
+
+    /**
+     * sets the LevelID
+     *
+     * @param levelID value the Attribute <code>lvelID</code> is set to
+     */
+    public void setLevelID(int levelID) {
+        this.levelID = levelID;
     }
 }

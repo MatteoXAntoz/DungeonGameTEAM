@@ -1,7 +1,7 @@
 package ecs.components;
 
 import ecs.entities.Entity;
-import ecs.items.ItemData;
+import ecs.entities.items.ItemData;
 import tools.Point;
 
 /** a simple implementation of dropping all items of an Entity when it is dying. */
