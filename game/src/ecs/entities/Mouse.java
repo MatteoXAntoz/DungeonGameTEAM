@@ -3,6 +3,7 @@ package ecs.entities;
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import dslToGame.AnimationBuilder;
 import ecs.components.AnimationComponent;
+import ecs.components.HealthComponent;
 import ecs.components.PositionComponent;
 import ecs.components.VelocityComponent;
 import ecs.components.ai.AIComponent;
@@ -37,6 +38,11 @@ public class Mouse extends Monster {
         idleRight = AnimationBuilder.buildAnimation(pathToIdleRight);
         idleLeft = AnimationBuilder.buildAnimation(pathToIdleLeft);
         new AnimationComponent(this, idleLeft, idleRight);
+    }
+
+    @Override
+    protected void setupHealthcomponent() {
+        healthComponent = new HealthComponent(this);
     }
 
     /**
