@@ -60,7 +60,7 @@ public class Demon extends Monster {
     }
 
     /** setup the AI component */
-    private void setupAi() {
+    public void setupAi() {
         new AIComponent(
                 this,
                 new IFightAI() {

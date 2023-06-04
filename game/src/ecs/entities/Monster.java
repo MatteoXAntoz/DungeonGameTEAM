@@ -35,6 +35,8 @@ public abstract class Monster extends Entity implements IIdleAI {
     protected abstract void setupAnimation();
     protected abstract void setupHealthcomponent();
 
+    protected abstract void setupAi();
+
 
     /**
      * method to check if monster is colliding with hero

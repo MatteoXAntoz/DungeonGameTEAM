@@ -56,7 +56,7 @@ public class Chort extends Monster {
     }
 
     /** method to setup the AIComponent */
-    private void setupAi() {
+    public void setupAi() {
         new AIComponent(
                 this,
                 new IFightAI() {

@@ -61,7 +61,7 @@ public class Mouse extends Monster {
     }
 
     /** method to setup AIComponent */
-    private void setupAi() {
+    public void setupAi() {
         new AIComponent(
                 this,
                 new IFightAI() {
