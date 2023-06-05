@@ -46,6 +46,8 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
 
 
         new PositionComponent(meele, this.calculateHitboxPosition(ehc, direction));
+
+        new MeeleComponent(entity);
 //
 //        Animation animation = AnimationBuilder.buildAnimation(pathToTexturesOfProjectile);
 //        new AnimationComponent(meele, animation);
