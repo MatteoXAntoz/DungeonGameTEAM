@@ -33,26 +33,28 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
 
     @Override
     public void execute(Entity entity) {
-        Entity projectile = new Entity();
+        Entity meele = new Entity();
+
+
         PositionComponent epc =
             (PositionComponent)
                 entity.getComponent(PositionComponent.class)
                     .orElseThrow(
                         () -> new MissingComponentException("PositionComponent"));
-        new PositionComponent(projectile, epc.getPosition());
+        new PositionComponent(meele, epc.getPosition());
+//
+//        Animation animation = AnimationBuilder.buildAnimation(pathToTexturesOfProjectile);
+//        new AnimationComponent(meele, animation);
 
-        Animation animation = AnimationBuilder.buildAnimation(pathToTexturesOfProjectile);
-        new AnimationComponent(projectile, animation);
-
-        Point aimedOn = selectionFunction.selectTargetPoint();
-        Point targetPoint =
-            SkillTools.calculateLastPositionInRange(
-                epc.getPosition(), aimedOn, projectileRange);
-        Point velocity =
-            SkillTools.calculateVelocity(epc.getPosition(), targetPoint, projectileSpeed);
-        VelocityComponent vc =
-            new VelocityComponent(projectile, velocity.x, velocity.y, animation, animation);
-        new ProjectileComponent(projectile, epc.getPosition(), targetPoint);
+//        Point aimedOn = selectionFunction.selectTargetPoint();
+//        Point targetPoint =
+//            SkillTools.calculateLastPositionInRange(
+//                epc.getPosition(), aimedOn, projectileRange);
+//        Point velocity =
+//            SkillTools.calculateVelocity(epc.getPosition(), targetPoint, projectileSpeed);
+//        VelocityComponent vc =
+//            new VelocityComponent(meele, velocity.x, velocity.y, animation, animation);
+        new ProjectileComponent(meele, epc.getPosition(), targetPoint);
         ICollide collide =
             (a, b, from) -> {
                 if (b != entity) {
@@ -60,13 +62,13 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
                         .ifPresent(
                             hc -> {
                                 ((HealthComponent) hc).receiveHit(projectileDamage);
-                                Game.removeEntity(projectile);
+                                Game.removeEntity(meele);
                             });
                 }
             };
 
         new HitboxComponent(
-            projectile, new Point(0.25f, 0.25f), projectileHitboxSize, collide, null);
+            meele, new Point(0f, 0f), meeleHitboxSize, collide, null);
     }
     private void setAnimationPaths(String pathToTextures)
     {
