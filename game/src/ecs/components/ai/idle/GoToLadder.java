@@ -16,8 +16,11 @@ import tools.Timer;
 
 import javax.swing.plaf.PanelUI;
 import java.awt.event.ItemEvent;
+import java.util.logging.Logger;
 
 public class GoToLadder implements IIdleAI {
+
+    private final Logger goToLadder_logger = Logger.getLogger(this.getClass().getName());
 
     /**
      * grapLadderPath is the path to the Ladder
