@@ -4,7 +4,7 @@ import ecs.damage.Damage;
 import ecs.damage.DamageType;
 import tools.Point;
 
-public class FireballSkill extends DamageMeeleSkill {
+public class FireballSkill extends DamageProjectileSkill {
     public FireballSkill(ITargetSelection targetSelection) {
         super(
                 "skills/fireball/fireBall_Down/",

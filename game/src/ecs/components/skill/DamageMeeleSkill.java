@@ -36,7 +36,7 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
     public void execute(Entity entity) {
         Entity meele = new Entity();
 
-        Tile.Direction direction = SkillTools.getCursorPositionAsDirection(entity);
+        Point direction = selectionFunction.selectTargetPoint();
 
         HitboxComponent ehc =
             (HitboxComponent)
@@ -47,19 +47,18 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
 
         new PositionComponent(meele, this.calculateHitboxPosition(ehc, direction));
 
-        new MeeleComponent(entity);
-//
+        new MeeleComponent(meele);
+
 //        Animation animation = AnimationBuilder.buildAnimation(pathToTexturesOfProjectile);
 //        new AnimationComponent(meele, animation);
 
-        new ProjectileComponent(meele, epc.getPosition(), targetPoint);
         ICollide collide =
             (a, b, from) -> {
                 if (b != entity) {
                     b.getComponent(HealthComponent.class)
                         .ifPresent(
                             hc -> {
-                                ((HealthComponent) hc).receiveHit(projectileDamage);
+                                ((HealthComponent) hc).receiveHit(meeleDamage);
                                 Game.removeEntity(meele);
                             });
                 }
@@ -68,7 +67,7 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
         Point hitboxSize = meeleHitboxSize;
 
         // Hitbox is rotated if direction is east or west
-        if(direction.getValue().x == 0)
+        if(direction.x == 0)
             hitboxSize = new Point(meeleHitboxSize.y, meeleHitboxSize.x);
 
         new HitboxComponent(
@@ -82,17 +81,16 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
         this.pathToTexturesLeft = pathToTextures + "/left";
     }
 
-    private Point calculateHitboxPosition(HitboxComponent ehc, Tile.Direction direction) {
+    private Point calculateHitboxPosition(HitboxComponent ehc, Point direction) {
         Point center = ehc.getCenter();
         Point size = new Point(ehc.getTopRight().x - ehc.getBottomLeft().x, ehc.getTopRight().y - ehc.getBottomLeft().y);
-        Point pDirection = direction.getValue();
 
-        Point edge = new Point(center.x * pDirection.x * size.x/2, center.y * pDirection.y * size.y/2);
+        Point edge = new Point(center.x * direction.x * size.x/2, center.y * direction.y * size.y/2);
 
         // new Direction rotated 90° counterclockwise from pDirection
-        Point pAngleDirection = new Point(edge.y * -1,edge.x);
+        Point angleDirection = new Point(edge.y * -1,edge.x);
 
-        Point position = new Point(edge.x * pAngleDirection.x * this.meeleHitboxSize.x/2, edge.x * pAngleDirection.x * this.meeleHitboxSize.x/2);
+        Point position = new Point(edge.x * angleDirection.x * this.meeleHitboxSize.x/2, edge.x * angleDirection.x * this.meeleHitboxSize.x/2);
         return position;
 
     }
