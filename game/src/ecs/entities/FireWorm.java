@@ -56,10 +56,10 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
         fireAttack.setupFireballSkill();
         fireAttack.setupTeleportSkill();
         fireAttack.setupSpitFireAgressive();
-        skillComponent.addSkill(fireAttack.fireballSkill);
-        skillComponent.addSkill(fireAttack.spitFire);
-        skillComponent.addSkill(fireAttack.teleportSkill);
-        skillComponent.addSkill(fireAttack.spitFireAgressive);
+        skillComponent.addSkill(fireAttack.getFireballSkill());
+        skillComponent.addSkill(fireAttack.getSpitFire());
+        skillComponent.addSkill(fireAttack.getTeleportSkill());
+        skillComponent.addSkill(fireAttack.getSpitFireAgressive());
 
     }
 
@@ -131,16 +131,16 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
 
         if (!isSecondStage()) {
             if (fireAttack.isInRadius(entity) && fireAttack.isColliding(entity)) {
-                fireAttack.spitFire.execute(entity);
+                fireAttack.getSpitFire().execute(entity);
             } else if (fireAttack.isInRadius(entity) && !fireAttack.isColliding(entity)) {
-                fireAttack.fireballSkill.execute(entity);
+                fireAttack.getSpitFire().execute(entity);
             }
         } else {
             velocityComponent.setXVelocity(0.08f);
             velocityComponent.setYVelocity(0.08f);
-            fireAttack.teleportSkill.execute(entity);
+            fireAttack.getSpitFire().execute(entity);
             if (fireAttack.isInRadius(entity) && fireAttack.isColliding(entity)) {
-                fireAttack.spitFireAgressive.execute(entity);
+                fireAttack.getSpitFire().execute(entity);
             }
         }
 
