@@ -5,9 +5,11 @@ import ecs.entities.Entity;
 import starter.Game;
 import tools.Point;
 
+import java.util.logging.Logger;
+
 public class FireAttack {
 
-
+    private final Logger fireAttack_Logger = Logger.getLogger(this.getClass().getName());
     private float fireballCooldown = 2;
     private float spitfireCoolDown = 1;
 
@@ -15,12 +17,12 @@ public class FireAttack {
     public FireAttack() {
     }
 
-    private Skill fireballSkill;
-    private Skill spitFire;
+    public Skill fireballSkill;
+    public Skill spitFire;
 
-    private Skill spitFireAgressive;
+    public Skill spitFireAgressive;
 
-    private TeleportSkill teleportSkill;
+    public TeleportSkill teleportSkill;
 
 
     //FireballSkill is set up
@@ -32,6 +34,7 @@ public class FireAttack {
                 return Game.hero.positionComponent.getPosition();
             }
         }), fireballCooldown);
+        fireAttack_Logger.info("FireballSkill wurde initialisiert.");
     }
 
     //SpitFire is set up
@@ -42,7 +45,7 @@ public class FireAttack {
                 return Game.hero.positionComponent.getPosition();
             }
         }), spitfireCoolDown);
-
+        fireAttack_Logger.info("SpitFire wurde initialisiert.");
 
     }
 
@@ -55,6 +58,7 @@ public class FireAttack {
             }
         }), 0);
 
+        fireAttack_Logger.info("SpitFireAgressive wurde initialisiert.");
 
     }
 
@@ -66,6 +70,7 @@ public class FireAttack {
                 teleportSkill.teleport(entity, Game.hero.positionComponent.getPosition());
             }
         }, 3);
+        fireAttack_Logger.info("Teleport wurde initialisiert.");
     }
 
     /**
@@ -103,6 +108,7 @@ public class FireAttack {
             && entity.positionComponent.getPosition().y < Game.hero.positionComponent.getPosition().y + heroHitBox);
     }
 
+    //Getters and Setters
     public float getFireballCooldown() {
         return fireballCooldown;
     }
