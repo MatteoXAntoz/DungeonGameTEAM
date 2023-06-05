@@ -17,8 +17,6 @@ import tools.Timer;
 import javax.swing.plaf.PanelUI;
 import java.awt.event.ItemEvent;
 
-import static starter.Game.currentLevel;
-
 public class GoToLadder implements IIdleAI {
 
     /**
@@ -40,14 +38,13 @@ public class GoToLadder implements IIdleAI {
 
 
     public GoToLadder() {
-        setLadderTile(currentLevel.getExitTiles().get(0));
-        setRandomPoint(currentLevel.getRandomFloorTile().getCoordinateAsPoint());
-        getTimer().setDuration(4);
+        ladderTile = Game.currentLevel.getExitTiles().get(0);
+        randomPoint = Game.currentLevel.getRandomFloorTile().getCoordinateAsPoint();
+        timer.setDuration(4);
     }
 
     /**
      * {@inheritDoc}
-     *
      * @param entity associated entity
      */
     @Override
@@ -73,21 +70,20 @@ public class GoToLadder implements IIdleAI {
     // random Point and the path to the Ladder is set up as cycle
     private void move(Entity entity, Character mode) {
         if (mode.equals('L')) {
-            if (getRandomPoint() == null) {
+            if (getGraphRandomPoint() == null) {
                 setGraphRandomPoint(AITools.calculatePath(entity.positionComponent.getPosition(), randomPoint));
             }
-            AITools.move(entity, getGraphRandomPoint());
-            setRandomPoint(currentLevel.getRandomFloorTile().getCoordinateAsPoint());
-            setGraphLadderPath(null);
+            AITools.move(entity, graphRandomPoint);
+            randomPoint = Game.currentLevel.getRandomFloorTile().getCoordinateAsPoint();
+            graphLadderPath = null;
 
         }
         if (mode.equals('R')) {
-            if (getGraphLadderPath() == null) {
-                setGraphLadderPath(AITools.calculatePath(entity.positionComponent.getPosition()
-                    , getLadderTile().getCoordinate().toPoint()));
+            if (graphLadderPath == null) {
+                graphLadderPath = AITools.calculatePath(entity.positionComponent.getPosition(), ladderTile.getCoordinate().toPoint());
             }
-            AITools.move(entity, getGraphLadderPath());
-            setGraphRandomPoint(null);
+            AITools.move(entity, graphLadderPath);
+            graphRandomPoint = null;
 
 
         }
