@@ -5,106 +5,289 @@ import ecs.components.AnimationComponent;
 import ecs.components.HealthComponent;
 import ecs.components.VelocityComponent;
 import ecs.components.ai.AIComponent;
-import ecs.components.ai.AITools;
 import ecs.components.ai.fight.IFightAI;
+import ecs.components.ai.idle.FireAttack;
 import ecs.components.ai.idle.GoToLadder;
-import ecs.components.ai.idle.PatrouilleWalk;
 import ecs.components.ai.transition.ITransition;
+import ecs.components.skill.*;
+
 import graphic.Animation;
-import starter.Game;
 
-public class FireWorm extends BossMonster {
+public class FireWorm extends BossMonster implements IFightAI, ITransition {
 
-    GoToLadder goToLadder;
-    Animation walkLeft, walkRight;
 
-    String pathToAttackLeft = "fire-worm/attackLeft";
-    String pathToAttackRight = "fire-worm/attackRight";
-    String pathToWalkingLeft = "fire-worm/walkLeft";
-    String pathToWalkingRight = "fire-worm/walkRight";
+    private SkillComponent skillComponent; // Skill-Komponente für die FireWorm-Entität.
+    private FireAttack fireAttack; // Instanz der FireAttack-Klasse für den Angriff der FireWorm-Entität.
+    private GoToLadder goToLadder; // Instanz der GoToLadder-Klasse für das Verhalten der FireWorm-Entität.
+    private Animation walkLeft, walkRight; // Animationen für das Gehen nach links und rechts.
+    private AnimationComponent animationComponent; // Komponente zur Verwaltung der Animationen der FireWorm-Entität.
+    private String pathToWalkingLeft; // Pfad zur Animation für das Gehen nach links.
+    private String pathToWalkingRight; // Pfad zur Animation für das Gehen nach rechts.
+
+    /**
+     *
+     */
 
     public FireWorm() {
 
+
+        fireAttack = new FireAttack();
         goToLadder = new GoToLadder();
         pathToIdleLeft = "fire-worm/idleLeft";
         pathToIdleRight = "fire-worm/idleRight";
 
-        pathToAttackLeft = "fire-worm/attackLeft";
-        pathToAttackRight = "fire-worm/attackRight";
-
         pathToWalkingLeft = "fire-worm/walkLeft";
         pathToWalkingRight = "fire-worm/walkRight";
 
-
+        setupHealthcomponent();
         setupAnimation();
         setupPosition();
         setupVelocity();
         setupAi();
+        setupSkillComponent();
+
 
     }
 
+    //Setup of skillComponent and Skills
+    private void setupSkillComponent() {
+        skillComponent = new SkillComponent(this);
+        fireAttack.setupSpitfire();
+        fireAttack.setupFireballSkill();
+        fireAttack.setupTeleportSkill();
+        fireAttack.setupSpitFireAgressive();
+        skillComponent.addSkill(fireAttack.fireballSkill);
+        skillComponent.addSkill(fireAttack.spitFire);
+        skillComponent.addSkill(fireAttack.teleportSkill);
+        skillComponent.addSkill(fireAttack.spitFireAgressive);
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void idle(Entity entity) {
         goToLadder.idle(entity);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setupPosition() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setupVelocity() {
-        xSpeed = 0.2f;
-        ySpeed = 0.2f;
+        xSpeed = 0.4f;
+        ySpeed = 0.4f;
         velocityComponent = new VelocityComponent(this, xSpeed, ySpeed, walkLeft, walkRight);
 
-
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setupAnimation() {
-        walkLeft = AnimationBuilder.buildAnimation(pathToAttackLeft);
-        walkRight = AnimationBuilder.buildAnimation(pathToAttackRight);
-        idleLeft = AnimationBuilder.buildAnimation(pathToIdleLeft);
-        idleRight = AnimationBuilder.buildAnimation(pathToIdleRight);
+        walkLeft = AnimationBuilder.buildAnimation(pathToWalkingLeft);
+        walkRight = AnimationBuilder.buildAnimation(pathToWalkingRight);
 
-        new AnimationComponent(this, walkLeft, walkRight);
-
+        animationComponent = new AnimationComponent(this, walkLeft, walkRight);
 
     }
 
+    /**
+     * {@inheritDoc}
+     * MaxHealth is set up to 250
+     * CurrentHealth is set up to 250 as well
+     */
     @Override
     protected void setupHealthcomponent() {
         healthComponent = new HealthComponent(this);
+        healthComponent.setMaximalHealthpoints(250);
+        healthComponent.setCurrentHealthpoints(250);
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setupAi() {
-
-        new AIComponent(this, new IFightAI() {
-            @Override
-            public void fight(Entity entity) {
-
-            }
-        }, this, new ITransition() {
-            @Override
-            public boolean isInFightMode(Entity entity) {
-                return false;
-            }
-        });
+        new AIComponent(this, this, this, this);
     }
 
-    private void activateSecondStage() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void fight(Entity entity) {
+
+        if (!isSecondStage()) {
+            if (fireAttack.isInRadius(entity) && fireAttack.isColliding(entity)) {
+                fireAttack.spitFire.execute(entity);
+            } else if (fireAttack.isInRadius(entity) && !fireAttack.isColliding(entity)) {
+                fireAttack.fireballSkill.execute(entity);
+            }
+        } else {
+            velocityComponent.setXVelocity(0.08f);
+            velocityComponent.setYVelocity(0.08f);
+            fireAttack.teleportSkill.execute(entity);
+            if (fireAttack.isInRadius(entity) && fireAttack.isColliding(entity)) {
+                fireAttack.spitFireAgressive.execute(entity);
+            }
+        }
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isInFightMode(Entity entity) {
+        if (fireAttack.isInRadius(entity)) {
+            return true;
+        } else if (fireAttack.isColliding(entity)) {
+            return true;
+        }
+        return false;
+    }
+
+    //Checks if the secondStage is active
     private boolean isSecondStage() {
-        return (healthComponent.getCurrentHealthpoints() <= healthComponent.getMaximalHealthpoints() / 2);
+        return (healthComponent.getCurrentHealthpoints() <= (healthComponent.getMaximalHealthpoints() / 2));
     }
 
+    /**
+     *
+     * @return skillComponent
+     */
+    public SkillComponent getSkillComponent() {
+        return skillComponent;
+    }
+    /**
+     *
+     * @param skillComponent
+     */
+    public void setSkillComponent(SkillComponent skillComponent) {
+        this.skillComponent = skillComponent;
+    }
 
+    /**
+     *
+     * @return fireAttack
+     */
+    public FireAttack getFireAttack() {
+        return fireAttack;
+    }
 
+    /**
+     *
+     * @param fireAttack
+     */
+    public void setFireAttack(FireAttack fireAttack) {
+        this.fireAttack = fireAttack;
+    }
 
+    /**
+     *
+     * @return goToLadder
+     */
+    public GoToLadder getGoToLadder() {
+        return goToLadder;
+    }
+
+    /**
+     *
+     * @param goToLadder
+     */
+    public void setGoToLadder(GoToLadder goToLadder) {
+        this.goToLadder = goToLadder;
+    }
+
+    /**
+     *
+     * @return walkLeft
+     */
+    public Animation getWalkLeft() {
+        return walkLeft;
+    }
+
+    /**
+     *
+     * @param walkLeft
+     */
+    public void setWalkLeft(Animation walkLeft) {
+        this.walkLeft = walkLeft;
+    }
+
+    /**
+     *
+     * @return walkRight
+     */
+    public Animation getWalkRight() {
+        return walkRight;
+    }
+
+    /**
+     *
+     * @param walkRight
+     */
+    public void setWalkRight(Animation walkRight) {
+        this.walkRight = walkRight;
+    }
+
+    /**
+     *
+     * @return animationComponent
+     */
+    public AnimationComponent getAnimationComponent() {
+        return animationComponent;
+    }
+
+    /**
+     *
+     * @param animationComponent
+     */
+    public void setAnimationComponent(AnimationComponent animationComponent) {
+        this.animationComponent = animationComponent;
+    }
+
+    /**
+     *
+     * @return pathToWalkingLeft
+     */
+    public String getPathToWalkingLeft() {
+        return pathToWalkingLeft;
+    }
+
+    /**
+     *
+     * @param pathToWalkingLeft
+     */
+    public void setPathToWalkingLeft(String pathToWalkingLeft) {
+        this.pathToWalkingLeft = pathToWalkingLeft;
+    }
+
+    /**
+     *
+     * @return pathToWalkingRight
+     */
+    public String getPathToWalkingRight() {
+        return pathToWalkingRight;
+    }
+
+    /**
+     *
+     * @param pathToWalkingRight
+     */
+    public void setPathToWalkingRight(String pathToWalkingRight) {
+        this.pathToWalkingRight = pathToWalkingRight;
+    }
 }
