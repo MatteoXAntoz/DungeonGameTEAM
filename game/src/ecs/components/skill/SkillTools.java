@@ -3,6 +3,11 @@ package ecs.components.skill;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import ecs.components.HitboxComponent;
+import ecs.components.MissingComponentException;
+import ecs.components.PositionComponent;
+import ecs.entities.Entity;
+import level.elements.tile.Tile;
 import starter.Game;
 import tools.Point;
 
@@ -58,5 +63,27 @@ public class SkillTools {
         Vector3 mousePosition =
                 Game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
         return new Point(mousePosition.x, mousePosition.y);
+    }
+
+    public static Tile.Direction getCursorPositionAsDirection(Entity entity) {
+        Vector3 mousePosition =
+            Game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+
+        HitboxComponent hc =
+            (HitboxComponent)
+                entity.getComponent(HitboxComponent.class)
+                    .orElseThrow(
+                        () -> new MissingComponentException("HitboxComponent"));
+
+        Point vector = new Point(mousePosition.x - hc.getCenter().x, mousePosition.x - hc.getCenter().y);
+
+        if(Math.abs(vector.x) <= vector.y)
+            return Tile.Direction.N;
+        else if(Math.abs(vector.x) <= -vector.y)
+            return Tile.Direction.S;
+        else if(Math.abs(vector.y) <= vector.x)
+            return Tile.Direction.E;
+        else
+            return Tile.Direction.W;
     }
 }
