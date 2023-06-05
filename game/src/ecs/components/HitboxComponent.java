@@ -127,6 +127,12 @@ public class HitboxComponent extends Component {
                 pc.getPosition().x + offset.x + size.x / 2,
                 pc.getPosition().y + offset.y + size.y / 2);
     }
+    /**
+     * Returns the size of the Hitbox
+     *
+     * @return size of Hitbox as <code>Point</code>
+     */
+    public Point getSize() {return this.size;}
 
     /**
      * @param iCollideEnter new collideMethod of the associated entity

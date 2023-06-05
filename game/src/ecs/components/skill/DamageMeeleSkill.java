@@ -6,6 +6,7 @@ import ecs.components.collision.ICollide;
 import ecs.damage.Damage;
 import ecs.entities.Entity;
 import graphic.Animation;
+import level.elements.tile.Tile;
 import starter.Game;
 import tools.Point;
 
@@ -35,25 +36,20 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
     public void execute(Entity entity) {
         Entity meele = new Entity();
 
+        Tile.Direction direction = SkillTools.getCursorPositionAsDirection(entity);
 
-        PositionComponent epc =
-            (PositionComponent)
-                entity.getComponent(PositionComponent.class)
+        HitboxComponent ehc =
+            (HitboxComponent)
+                entity.getComponent(HitboxComponent.class)
                     .orElseThrow(
-                        () -> new MissingComponentException("PositionComponent"));
-        new PositionComponent(meele, epc.getPosition());
+                        () -> new MissingComponentException("HitboxComponent"));
+
+
+        new PositionComponent(meele, this.calculateHitboxPosition(ehc, direction));
 //
 //        Animation animation = AnimationBuilder.buildAnimation(pathToTexturesOfProjectile);
 //        new AnimationComponent(meele, animation);
 
-//        Point aimedOn = selectionFunction.selectTargetPoint();
-//        Point targetPoint =
-//            SkillTools.calculateLastPositionInRange(
-//                epc.getPosition(), aimedOn, projectileRange);
-//        Point velocity =
-//            SkillTools.calculateVelocity(epc.getPosition(), targetPoint, projectileSpeed);
-//        VelocityComponent vc =
-//            new VelocityComponent(meele, velocity.x, velocity.y, animation, animation);
         new ProjectileComponent(meele, epc.getPosition(), targetPoint);
         ICollide collide =
             (a, b, from) -> {
@@ -67,8 +63,14 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
                 }
             };
 
+        Point hitboxSize = meeleHitboxSize;
+
+        // Hitbox is rotated if direction is east or west
+        if(direction.getValue().x == 0)
+            hitboxSize = new Point(meeleHitboxSize.y, meeleHitboxSize.x);
+
         new HitboxComponent(
-            meele, new Point(0f, 0f), meeleHitboxSize, collide, null);
+            meele, new Point(0f, 0f), hitboxSize, collide, null);
     }
     private void setAnimationPaths(String pathToTextures)
     {
@@ -76,5 +78,20 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
         this.pathToTexturesDown = pathToTextures + "/down";
         this.pathToTexturesRight = pathToTextures + "/right";
         this.pathToTexturesLeft = pathToTextures + "/left";
+    }
+
+    private Point calculateHitboxPosition(HitboxComponent ehc, Tile.Direction direction) {
+        Point center = ehc.getCenter();
+        Point size = new Point(ehc.getTopRight().x - ehc.getBottomLeft().x, ehc.getTopRight().y - ehc.getBottomLeft().y);
+        Point pDirection = direction.getValue();
+
+        Point edge = new Point(center.x * pDirection.x * size.x/2, center.y * pDirection.y * size.y/2);
+
+        // new Direction rotated 90° counterclockwise from pDirection
+        Point pAngleDirection = new Point(edge.y * -1,edge.x);
+
+        Point position = new Point(edge.x * pAngleDirection.x * this.meeleHitboxSize.x/2, edge.x * pAngleDirection.x * this.meeleHitboxSize.x/2);
+        return position;
+
     }
 }
