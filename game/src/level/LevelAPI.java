@@ -81,7 +81,7 @@ public class LevelAPI {
                 currentLevel.getRandomFloorTile().getCoordinateAsPoint());
 
 
-        new FireWorm();
+
         spawnItems();
 
         spawnTraps();
