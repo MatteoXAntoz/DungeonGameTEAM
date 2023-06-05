@@ -74,7 +74,6 @@ public class GoToLadder implements IIdleAI {
     // random Point and the path to the Ladder is set up as cycle
     private void move(Entity entity, Character mode) {
         if (mode.equals('L')) {
-            goToLadder_logger.info("The Fire-Worm goes to a ladder");
             if (getGraphRandomPoint() == null) {
                 setGraphRandomPoint(AITools.calculatePath(entity.positionComponent.getPosition(), randomPoint));
             }
@@ -84,7 +83,7 @@ public class GoToLadder implements IIdleAI {
 
         }
         if (mode.equals('R')) {
-            goToLadder_logger.info("The Fire-Worm goes to a random Point");
+
             if (graphLadderPath == null) {
                 graphLadderPath = AITools.calculatePath(entity.positionComponent.getPosition(), ladderTile.getCoordinate().toPoint());
             }
