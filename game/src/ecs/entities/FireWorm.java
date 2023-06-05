@@ -130,19 +130,19 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
     public void fight(Entity entity) {
 
         if (!isSecondStage()) {
-            if (fireAttack.isInRadius(entity) && fireAttack.isColliding(entity)) {
-                fireAttack.getSpitFire().execute(entity);
-            } else if (fireAttack.isInRadius(entity) && !fireAttack.isColliding(entity)) {
-                fireAttack.getSpitFire().execute(entity);
+            if (getFireAttack().isInRadius(entity) && getFireAttack().isColliding(entity)) {
+                getFireAttack().getSpitFire().execute(entity);
+            } else if (getFireAttack().isInRadius(entity) && !getFireAttack().isColliding(entity)) {
+                getFireAttack().getFireballSkill().execute(entity);
             }
         } else {
             velocityComponent.setXVelocity(0.08f);
             velocityComponent.setYVelocity(0.08f);
-            fireAttack.getSpitFire().execute(entity);
-            if (fireAttack.isInRadius(entity) && fireAttack.isColliding(entity)) {
-                fireAttack.getSpitFire().execute(entity);
+            if (getFireAttack().isInRadius(entity) && getFireAttack().isColliding(entity)) {
+                getFireAttack().getSpitFireAgressive().execute(entity);
             }
         }
+        System.out.println(isSecondStage());
 
     }
 
@@ -151,9 +151,9 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
      */
     @Override
     public boolean isInFightMode(Entity entity) {
-        if (fireAttack.isInRadius(entity)) {
+        if (getFireAttack().isInRadius(entity)) {
             return true;
-        } else if (fireAttack.isColliding(entity)) {
+        } else if (getFireAttack().isColliding(entity)) {
             return true;
         }
         return false;
@@ -161,7 +161,7 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
 
     //Checks if the secondStage is active
     private boolean isSecondStage() {
-        return (healthComponent.getCurrentHealthpoints() <= (healthComponent.getMaximalHealthpoints() / 2));
+        return (healthComponent.getCurrentHealthpoints() < (healthComponent.getMaximalHealthpoints() / 2));
     }
 
     /**
