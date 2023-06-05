@@ -10,7 +10,7 @@ public class TeleportSkill extends Skill{
      * @param coolDownInSeconds
      */
 
-    
+
     public TeleportSkill(ISkillFunction skillFunction, float coolDownInSeconds) {
         super(skillFunction, coolDownInSeconds);
     }

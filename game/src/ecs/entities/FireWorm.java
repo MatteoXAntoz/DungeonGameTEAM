@@ -13,9 +13,12 @@ import ecs.components.skill.*;
 
 import graphic.Animation;
 
+import java.util.logging.Logger;
+
 public class FireWorm extends BossMonster implements IFightAI, ITransition {
 
 
+    private final Logger fireWorm_Logger = Logger.getLogger(this.getClass().getName());
     private SkillComponent skillComponent; // Skill-Komponente für die FireWorm-Entität.
     private FireAttack fireAttack; // Instanz der FireAttack-Klasse für den Angriff der FireWorm-Entität.
     private GoToLadder goToLadder; // Instanz der GoToLadder-Klasse für das Verhalten der FireWorm-Entität.
@@ -57,9 +60,13 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
         fireAttack.setupTeleportSkill();
         fireAttack.setupSpitFireAgressive();
         skillComponent.addSkill(fireAttack.getFireballSkill());
+        fireWorm_Logger.info("FireballSkill was added");
         skillComponent.addSkill(fireAttack.getSpitFire());
+        fireWorm_Logger.info("SpitFire was added");
         skillComponent.addSkill(fireAttack.getTeleportSkill());
+        fireWorm_Logger.info("TeleportSkill was added");
         skillComponent.addSkill(fireAttack.getSpitFireAgressive());
+        fireWorm_Logger.info("SpitFireAgressive was added");
 
     }
 
@@ -142,7 +149,6 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
                 getFireAttack().getSpitFireAgressive().execute(entity);
             }
         }
-        System.out.println(isSecondStage());
 
     }
 
