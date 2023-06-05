@@ -65,7 +65,7 @@ public class SkillTools {
         return new Point(mousePosition.x, mousePosition.y);
     }
 
-    public static Tile.Direction getCursorPositionAsDirection(Entity entity) {
+    public static Point getCursorPositionAsDirection(Entity entity) {
         Vector3 mousePosition =
             Game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 
@@ -78,12 +78,12 @@ public class SkillTools {
         Point vector = new Point(mousePosition.x - hc.getCenter().x, mousePosition.x - hc.getCenter().y);
 
         if(Math.abs(vector.x) <= vector.y)
-            return Tile.Direction.N;
+            return Tile.Direction.N.getValue();
         else if(Math.abs(vector.x) <= -vector.y)
-            return Tile.Direction.S;
+            return Tile.Direction.S.getValue();
         else if(Math.abs(vector.y) <= vector.x)
-            return Tile.Direction.E;
+            return Tile.Direction.E.getValue();
         else
-            return Tile.Direction.W;
+            return Tile.Direction.W.getValue();
     }
 }

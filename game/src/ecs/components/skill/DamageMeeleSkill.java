@@ -36,7 +36,7 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
     public void execute(Entity entity) {
         Entity meele = new Entity();
 
-        Point direction = selectionFunction.selectTargetPoint();
+        Point direction = selectionFunction.selectTargetPoint(entity);
 
         HitboxComponent ehc =
             (HitboxComponent)

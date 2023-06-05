@@ -34,11 +34,9 @@ public class Hero extends Entity {
     private final String pathToRunLeft = "knight/runLeft";
     private final String pathToRunRight = "knight/runRight";
 
-    //
     public SprintSkill sprintSkill;
-
-    //
     public HealingSkill healingSkill;
+    public Skill swordSkill;
     public SkillComponent skillComponent = new SkillComponent(this);
 
     public VelocityComponent velocityComponent;
@@ -62,12 +60,15 @@ public class Hero extends Entity {
 
         setupSprintSkill();
         setupHealingSkill();
+        setUpSwordSkill();
 
         pc.setSkillSlot1(sprintSkill);
         pc.setSkillSlot2(healingSkill);
+        pc.setSkillSlot3(swordSkill);
 
         skillComponent.addSkill(sprintSkill);
         skillComponent.addSkill(healingSkill);
+        skillComponent.addSkill(swordSkill);
 
         //Der Inventarplatz vom Spieler wird auf wird auf 10 gesetzt
         getMyInventory().setMaxSpace(10);
@@ -114,6 +115,12 @@ public class Hero extends Entity {
                             }
                         },
                         2);
+    }
+
+    private void setUpSwordSkill() {
+        swordSkill =
+            new Skill(
+                new SwordSkill(SkillTools::getCursorPositionAsDirection), 0.7f);
     }
 
     private void setupHitboxComponent() {
