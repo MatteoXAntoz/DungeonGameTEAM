@@ -75,15 +75,15 @@ public class SkillTools {
                     .orElseThrow(
                         () -> new MissingComponentException("HitboxComponent"));
 
-        Point vector = new Point(mousePosition.x - hc.getCenter().x, mousePosition.x - hc.getCenter().y);
+        Point vector = new Point(mousePosition.x - hc.getCenter().x, mousePosition.y - hc.getCenter().y);
 
-        if(Math.abs(vector.x) <= vector.y)
-            return Tile.Direction.N.getValue();
-        else if(Math.abs(vector.x) <= -vector.y)
-            return Tile.Direction.S.getValue();
-        else if(Math.abs(vector.y) <= vector.x)
-            return Tile.Direction.E.getValue();
-        else
-            return Tile.Direction.W.getValue();
+        if(Math.abs(vector.x) <= vector.y) {
+            return Tile.Direction.N.getValue();}
+        else if(Math.abs(vector.x) <= -vector.y) {
+            return Tile.Direction.S.getValue();}
+        else if(Math.abs(vector.y) <= vector.x) {
+            return Tile.Direction.E.getValue();}
+        else {
+            return Tile.Direction.W.getValue();}
     }
 }

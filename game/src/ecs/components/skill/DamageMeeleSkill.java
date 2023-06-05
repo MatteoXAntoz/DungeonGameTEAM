@@ -49,8 +49,8 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
 
         new MeeleComponent(meele);
 
-//        Animation animation = AnimationBuilder.buildAnimation(pathToTexturesOfProjectile);
-//        new AnimationComponent(meele, animation);
+        Animation animation = AnimationBuilder.buildAnimation("knight/idleLeft");
+        new AnimationComponent(meele, animation);
 
         ICollide collide =
             (a, b, from) -> {
@@ -58,6 +58,7 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
                     b.getComponent(HealthComponent.class)
                         .ifPresent(
                             hc -> {
+                                System.out.println("Hit!");
                                 ((HealthComponent) hc).receiveHit(meeleDamage);
                                 Game.removeEntity(meele);
                             });

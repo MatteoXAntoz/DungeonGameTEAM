@@ -189,9 +189,9 @@ public abstract class Tile implements Serializable {
     // --------------------------- For LibGDX Pathfinding ---------------------------
     public enum Direction {
         N(new Point(0, 1)),
-        E(new Point(1, 1)),
+        E(new Point(1, 0)),
         S(new Point(0, -1)),
-        W(new Point(-1, 1));
+        W(new Point(-1, 0));
 
         private final Point value;
 
