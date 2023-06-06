@@ -34,7 +34,7 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
         this.meeleDamage = meeleDamage;
         this.meeleHitboxSize = meeleHitboxSize;
         this.selectionFunction = selectionFunction;
-        meeleLogger.setLevel(Level.ALL);
+        meeleLogger.setLevel(Level.INFO);
     }
 
     @Override
@@ -49,8 +49,12 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
                     .orElseThrow(
                         () -> new MissingComponentException("HitboxComponent"));
 
+        Point hitboxSize = meeleHitboxSize;
+        // Hitbox is rotated if direction is east or west
+        if(direction.x != 0)
+            hitboxSize = new Point(meeleHitboxSize.y, meeleHitboxSize.x);
 
-        new PositionComponent(meele, this.calculateHitboxPosition(ehc, direction));
+        new PositionComponent(meele, this.calculateHitboxPosition(ehc, direction, hitboxSize));
 
         new MeeleComponent(meele);
 
@@ -70,12 +74,6 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
                 }
             };
 
-        Point hitboxSize = meeleHitboxSize;
-
-        // Hitbox is rotated if direction is east or west
-        if(direction.x != 0)
-            hitboxSize = new Point(meeleHitboxSize.y, meeleHitboxSize.x);
-
         HitboxComponent hc =
             new HitboxComponent(
             meele, new Point(0f, 0f), hitboxSize, collide, null);
@@ -94,22 +92,23 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
         this.pathToTexturesLeft = pathToTextures + "/left";
     }
 
-    private Point calculateHitboxPosition(HitboxComponent ehc, Point direction) {
+    private Point calculateHitboxPosition(HitboxComponent ehc, Point direction, Point hitboxSize) {
         meeleLogger.finer("Direction: " + direction);
-        Point center = ehc.getCenter();
-        Point size = new Point(ehc.getTopRight().x - ehc.getBottomLeft().x, ehc.getTopRight().y - ehc.getBottomLeft().y);
-        meeleLogger.finer("Entity Hitbox Size: " + size);
+        Point eCenter = ehc.getCenter();
+        Point eSize = new Point(
+            ehc.getTopRight().x - ehc.getBottomLeft().x,
+            ehc.getTopRight().y - ehc.getBottomLeft().y);
+        meeleLogger.finer("Entity Hitbox Size: " + eSize);
 
-        Point edge = new Point(center.x + direction.x * size.x/2, center.y + direction.y * size.y/2);
-        meeleLogger.finer("Entity Edge: " + edge);
+        Point mCenter = new Point(
+            eCenter.x + (eSize.x + hitboxSize.x) * direction.x / 2,
+            eCenter.y + (eSize.y + hitboxSize.y) * direction.y / 2
+            );
 
-        // new Direction rotated 90° counterclockwise from pDirection
-        Point angleDirection = new Point(direction.y * -1, direction.x);
-        meeleLogger.finer("New Direction from Edge: " + angleDirection);
-
-        Point position = new Point(edge.x + angleDirection.x * this.meeleHitboxSize.x/2, edge.y + angleDirection.y * this.meeleHitboxSize.y/2);
-        meeleLogger.finer("New Position: " + position);
-        return position;
-
+        Point mPosition = new Point(
+            mCenter.x + hitboxSize.x / -2,
+            mCenter.y + hitboxSize.y / -2
+        );
+        return mPosition;
     }
 }
