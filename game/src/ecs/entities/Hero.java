@@ -125,10 +125,7 @@ public class Hero extends Entity {
 
     private void setupHitboxComponent() {
         hitboxComponent =
-                new HitboxComponent(
-                        this,
-                        (you, other, direction) -> System.out.println("heroCollisionEnter"),
-                        (you, other, direction) -> System.out.println("heroCollisionLeave"));
+            new HitboxComponent(this);
     }
 
     private void setupHealthComponent() {

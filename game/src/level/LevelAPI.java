@@ -88,7 +88,7 @@ public class LevelAPI {
 
         spawnMonsters();
 
-        String heroInfo = String.valueOf(Game.hero.healthComponent.getCurrentHealthpoints());
+        String heroInfo = "Current Hero health: " + Game.hero.healthComponent.getCurrentHealthpoints();
         levelAPI_logger.info(heroInfo);
     }
 

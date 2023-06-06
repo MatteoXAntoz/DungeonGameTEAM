@@ -28,6 +28,7 @@ public class Demon extends Monster {
         setupAnimation();
         setupPosition();
         setupVelocity();
+        setupHealthcomponent();
         setupAi();
         damage = 10;
     }

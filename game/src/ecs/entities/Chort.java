@@ -25,6 +25,7 @@ public class Chort extends Monster {
         setupAnimation();
         setupPosition();
         setupVelocity();
+        setupHealthcomponent();
         setupAi();
         followHeroOrEatItem = new FollowHeroOrEatItem(this);
         followHeroOrEatItem.from = positionComponent.getPosition();
