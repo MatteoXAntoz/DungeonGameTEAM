@@ -6,6 +6,7 @@ import ecs.components.collision.ICollide;
 import ecs.damage.Damage;
 import ecs.entities.Entity;
 import graphic.Animation;
+import level.elements.tile.Tile;
 import starter.Game;
 import tools.Point;
 
@@ -14,10 +15,7 @@ import java.util.logging.Logger;
 
 public abstract class DamageMeeleSkill implements ISkillFunction {
 
-    private String pathToTexturesUp;
-    private String pathToTexturesDown;
-    private String pathToTexturesRight;
-    private String pathToTexturesLeft;
+    private String pathToTextures;
     private Damage meeleDamage;
     private Point meeleHitboxSize;
     private final float knockBackVelocity;
@@ -27,13 +25,13 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
     private ITargetSelection selectionFunction;
 
     public DamageMeeleSkill(
-        String pathToTexturesOfMeele,
+        String pathToTextures,
         Damage meeleDamage,
         Point meeleHitboxSize,
         float knockBackVelocity,
         int knockBackDuration,
         ITargetSelection selectionFunction) {
-        this.setAnimationPaths(pathToTexturesOfMeele);
+        this.pathToTextures = pathToTextures;
         this.meeleDamage = meeleDamage;
         this.meeleHitboxSize = meeleHitboxSize;
         this.knockBackVelocity = knockBackVelocity;
@@ -61,9 +59,10 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
 
         new PositionComponent(meele, this.calculateHitboxPosition(ehc, direction, hitboxSize));
 
-        new MeeleComponent(meele, 9);
+        int durationInFrames = 9;
+        new MeeleComponent(meele, durationInFrames);
 
-        Animation animation = AnimationBuilder.buildAnimation("knight/attack/", 9/3);
+        Animation animation = this.getAnimations(direction, durationInFrames/3);
         new AnimationComponent(meele, animation);
 
         ICollide collide =
@@ -105,12 +104,19 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
                 "Meele Hitbox: BL-" + hc.getBottomLeft() + " TR-" + hc.getTopRight()
         );
     }
-    private void setAnimationPaths(String pathToTextures)
+    private Animation getAnimations(Point direction, int frameTime)
     {
-        this.pathToTexturesUp = pathToTextures + "/up";
-        this.pathToTexturesDown = pathToTextures + "/down";
-        this.pathToTexturesRight = pathToTextures + "/right";
-        this.pathToTexturesLeft = pathToTextures + "/left";
+        String sDirection;
+        if(direction.y == 1)
+            sDirection = "attack_Up/";
+        else if(direction.y == -1)
+            sDirection = "attack_Down/";
+        else if(direction.x == 1)
+            sDirection = "attack_Right/";
+        else
+            sDirection = "attack_Left/";
+
+        return AnimationBuilder.buildAnimation("knight/attack/" + sDirection, frameTime);
     }
 
     private Point calculateHitboxPosition(HitboxComponent ehc, Point direction, Point hitboxSize) {
