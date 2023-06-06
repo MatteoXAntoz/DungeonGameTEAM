@@ -4,10 +4,9 @@ import dslToGame.AnimationBuilder;
 import ecs.components.*;
 import ecs.components.collision.ICollide;
 import ecs.damage.Damage;
+import ecs.damage.DamageType;
 import ecs.entities.Entity;
 import graphic.Animation;
-import level.elements.tile.Tile;
-import starter.Game;
 import tools.Point;
 
 import java.util.logging.Level;
@@ -16,7 +15,8 @@ import java.util.logging.Logger;
 public abstract class DamageMeeleSkill implements ISkillFunction {
 
     private String pathToTextures;
-    private Damage meeleDamage;
+    private final Damage meeleDamage;
+    private Damage currentMeeleDamage;
     private Point meeleHitboxSize;
     private final float knockBackVelocity;
     private final int knockBackDuration;
@@ -43,6 +43,7 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
     @Override
     public void execute(Entity entity) {
         Entity meele = new Entity();
+        currentMeeleDamage = meeleDamage;
 
         Point direction = selectionFunction.selectTargetPoint(entity);
 
@@ -72,7 +73,7 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
                         .ifPresent(
                             hc -> {
                                 ((HealthComponent) hc).receiveHit(meeleDamage);
-                                Game.removeEntity(meele);
+                                currentMeeleDamage = new Damage(0, DamageType.PHYSICAL, null);
                             });
                     PositionComponent epc = (PositionComponent)(entity.getComponent(PositionComponent.class).get());
                     PositionComponent opc = (PositionComponent)(other.getComponent(PositionComponent.class).get());
