@@ -75,6 +75,7 @@ public class LevelManager {
      */
     public void addMonster(int value) {
         int maxAmount = 10;
+        new MonsterChest();
         if (value > 0 && value <= 2) {
             for (int i = 0; i < Math.random() * value; i++) {
                 monster.add(new Mouse());
