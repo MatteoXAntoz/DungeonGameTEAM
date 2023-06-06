@@ -21,6 +21,8 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
     private String pathToTexturesLeft;
     private Damage meeleDamage;
     private Point meeleHitboxSize;
+    private final int knockBackVelocity;
+    private final int knockBackDuration;
     private static Logger meeleLogger = Logger.getLogger(DamageMeeleSkill.class.getName());
 
     private ITargetSelection selectionFunction;
@@ -29,10 +31,14 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
         String pathToTexturesOfMeele,
         Damage meeleDamage,
         Point meeleHitboxSize,
+        int knockBackVelocity,
+        int knockBackDuration,
         ITargetSelection selectionFunction) {
         this.setAnimationPaths(pathToTexturesOfMeele);
         this.meeleDamage = meeleDamage;
         this.meeleHitboxSize = meeleHitboxSize;
+        this.knockBackVelocity = knockBackVelocity;
+        this.knockBackDuration = knockBackDuration;
         this.selectionFunction = selectionFunction;
         meeleLogger.setLevel(Level.INFO);
     }
@@ -70,6 +76,21 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
                                 ((HealthComponent) hc).receiveHit(meeleDamage);
                                 Game.removeEntity(meele);
                             });
+                    PositionComponent epc = (PositionComponent)(entity.getComponent(PositionComponent.class).get());
+                    PositionComponent opc = (PositionComponent)(other.getComponent(PositionComponent.class).get());
+
+                    Point velocity = SkillTools.calculateVelocity(
+                        epc.getPosition(),
+                        opc.getPosition(),
+                        knockBackVelocity
+                    );
+                    other.addComponent  (
+                        new KnockbackComponent(
+                            other,
+                            velocity.x,
+                            velocity.y,
+                            30
+                        ));
                 }
             };
 
