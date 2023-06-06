@@ -3,6 +3,7 @@ package ecs.entities;
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import dslToGame.AnimationBuilder;
 import ecs.components.AnimationComponent;
+import ecs.components.HealthComponent;
 import ecs.components.PositionComponent;
 import ecs.components.VelocityComponent;
 import ecs.components.ai.AIComponent;
@@ -39,6 +40,11 @@ public class Mouse extends Monster {
         new AnimationComponent(this, idleLeft, idleRight);
     }
 
+    @Override
+    protected void setupHealthcomponent() {
+        healthComponent = new HealthComponent(this);
+    }
+
     /**
      * setup the idle strategy if path is null a new path to hero will be generated
      *
@@ -55,7 +61,7 @@ public class Mouse extends Monster {
     }
 
     /** method to setup AIComponent */
-    private void setupAi() {
+    public void setupAi() {
         new AIComponent(
                 this,
                 new IFightAI() {
