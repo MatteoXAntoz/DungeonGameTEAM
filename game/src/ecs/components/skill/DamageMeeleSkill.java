@@ -58,7 +58,7 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
 
         new MeeleComponent(meele);
 
-        Animation animation = AnimationBuilder.buildAnimation("animation/");
+        Animation animation = AnimationBuilder.buildAnimation("knight/attack/");
         new AnimationComponent(meele, animation);
 
         ICollide collide =
@@ -76,6 +76,8 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
         HitboxComponent hc =
             new HitboxComponent(
             meele, new Point(0f, 0f), hitboxSize, collide, null);
+
+//        this.cloneEntityVelocity(entity, meele);
 
         // Logger
         meeleLogger.fine(
@@ -109,5 +111,15 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
             mCenter.y + hitboxSize.y / -2
         );
         return mPosition;
+    }
+
+//    private void cloneEntityVelocity(Entity entity, Entity meele) {
+//        VelocityComponent ehc =
+//            (VelocityComponent)
+//                entity.getComponent(VelocityComponent.class)
+//                    .orElseThrow(
+//                        () -> new MissingComponentException("VelocityComponent"));
+//
+//        meele.addComponent(ehc);
     }
 }

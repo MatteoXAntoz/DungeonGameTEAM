@@ -7,8 +7,8 @@ import tools.Point;
 public class SwordSkill extends DamageMeeleSkill {
     public SwordSkill(ITargetSelection targetSelection) {
         super(
-            "animation/",
-            new Damage(1000, DamageType.PHYSICAL, null),
+            "knight/attack/",
+            new Damage(30, DamageType.PHYSICAL, null),
             new Point(3.0f, 1.5f),
             targetSelection
         );
