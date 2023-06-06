@@ -75,6 +75,7 @@ public class HealthComponent extends Component {
     public void receiveHit(Damage damage) {
         damageToGet.add(damage);
         this.lastCause = damage.cause() != null ? damage.cause() : this.lastCause;
+        System.out.println("New " + entity.getClass().getSimpleName() + " health: " + this.currentHealthpoints);
     }
 
     /** Triggers the onDeath Function */

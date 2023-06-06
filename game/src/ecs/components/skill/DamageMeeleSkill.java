@@ -10,6 +10,9 @@ import level.elements.tile.Tile;
 import starter.Game;
 import tools.Point;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public abstract class DamageMeeleSkill implements ISkillFunction {
 
     private String pathToTexturesUp;
@@ -18,6 +21,7 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
     private String pathToTexturesLeft;
     private Damage meeleDamage;
     private Point meeleHitboxSize;
+    private static Logger meeleLogger = Logger.getLogger(DamageMeeleSkill.class.getName());
 
     private ITargetSelection selectionFunction;
 
@@ -30,6 +34,7 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
         this.meeleDamage = meeleDamage;
         this.meeleHitboxSize = meeleHitboxSize;
         this.selectionFunction = selectionFunction;
+        meeleLogger.setLevel(Level.ALL);
     }
 
     @Override
@@ -49,7 +54,7 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
 
         new MeeleComponent(meele);
 
-        Animation animation = AnimationBuilder.buildAnimation("knight/idleLeft");
+        Animation animation = AnimationBuilder.buildAnimation("animation/");
         new AnimationComponent(meele, animation);
 
         ICollide collide =
@@ -68,11 +73,18 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
         Point hitboxSize = meeleHitboxSize;
 
         // Hitbox is rotated if direction is east or west
-        if(direction.x == 0)
+        if(direction.x != 0)
             hitboxSize = new Point(meeleHitboxSize.y, meeleHitboxSize.x);
 
-        new HitboxComponent(
+        HitboxComponent hc =
+            new HitboxComponent(
             meele, new Point(0f, 0f), hitboxSize, collide, null);
+
+        // Logger
+        meeleLogger.fine(
+            "Entity Hitbox: BL-" + ehc.getBottomLeft() + " TR-" + ehc.getTopRight() + "\n" +
+                "Meele Hitbox: BL-" + hc.getBottomLeft() + " TR-" + hc.getTopRight()
+        );
     }
     private void setAnimationPaths(String pathToTextures)
     {
@@ -83,15 +95,20 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
     }
 
     private Point calculateHitboxPosition(HitboxComponent ehc, Point direction) {
+        meeleLogger.finer("Direction: " + direction);
         Point center = ehc.getCenter();
         Point size = new Point(ehc.getTopRight().x - ehc.getBottomLeft().x, ehc.getTopRight().y - ehc.getBottomLeft().y);
+        meeleLogger.finer("Entity Hitbox Size: " + size);
 
-        Point edge = new Point(center.x * direction.x * size.x/2, center.y * direction.y * size.y/2);
+        Point edge = new Point(center.x + direction.x * size.x/2, center.y + direction.y * size.y/2);
+        meeleLogger.finer("Entity Edge: " + edge);
 
         // new Direction rotated 90° counterclockwise from pDirection
-        Point angleDirection = new Point(edge.y * -1,edge.x);
+        Point angleDirection = new Point(direction.y * -1, direction.x);
+        meeleLogger.finer("New Direction from Edge: " + angleDirection);
 
-        Point position = new Point(edge.x * angleDirection.x * this.meeleHitboxSize.x/2, edge.x * angleDirection.x * this.meeleHitboxSize.x/2);
+        Point position = new Point(edge.x + angleDirection.x * this.meeleHitboxSize.x/2, edge.y + angleDirection.y * this.meeleHitboxSize.y/2);
+        meeleLogger.finer("New Position: " + position);
         return position;
 
     }
