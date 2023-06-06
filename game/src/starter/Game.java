@@ -319,6 +319,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         new DrawSystem(painter);
         new PlayerSystem();
         new AISystem();
+        new KnockBackSystem();
         new CollisionSystem();
         new HealthSystem();
         new XPSystem();

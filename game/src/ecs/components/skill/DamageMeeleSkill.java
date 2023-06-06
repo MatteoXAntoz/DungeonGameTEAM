@@ -6,7 +6,6 @@ import ecs.components.collision.ICollide;
 import ecs.damage.Damage;
 import ecs.entities.Entity;
 import graphic.Animation;
-import level.elements.tile.Tile;
 import starter.Game;
 import tools.Point;
 
@@ -21,7 +20,7 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
     private String pathToTexturesLeft;
     private Damage meeleDamage;
     private Point meeleHitboxSize;
-    private final int knockBackVelocity;
+    private final float knockBackVelocity;
     private final int knockBackDuration;
     private static Logger meeleLogger = Logger.getLogger(DamageMeeleSkill.class.getName());
 
@@ -31,7 +30,7 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
         String pathToTexturesOfMeele,
         Damage meeleDamage,
         Point meeleHitboxSize,
-        int knockBackVelocity,
+        float knockBackVelocity,
         int knockBackDuration,
         ITargetSelection selectionFunction) {
         this.setAnimationPaths(pathToTexturesOfMeele);
@@ -85,11 +84,11 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
                         knockBackVelocity
                     );
                     other.addComponent  (
-                        new KnockbackComponent(
+                        new KnockBackComponent(
                             other,
                             velocity.x,
                             velocity.y,
-                            30
+                            knockBackDuration
                         ));
                 }
             };

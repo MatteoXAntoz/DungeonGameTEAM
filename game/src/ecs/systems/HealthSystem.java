@@ -89,6 +89,7 @@ public class HealthSystem extends ECS_System {
         }
         // reset all damage objects in health component and apply damage
         hsd.hc.clearDamage();
+        if(dmgAmount > 0)
         hsd.hc.setCurrentHealthpoints(hsd.hc.getCurrentHealthpoints() - dmgAmount);
         if(hsd.hc.getCurrentHealthpoints() > 0 && dmgAmount > 0)
             healthLogger.info("New " + hsd.e.getClass().getSimpleName() + " health: " + hsd.hc.getCurrentHealthpoints());

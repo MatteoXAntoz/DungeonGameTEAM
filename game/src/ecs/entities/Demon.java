@@ -44,6 +44,8 @@ public class Demon extends Monster {
     @Override
     protected void setupHealthcomponent() {
         healthComponent = new HealthComponent(this);
+        healthComponent.setMaximalHealthpoints(100);
+        healthComponent.setCurrentHealthpoints(100);
     }
 
     /**
