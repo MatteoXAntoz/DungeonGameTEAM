@@ -67,8 +67,7 @@ public class MonsterChest extends Monster {
     public void setupInteraction() {
         interactionComponent = new InteractionComponent(this, 0.5f, false, new IInteraction() {
             @Override
-            public void onInteraction(Entity entity) {
-               //dropItem();  muss gelöscht, dies kommt vor, wenn das Monster tot ist.
+            public void onInteraction(Entity entity) { 
                 fight = true;
             }
         });
@@ -86,7 +85,9 @@ public class MonsterChest extends Monster {
                   followHero(entity);
                 }
 
-                //////
+                if(healthComponent.getCurrentHealthpoints()==0){
+                    dropItem();
+                }
 
 
             }
