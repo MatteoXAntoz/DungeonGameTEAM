@@ -134,7 +134,6 @@ public class Hero extends Entity {
     private void setupHealthComponent() {
         healthComponent = new HealthComponent(this);
         healthComponent.setMaximalHealthpoints(100);
-        healthComponent.setCurrentHealthpoints(100);
         healthComponent.setOnDeath(entity -> Game.toggleGameOverMenu());
         if (!SaveLoadGame.isEmpty(SaveLoadGame.PATH, SaveLoadGame.PLAYER_DATA)) {
             healthComponent.setCurrentHealthpoints(SaveLoadGame.loadHeroHealth());

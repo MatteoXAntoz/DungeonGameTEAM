@@ -2,6 +2,7 @@ package ecs.entities;
 
 import dslToGame.AnimationBuilder;
 import ecs.components.AnimationComponent;
+import ecs.components.HealthComponent;
 import ecs.components.PositionComponent;
 import ecs.components.VelocityComponent;
 import ecs.components.ai.AIComponent;
@@ -38,6 +39,11 @@ public class Chort extends Monster {
         new AnimationComponent(this, idleLeft, idleRight);
     }
 
+    @Override
+    protected void setupHealthcomponent() {
+        healthComponent = new HealthComponent(this);
+    }
+
     /**
      * method for the idle strategy a monster can follow the hero or it eats an item and it will be
      * removed from the dungeon
@@ -50,7 +56,7 @@ public class Chort extends Monster {
     }
 
     /** method to setup the AIComponent */
-    private void setupAi() {
+    public void setupAi() {
         new AIComponent(
                 this,
                 new IFightAI() {

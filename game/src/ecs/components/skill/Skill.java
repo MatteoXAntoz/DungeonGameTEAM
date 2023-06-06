@@ -8,6 +8,7 @@ public class Skill {
     private ISkillFunction skillFunction;
     private int coolDownInFrames;
     private int currentCoolDownInFrames;
+    public float coolDownInSeconds;
 
     /**
      * @param skillFunction Function of this skill
@@ -16,6 +17,7 @@ public class Skill {
         this.skillFunction = skillFunction;
         this.coolDownInFrames = (int) (coolDownInSeconds * Constants.FRAME_RATE);
         this.currentCoolDownInFrames = 0;
+        this.coolDownInSeconds = coolDownInSeconds;
     }
 
     /**
