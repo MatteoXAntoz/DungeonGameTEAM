@@ -56,9 +56,9 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
 
         new PositionComponent(meele, this.calculateHitboxPosition(ehc, direction, hitboxSize));
 
-        new MeeleComponent(meele);
+        new MeeleComponent(meele, 9);
 
-        Animation animation = AnimationBuilder.buildAnimation("knight/attack/");
+        Animation animation = AnimationBuilder.buildAnimation("knight/attack/", 9/3);
         new AnimationComponent(meele, animation);
 
         ICollide collide =
@@ -121,5 +121,5 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
 //                        () -> new MissingComponentException("VelocityComponent"));
 //
 //        meele.addComponent(ehc);
-    }
+//    }
 }

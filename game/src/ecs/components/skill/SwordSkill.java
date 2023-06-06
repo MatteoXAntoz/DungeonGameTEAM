@@ -9,7 +9,7 @@ public class SwordSkill extends DamageMeeleSkill {
         super(
             "knight/attack/",
             new Damage(30, DamageType.PHYSICAL, null),
-            new Point(3.0f, 1.5f),
+            new Point(1.0f, 1.5f),
             targetSelection
         );
     }
