@@ -20,6 +20,7 @@ public class Demon extends Monster {
     GraphPath<Tile> path;
 
     public Demon() {
+        super();
 
         pathToIdleLeft = "demon/idleLeft";
         pathToIdleRight = "demon/idleRight";

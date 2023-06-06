@@ -18,7 +18,7 @@ public class Chort extends Monster {
 
     /** constructor for the class Chort to create a monster of type chort */
     public Chort() {
-
+        super();
         pathToIdleLeft = "chort/idleLeft";
         pathToIdleRight = "chort/idleRight";
 

@@ -30,7 +30,7 @@ public class FireAttack {
 
         fireballSkill = new Skill(new FireballSkill(new ITargetSelection() {
             @Override
-            public Point selectTargetPoint() {
+            public Point selectTargetPoint(Entity entity) {
                 return Game.hero.positionComponent.getPosition();
             }
         }), fireballCooldown);
@@ -41,7 +41,7 @@ public class FireAttack {
     public void setupSpitfire() {
         spitFire = new Skill(new Spitfire(new ITargetSelection() {
             @Override
-            public Point selectTargetPoint() {
+            public Point selectTargetPoint(Entity entity) {
                 return Game.hero.positionComponent.getPosition();
             }
         }), spitfireCoolDown);
@@ -53,7 +53,7 @@ public class FireAttack {
     public void setupSpitFireAgressive() {
         spitFireAgressive = new Skill(new Spitfire(new ITargetSelection() {
             @Override
-            public Point selectTargetPoint() {
+            public Point selectTargetPoint(Entity entity) {
                 return Game.hero.positionComponent.getPosition();
             }
         }), 0);

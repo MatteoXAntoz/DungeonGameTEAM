@@ -62,12 +62,15 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
         new AnimationComponent(meele, animation);
 
         ICollide collide =
-            (a, b, from) -> {
-                if (b != entity) {
-                    b.getComponent(HealthComponent.class)
+            (self, other, from) -> {
+                System.out.println("Hit1!");
+                System.out.println(other.getClass().getSimpleName());
+                System.out.println(other.getComponent(HealthComponent.class).isPresent());
+                if (other != entity) {
+                    other.getComponent(HealthComponent.class)
                         .ifPresent(
                             hc -> {
-                                System.out.println("Hit!");
+                                System.out.println("Hit2!");
                                 ((HealthComponent) hc).receiveHit(meeleDamage);
                                 Game.removeEntity(meele);
                             });
