@@ -95,7 +95,7 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
         //####################################
         this.setUpPositionComponent(meele, ehc, direction, hitboxSize);
 
-        this.setUpHitboxcomponent(entity, meele, direction);
+        this.setUpHitboxcomponent(entity, meele, hitboxSize);
 
         this.setUpAnimationComponent(meele, direction);
 
