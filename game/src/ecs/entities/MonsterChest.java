@@ -44,7 +44,7 @@ public class MonsterChest extends Monster {
             "objects/treasurechest/chest_full_open_anim_f2.png",
             "objects/treasurechest/chest_empty_open_anim_f2.png");
 
-    public void setupPosition() {
+    protected void setupPosition() {
         positionComponent = new PositionComponent(this);
     }
 
@@ -53,18 +53,13 @@ public class MonsterChest extends Monster {
 
     }
 
-    public void setupAnimation() {
-        AnimationComponent ac =
-            new AnimationComponent(
-                this,
-                new Animation(DEFAULT_CLOSED_ANIMATION_FRAMES, 100, false),
-                new Animation(DEFAULT_OPENING_ANIMATION_FRAMES, 100, false));
+    protected void setupAnimation() {
         idleRight = AnimationBuilder.buildAnimation(monsterChest_closed);
         idleLeft = AnimationBuilder.buildAnimation(monsterChest_closed);
         new AnimationComponent(this, idleLeft, idleRight);
     }
 
-    public void setupInteraction() {
+    protected void setupInteraction() {
         interactionComponent = new InteractionComponent(this, 0.5f, false, new IInteraction() {
             @Override
             public void onInteraction(Entity entity) {
@@ -73,11 +68,11 @@ public class MonsterChest extends Monster {
         });
     }
 
-    public void setupHitbox() {
+    protected void setupHitbox() {
         HitboxComponent hitboxComponent = new HitboxComponent(this);
     }
 
-    public void setupAI() {
+    protected void setupAI() {
         AIComponent ai = new AIComponent(this, new IFightAI() {
             @Override
             public void fight(Entity entity) {
@@ -95,7 +90,7 @@ public class MonsterChest extends Monster {
 
     }
 
-    public void setupHealthComponent() {
+    protected void setupHealthComponent() {
         healthComponent = new HealthComponent(
             this,
             10,
@@ -119,6 +114,9 @@ public class MonsterChest extends Monster {
 
     }
 
+    /**
+     * method to drops an item if the monsterches dies
+     */
     public void dropItem() {
         Game.removeEntity(this);
         int anzahl = 2;
