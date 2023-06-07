@@ -48,52 +48,55 @@ public class GoToLadder implements IIdleAI {
     }
 
     /**
-     * {@inheritDoc}
-     * @param entity associated entity
+     * Puts the entity in an idle state, alternating between left and right modes.
+     * If the timer is not counting, it switches the mode and activates the timer.
+     * Otherwise, it moves the entity according to the current mode and reduces the timer counter.
+     *
+     * @param entity The entity to put in idle state.
      */
-    @Override
     public void idle(Entity entity) {
-
         if (!getTimer().isCounting()) {
+            // If the mode is left, switch to right mode; if the mode is right, switch to left mode
             if (getMode().equals('L')) {
                 setMode('R');
             } else if (getMode().equals('R')) {
                 setMode('L');
             }
+            // Activate the timer counter
             getTimer().activateCounter();
         } else {
+            // Move the entity according to the current mode
             move(entity, getMode());
         }
 
+        // Reduce the timer counter
         getTimer().reduceCounter();
-
-
     }
 
-
-    // random Point and the path to the Ladder is set up as cycle
+    //Moves the entity according to the specified mode.
     private void move(Entity entity, Character mode) {
         if (mode.equals('L')) {
+            // If there is no graph random point set, calculate a new path from the entity's position to a random point
             if (getGraphRandomPoint() == null) {
                 setGraphRandomPoint(AITools.calculatePath(entity.positionComponent.getPosition(), randomPoint));
             }
+            // Move the entity along the calculated path
             AITools.move(entity, graphRandomPoint);
+            // Update the random point to a new random floor tile
             randomPoint = Game.currentLevel.getRandomFloorTile().getCoordinateAsPoint();
+            // Reset the ladder path
             graphLadderPath = null;
-
         }
         if (mode.equals('R')) {
-
+            // If the ladder path is not set, calculate a new path from the entity's position to the ladder tile
             if (graphLadderPath == null) {
                 graphLadderPath = AITools.calculatePath(entity.positionComponent.getPosition(), ladderTile.getCoordinate().toPoint());
             }
+            // Move the entity along the ladder path
             AITools.move(entity, graphLadderPath);
+            // Reset the random point
             graphRandomPoint = null;
-
-
         }
-
-
     }
 
     public GraphPath<Tile> getGraphLadderPath() {
