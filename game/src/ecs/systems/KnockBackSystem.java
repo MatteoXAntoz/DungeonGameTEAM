@@ -4,6 +4,9 @@ import ecs.components.*;
 import ecs.entities.Entity;
 import starter.Game;
 
+/**
+ * reduces Duration of Knockback Components, sets Velocitys and delets them.
+ */
 public class KnockBackSystem extends ECS_System {
     private record HSData(Entity e, KnockBackComponent kbc, VelocityComponent vc) {}
 
