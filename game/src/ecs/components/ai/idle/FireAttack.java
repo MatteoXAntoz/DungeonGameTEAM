@@ -31,7 +31,7 @@ public class FireAttack {
         fireballSkill = new Skill(new FireballSkill(new ITargetSelection() {
             @Override
             public Point selectTargetPoint() {
-                return Game.hero.positionComponent.getPosition();
+                return Game.hero.hitboxComponent.getCenter();
             }
         }), fireballCooldown);
         fireAttack_Logger.info("FireballSkill wurde initialisiert.");
@@ -42,7 +42,7 @@ public class FireAttack {
         spitFire = new Skill(new Spitfire(new ITargetSelection() {
             @Override
             public Point selectTargetPoint() {
-                return Game.hero.positionComponent.getPosition();
+                return Game.hero.hitboxComponent.getCenter();
             }
         }), spitfireCoolDown);
         fireAttack_Logger.info("SpitFire wurde initialisiert.");
@@ -54,7 +54,7 @@ public class FireAttack {
         spitFireAgressive = new Skill(new Spitfire(new ITargetSelection() {
             @Override
             public Point selectTargetPoint() {
-                return Game.hero.positionComponent.getPosition();
+                return Game.hero.hitboxComponent.getCenter();
             }
         }), 0);
 
@@ -96,7 +96,6 @@ public class FireAttack {
     }
 
     /**
-     *
      * @param entity
      * @return checks if the entity is colliding with the Hero
      */
