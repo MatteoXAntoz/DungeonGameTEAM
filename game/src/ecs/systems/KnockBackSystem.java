@@ -8,15 +8,15 @@ import starter.Game;
  * reduces Duration of Knockback Components, sets Velocitys and delets them.
  */
 public class KnockBackSystem extends ECS_System {
-    private record HSData(Entity e, KnockbackComponent kbc, VelocityComponent vc) {}
+    private record HSData(Entity e, KnockBackComponent kbc, VelocityComponent vc) {}
 
     @Override
     public void update() {
         Game.getEntities().stream()
             // Consider only entities that have a KnockBackComponent
-            .flatMap(e -> e.getComponent(KnockbackComponent.class).stream())
+            .flatMap(e -> e.getComponent(KnockBackComponent.class).stream())
             // Form triples (e, kbc, vc)
-            .map(kbc -> buildDataObject((KnockbackComponent) kbc))
+            .map(kbc -> buildDataObject((KnockBackComponent) kbc))
             // ApplyKnockback
             .map(this::applyKnockback)
             // Reduce Cooldowns
@@ -39,10 +39,10 @@ public class KnockBackSystem extends ECS_System {
     }
 
     private void removeKnockback(HSData hsd) {
-        hsd.e.removeComponent(KnockbackComponent.class);
+        hsd.e.removeComponent(KnockBackComponent.class);
     }
 
-    private KnockBackSystem.HSData buildDataObject(KnockbackComponent kbc) {
+    private KnockBackSystem.HSData buildDataObject(KnockBackComponent kbc) {
         Entity e = kbc.getEntity();
 
         VelocityComponent vc =
