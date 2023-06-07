@@ -117,8 +117,8 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
     @Override
     protected void setupHealthcomponent() {
         healthComponent = new HealthComponent(this);
-        healthComponent.setMaximalHealthpoints(250);
-        healthComponent.setCurrentHealthpoints(250);
+        healthComponent.setMaximalHealthpoints(120);
+        healthComponent.setCurrentHealthpoints(120);
 
     }
 
@@ -143,8 +143,8 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
                 getFireAttack().getFireballSkill().execute(entity);
             }
         } else {
-            velocityComponent.setXVelocity(0.08f);
-            velocityComponent.setYVelocity(0.08f);
+            velocityComponent.setXVelocity(0.05f);
+            velocityComponent.setYVelocity(0.05f);
             if (getFireAttack().isInRadius(entity) && getFireAttack().isColliding(entity)) {
                 getFireAttack().getSpitFireAgressive().execute(entity);
             }
