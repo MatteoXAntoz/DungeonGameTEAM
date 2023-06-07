@@ -9,7 +9,7 @@ public class FireballSkill extends DamageProjectileSkill {
     public FireballSkill(ITargetSelection targetSelection) {
         super(
                 "skills/fireball/fireBall_Down/",
-                0.25f,
+                0.04f,
                 new Damage(25,
                     DamageType.FIRE,
                     null),
