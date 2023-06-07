@@ -77,7 +77,7 @@ public class LevelManager {
         int maxAmount = 10;
         new MonsterChest();
         // for each level a fireWorm is added
-        monster.add(new FireWorm());
+//        monster.add(new FireWorm());
         if (value > 0 && value <= 2) {
             for (int i = 0; i < Math.random() * value; i++) {
                 monster.add(new Mouse());

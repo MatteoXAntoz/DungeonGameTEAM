@@ -32,7 +32,7 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
      */
 
     public FireWorm() {
-
+        super();
 
         fireAttack = new FireAttack();
         goToLadder = new GoToLadder();

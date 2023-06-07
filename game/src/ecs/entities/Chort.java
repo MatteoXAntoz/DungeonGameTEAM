@@ -18,13 +18,14 @@ public class Chort extends Monster {
 
     /** constructor for the class Chort to create a monster of type chort */
     public Chort() {
-
+        super();
         pathToIdleLeft = "chort/idleLeft";
         pathToIdleRight = "chort/idleRight";
 
         setupAnimation();
         setupPosition();
         setupVelocity();
+        setupHealthcomponent();
         setupAi();
         followHeroOrEatItem = new FollowHeroOrEatItem(this);
         followHeroOrEatItem.from = positionComponent.getPosition();
@@ -42,6 +43,8 @@ public class Chort extends Monster {
     @Override
     protected void setupHealthcomponent() {
         healthComponent = new HealthComponent(this);
+        healthComponent.setMaximalHealthpoints(100);
+        healthComponent.setCurrentHealthpoints(100);
     }
 
     /**

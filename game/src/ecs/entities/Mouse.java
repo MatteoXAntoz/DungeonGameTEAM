@@ -21,6 +21,7 @@ public class Mouse extends Monster {
 
     /** constructor for class mouse */
     public Mouse() {
+        super();
 
         pathToIdleLeft = "mouse/idleLeft";
         pathToIdleRight = "mouse/idleRight";
@@ -28,6 +29,7 @@ public class Mouse extends Monster {
         setupAnimation();
         setupPosition();
         setupVelocity();
+        setupHealthcomponent();
         setupAi();
         damage = 2;
     }
@@ -43,6 +45,8 @@ public class Mouse extends Monster {
     @Override
     protected void setupHealthcomponent() {
         healthComponent = new HealthComponent(this);
+        healthComponent.setMaximalHealthpoints(100);
+        healthComponent.setCurrentHealthpoints(100);
     }
 
     /**

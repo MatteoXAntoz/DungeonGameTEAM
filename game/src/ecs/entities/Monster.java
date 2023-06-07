@@ -1,6 +1,7 @@
 package ecs.entities;
 
 import ecs.components.HealthComponent;
+import ecs.components.HitboxComponent;
 import ecs.components.VelocityComponent;
 import ecs.components.ai.idle.IIdleAI;
 import graphic.Animation;
@@ -9,6 +10,11 @@ import graphic.Animation;
  * abstract class to create a template to build monster
  */
 public abstract class Monster extends Entity implements IIdleAI {
+    public Monster()
+    {
+        super();
+        setUpHitboxComponent();
+    }
 
     protected float xSpeed;
     protected float ySpeed;
@@ -36,6 +42,10 @@ public abstract class Monster extends Entity implements IIdleAI {
     protected abstract void setupHealthcomponent();
 
     protected abstract void setupAi();
+
+    protected void setUpHitboxComponent() {
+        new HitboxComponent(this);
+    }
 
 
     /**
