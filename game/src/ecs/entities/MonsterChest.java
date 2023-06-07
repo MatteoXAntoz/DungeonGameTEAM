@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * class to create a monster of the type chort
+ * class to create a monsterchest that attacks and follows the player
  */
 public class MonsterChest extends Monster {
 
