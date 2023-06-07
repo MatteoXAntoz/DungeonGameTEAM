@@ -10,10 +10,10 @@ public class Spitfire extends DamageProjectileSkill{
     public Spitfire(ITargetSelection targetSelection) {
         super(
             "skills/Spitfire/",
-            0.02f,
+            0.007f,
             new Damage(1,
                 DamageType.FIRE,
                 null),
-            new Point(10, 10), targetSelection, 0.5f);
+            new Point(1, 1), targetSelection, 1);
     }
 }
