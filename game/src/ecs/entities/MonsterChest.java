@@ -53,6 +53,11 @@ public class MonsterChest extends Monster {
      */
     public MonsterChest() {
         super();
+        this.deathFunction = (e) -> {
+            if(itransition.isInFightMode(this)){
+                dropItem();
+            }
+        };
         setupITransition();
         setupAnimation();
         setupInteraction();
@@ -139,8 +144,13 @@ public class MonsterChest extends Monster {
      * method to drops an item if the monsterchest dies
      */
     public void dropItem() {
-        Game.removeEntity(this);
-        //item.positionComponent.setPosition(positionComponent.getPosition().toCoordinate().toPoint());
+        Item item1 = Item.ranItem();
+        Item item2= Item.ranItem();
+        item1.positionComponent.setPosition(positionComponent.getPosition());
+        item2.positionComponent.setPosition(positionComponent.getPosition());
+        Game.items.add(item1);
+        Game.items.add(item2);
+
     }
 
     // method to calculate the path to player and moves the monsterchest in the direction
