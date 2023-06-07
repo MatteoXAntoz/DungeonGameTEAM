@@ -67,12 +67,14 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
         // Values that are needed
         //#########################
 
-        // Entity that
+        // Entity that represents the Meele attack
         Entity meele = new Entity();
 
         // Vector for the direction
+        // Attack is executed in mouse direction either, north, south, east or west
         Point direction = selectionFunction.selectTargetPoint(entity);
 
+        // HitboxComponent of the Entity using the Meele Attack
         HitboxComponent ehc =
             (HitboxComponent)
                 entity.getComponent(HitboxComponent.class)
@@ -81,31 +83,40 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
 
         meeleLogger.fine("Entity Hitbox: BL-" + ehc.getBottomLeft() + " TR-" + ehc.getTopRight() + "\n");
 
-        Point hitboxSize = meeleHitboxSize;
+        // Hitbox is rotated if direction is east or west, in case it is not a square
+        // Since its start orientation is north
 
-        // Hitbox is rotated if direction is east or west
+        Point hitboxSize = meeleHitboxSize;
         if(direction.x != 0)
             hitboxSize = new Point(meeleHitboxSize.y, meeleHitboxSize.x);
+
 
         // setUpMethods for all the Components
         //####################################
         this.setUpPositionComponent(meele, ehc, direction, hitboxSize);
 
-        new MeeleComponent(meele, durationInFrames);
+        this.setUpHitboxcomponent(entity, meele, direction);
 
         this.setUpAnimationComponent(meele, direction);
+
+        new MeeleComponent(meele, durationInFrames);
     }
 
+    // creates a new PositionComponent calculating the right position with calculateHitboxPosition()
     private void setUpPositionComponent(Entity meele, HitboxComponent ehc, Point direction, Point hitboxSize) {
         new PositionComponent(meele, this.calculateHitboxPosition(ehc, direction, hitboxSize));
     }
 
+    // creates a AnimationComponent with the right animation coresponding to the direction
     private void setUpAnimationComponent(Entity meele, Point direction) {
         Animation animation = this.getAnimations(direction, durationInFrames/3);
         new AnimationComponent(meele, animation);
     }
 
+    // Sets the hitboxComponent with its ICollide function and its knockback
     private void setUpHitboxcomponent(Entity entity, Entity meele, Point hitboxSize) {
+
+        // ICollide Function describing what happens when an Entity gets git with meele
         damageDealt = false;
         ICollide collide =
             (self, other, from) -> {
@@ -113,25 +124,13 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
                     other.getComponent(HealthComponent.class)
                         .ifPresent(
                             hc -> {
+                                // entity gets damage that was set
                                 ((HealthComponent) hc).receiveHit(meeleDamage);
                                 damageDealt = true;
                             });
 
-                    PositionComponent epc = (PositionComponent)(entity.getComponent(PositionComponent.class).get());
-                    PositionComponent opc = (PositionComponent)(other.getComponent(PositionComponent.class).get());
-
-                    Point velocity = SkillTools.calculateVelocity(
-                        epc.getPosition(),
-                        opc.getPosition(),
-                        knockBackVelocity
-                    );
-                    other.addComponent  (
-                        new KnockBackComponent(
-                            other,
-                            velocity.x,
-                            velocity.y,
-                            knockBackDuration
-                        ));
+                    // Gives git entity knockback
+                    setKnockBack(other, entity);
                 }
             };
 
@@ -142,6 +141,31 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
         meeleLogger.fine("Meele Hitbox: BL-" + hc.getBottomLeft() + " TR-" + hc.getTopRight());
     }
 
+    // Sets KnockbackComponent to "getting" entity, in direction away from "giving" entity
+    private void setKnockBack(Entity getting, Entity giving) {
+
+        // Position components of both entities
+        PositionComponent getPc = (PositionComponent)(giving.getComponent(PositionComponent.class).get());
+        PositionComponent givPc = (PositionComponent)(getting.getComponent(PositionComponent.class).get());
+
+        // calculates the specific x and y velocities
+        Point velocity = SkillTools.calculateVelocity(
+            getPc.getPosition(),
+            givPc.getPosition(),
+            knockBackVelocity
+        );
+        // adds Component to "getting" Entity
+        getting.addComponent  (
+            new KnockBackComponent(
+                getting,
+                velocity.x,
+                velocity.y,
+                knockBackDuration
+            ));
+    }
+
+    // gets right animatin path according to direction
+    // Note: All MeeleAttacks must have 4 subfolders with exactly those names
     private Animation getAnimations(Point direction, int frameTime)
     {
         String sDirection;
@@ -157,19 +181,28 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
         return AnimationBuilder.buildAnimation("knight/attack/" + sDirection, frameTime);
     }
 
+    // Calculates the right position for PositionComponent and therefore the Hitbox.
+    // Hitbox should be alligned and centered with the Entity Hitbox
     private Point calculateHitboxPosition(HitboxComponent ehc, Point direction, Point hitboxSize) {
         meeleLogger.finer("Direction: " + direction);
+
+        // Center of the Entity as Start Point
         Point eCenter = ehc.getCenter();
+
+        // gets the size of the Entity as a Vector(Point)
         Point eSize = new Point(
             ehc.getTopRight().x - ehc.getBottomLeft().x,
             ehc.getTopRight().y - ehc.getBottomLeft().y);
         meeleLogger.finer("Entity Hitbox Size: " + eSize);
 
+        // gets the Center of the new hitbox by adding the sizes of the hitboxes to the center of the Entity.
+        // And then multiplying them with the direction Vector
         Point mCenter = new Point(
             eCenter.x + (eSize.x + hitboxSize.x) * direction.x / 2,
             eCenter.y + (eSize.y + hitboxSize.y) * direction.y / 2
             );
 
+        // goes from the center of the hitbox to the bottom Left corner where the positionComponent will be.
         Point mPosition = new Point(
             mCenter.x + hitboxSize.x / -2,
             mCenter.y + hitboxSize.y / -2
@@ -177,13 +210,13 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
         return mPosition;
     }
 
-    private void cloneEntityVelocity(Entity entity, Entity meele) {
-        VelocityComponent ehc =
-            (VelocityComponent)
-                entity.getComponent(VelocityComponent.class)
-                    .orElseThrow(
-                        () -> new MissingComponentException("VelocityComponent"));
-
-        meele.addComponent(ehc);
+//    private void cloneEntityVelocity(Entity entity, Entity meele) {
+//        VelocityComponent ehc =
+//            (VelocityComponent)
+//                entity.getComponent(VelocityComponent.class)
+//                    .orElseThrow(
+//                        () -> new MissingComponentException("VelocityComponent"));
+//
+//        meele.addComponent(ehc);
 //    }
 }
