@@ -263,6 +263,9 @@ public class PlayerSystem extends ECS_System {
         if (Gdx.input.isKeyPressed(KeyboardConfig.SECOND_SKILL.get())) {
             ksd.pc.getSkillSlot2().ifPresent(skill -> skill.execute(ksd.e));
         }
+        if (Gdx.input.isKeyPressed(KeyboardConfig.THIRD_SKILL.get())) {
+            ksd.pc.getSkillSlot3().ifPresent(skill -> skill.execute(ksd.e));
+        }
     }
 
     private KSData buildDataObject(PlayableComponent pc) {

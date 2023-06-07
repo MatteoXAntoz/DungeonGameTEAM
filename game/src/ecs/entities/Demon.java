@@ -20,6 +20,7 @@ public class Demon extends Monster {
     GraphPath<Tile> path;
 
     public Demon() {
+        super();
 
         pathToIdleLeft = "demon/idleLeft";
         pathToIdleRight = "demon/idleRight";
@@ -27,7 +28,8 @@ public class Demon extends Monster {
         setupAnimation();
         setupPosition();
         setupVelocity();
-        setupAi();
+        setupHealthComponent();
+        setupAI();
         damage = 10;
     }
 
@@ -40,8 +42,10 @@ public class Demon extends Monster {
     }
 
     @Override
-    protected void setupHealthcomponent() {
+    protected void setupHealthComponent() {
         healthComponent = new HealthComponent(this);
+        healthComponent.setMaximalHealthpoints(100);
+        healthComponent.setCurrentHealthpoints(100);
     }
 
     /**
@@ -60,7 +64,7 @@ public class Demon extends Monster {
     }
 
     /** setup the AI component */
-    public void setupAi() {
+    public void setupAI() {
         new AIComponent(
                 this,
                 new IFightAI() {

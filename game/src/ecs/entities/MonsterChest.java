@@ -65,7 +65,7 @@ public class MonsterChest extends Monster {
     }
 
     @Override
-    protected void setupHealthcomponent() {
+    protected void setupHealthComponent() {
         healthComponent = new HealthComponent(
             this,
             10,
@@ -76,7 +76,7 @@ public class MonsterChest extends Monster {
     }
 
     @Override
-    protected void setupAi() {
+    protected void setupAI() {
         AIComponent ai = new AIComponent(this, new IFightAI() {
             @Override
             public void fight(Entity entity) {
@@ -92,6 +92,8 @@ public class MonsterChest extends Monster {
             }
         }, this, itransition);
     }
+
+
 
     public void setupInteraction() {
         interactionComponent = new InteractionComponent(this, 0.5f, false, new IInteraction() {
@@ -129,7 +131,7 @@ public class MonsterChest extends Monster {
         int anzahl = 2;
         ArrayList<Item> drop = new ArrayList<>();
         for(int i = 0;i<anzahl;i++ ){
-           drop.add(Item.ranItem());
+            drop.add(Item.ranItem());
         }
 
         for(Item item:drop){
