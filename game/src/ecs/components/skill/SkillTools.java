@@ -65,6 +65,12 @@ public class SkillTools {
         return new Point(mousePosition.x, mousePosition.y);
     }
 
+    /**
+     * gets the direction the cursor is pointed relative to the entity
+     *
+     * @param entity who is startPoint of directoin
+     * @return Vector that only konsists of -1, 0 and 1
+     */
     public static Point getCursorPositionAsDirection(Entity entity) {
         Vector3 mousePosition =
             Game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));

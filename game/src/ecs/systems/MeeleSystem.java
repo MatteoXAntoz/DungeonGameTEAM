@@ -4,6 +4,9 @@ import ecs.components.HealthComponent;
 import ecs.components.MeeleComponent;
 import starter.Game;
 
+/**
+ * reduces Duration of MeeleComponents and removes them
+ */
 public class MeeleSystem extends ECS_System {
 
     @Override

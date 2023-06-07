@@ -2,6 +2,9 @@ package ecs.components;
 
 import ecs.entities.Entity;
 
+/**
+ * Component that Manages the deletion of MeeleAttack Entities
+ */
 public class MeeleComponent extends Component {
     private final int animationFramesDuration;
     private int currentDuration;
