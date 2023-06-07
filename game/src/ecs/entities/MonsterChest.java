@@ -64,6 +64,35 @@ public class MonsterChest extends Monster {
         new AnimationComponent(this, idleLeft, idleRight);
     }
 
+    @Override
+    protected void setupHealthcomponent() {
+        healthComponent = new HealthComponent(
+            this,
+            10,
+            deathFunction,
+            idle,
+            idle
+        );
+    }
+
+    @Override
+    protected void setupAi() {
+        AIComponent ai = new AIComponent(this, new IFightAI() {
+            @Override
+            public void fight(Entity entity) {
+                if (itransition.isInFightMode(entity)) {
+                    followHero(entity);
+                }
+
+                if(healthComponent.getCurrentHealthpoints()==0){
+                    dropItem();
+                }
+
+
+            }
+        }, this, itransition);
+    }
+
     public void setupInteraction() {
         interactionComponent = new InteractionComponent(this, 0.5f, false, new IInteraction() {
             @Override
@@ -77,33 +106,9 @@ public class MonsterChest extends Monster {
         HitboxComponent hitboxComponent = new HitboxComponent(this);
     }
 
-    public void setupAI() {
-        AIComponent ai = new AIComponent(this, new IFightAI() {
-            @Override
-            public void fight(Entity entity) {
-                if (itransition.isInFightMode(entity)) {
-                  followHero(entity);
-                }
-
-                if(healthComponent.getCurrentHealthpoints()==0){
-                    dropItem();
-                }
 
 
-            }
-        }, this, itransition);
 
-    }
-
-    public void setupHealthComponent() {
-        healthComponent = new HealthComponent(
-            this,
-            10,
-            deathFunction,
-            idle,
-            idle
-        );
-    }
 
     public MonsterChest() {
         super();
@@ -112,9 +117,9 @@ public class MonsterChest extends Monster {
         setupInteraction();
         setupPosition();
         setupHitbox();
-        setupAI();
+        setupAi();
         new VelocityComponent(this, 0.04f, 0.04F, idleLeft, idleRight);
-        setupHealthComponent();
+        setupHealthcomponent();
 
 
     }
