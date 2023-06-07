@@ -4,7 +4,6 @@ import dslToGame.AnimationBuilder;
 import ecs.components.*;
 import ecs.components.collision.ICollide;
 import ecs.damage.Damage;
-import ecs.damage.DamageType;
 import ecs.entities.Entity;
 import graphic.Animation;
 import tools.Point;
@@ -103,7 +102,7 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
                         knockBackVelocity
                     );
                     other.addComponent  (
-                        new KnockBackComponent(
+                        new KnockbackComponent(
                             other,
                             velocity.x,
                             velocity.y,
@@ -119,7 +118,7 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
 //        this.cloneEntityVelocity(entity, meele);
 
         // Logger
-        meeleLogger.fine(J
+        meeleLogger.fine(
             "Entity Hitbox: BL-" + ehc.getBottomLeft() + " TR-" + ehc.getTopRight() + "\n" +
                 "Meele Hitbox: BL-" + hc.getBottomLeft() + " TR-" + hc.getTopRight()
         );
@@ -174,7 +173,7 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
         return mPosition;
     }
 
-    private
+//    private
 
 //    private void cloneEntityVelocity(Entity entity, Entity meele) {
 //        VelocityComponent ehc =

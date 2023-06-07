@@ -7,8 +7,6 @@ import ecs.components.*;
 import ecs.components.ai.AIComponent;
 import ecs.components.ai.AITools;
 import ecs.components.ai.fight.IFightAI;
-import ecs.components.ai.idle.FollowHeroOrEatItem;
-import ecs.components.ai.idle.IIdleAI;
 import ecs.components.ai.transition.ITransition;
 import ecs.entities.items.Item;
 import graphic.Animation;
@@ -44,6 +42,7 @@ public class MonsterChest extends Monster {
             "objects/treasurechest/chest_full_open_anim_f2.png",
             "objects/treasurechest/chest_empty_open_anim_f2.png");
 
+    @Override
     public void setupPosition() {
         positionComponent = new PositionComponent(this);
     }
@@ -53,6 +52,7 @@ public class MonsterChest extends Monster {
 
     }
 
+    @Override
     public void setupAnimation() {
         AnimationComponent ac =
             new AnimationComponent(
@@ -95,6 +95,7 @@ public class MonsterChest extends Monster {
 
     }
 
+    @Override
     public void setupHealthComponent() {
         healthComponent = new HealthComponent(
             this,

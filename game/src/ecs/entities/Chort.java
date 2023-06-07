@@ -25,8 +25,8 @@ public class Chort extends Monster {
         setupAnimation();
         setupPosition();
         setupVelocity();
-        setupHealthcomponent();
-        setupAi();
+        setupHealthComponent();
+        setupAI();
         followHeroOrEatItem = new FollowHeroOrEatItem(this);
         followHeroOrEatItem.from = positionComponent.getPosition();
         damage = 20;
@@ -41,7 +41,7 @@ public class Chort extends Monster {
     }
 
     @Override
-    protected void setupHealthcomponent() {
+    protected void setupHealthComponent() {
         healthComponent = new HealthComponent(this);
         healthComponent.setMaximalHealthpoints(100);
         healthComponent.setCurrentHealthpoints(100);
@@ -59,7 +59,7 @@ public class Chort extends Monster {
     }
 
     /** method to setup the AIComponent */
-    public void setupAi() {
+    public void setupAI() {
         new AIComponent(
                 this,
                 new IFightAI() {

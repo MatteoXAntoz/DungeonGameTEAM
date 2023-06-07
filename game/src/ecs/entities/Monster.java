@@ -39,9 +39,9 @@ public abstract class Monster extends Entity implements IIdleAI {
     protected abstract void setupVelocity();
 
     protected abstract void setupAnimation();
-    protected abstract void setupHealthcomponent();
+    protected abstract void setupHealthComponent();
 
-    protected abstract void setupAi();
+    protected abstract void setupAI();
 
     protected void setUpHitboxComponent() {
         new HitboxComponent(this);

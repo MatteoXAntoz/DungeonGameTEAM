@@ -2,12 +2,12 @@ package ecs.components;
 
 import ecs.entities.Entity;
 
-public class KnockBackComponent extends Component {
+public class KnockbackComponent extends Component {
     private final float xVelocity;
     private final float yVelocity;
     private final int duration;
     private int currentDuration;
-    public KnockBackComponent(Entity entity, float xVelocity, float yVelocity, int duration) {
+    public KnockbackComponent(Entity entity, float xVelocity, float yVelocity, int duration) {
         super(entity);
         this.xVelocity = xVelocity;
         this.yVelocity = yVelocity;

@@ -42,11 +42,11 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
         pathToWalkingLeft = "fire-worm/walkLeft";
         pathToWalkingRight = "fire-worm/walkRight";
 
-        setupHealthcomponent();
+        setupHealthComponent();
         setupAnimation();
         setupPosition();
         setupVelocity();
-        setupAi();
+        setupAI();
         setupSkillComponent();
 
 
@@ -115,7 +115,7 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
      * CurrentHealth is set up to 250 as well
      */
     @Override
-    protected void setupHealthcomponent() {
+    protected void setupHealthComponent() {
         healthComponent = new HealthComponent(this);
         healthComponent.setMaximalHealthpoints(120);
         healthComponent.setCurrentHealthpoints(120);
@@ -126,7 +126,7 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
      * {@inheritDoc}
      */
     @Override
-    protected void setupAi() {
+    protected void setupAI() {
         new AIComponent(this, this, this, this);
     }
 
