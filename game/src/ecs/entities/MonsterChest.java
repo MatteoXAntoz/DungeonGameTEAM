@@ -7,6 +7,8 @@ import ecs.components.*;
 import ecs.components.ai.AIComponent;
 import ecs.components.ai.AITools;
 import ecs.components.ai.fight.IFightAI;
+import ecs.components.ai.idle.FollowHeroOrEatItem;
+import ecs.components.ai.idle.IIdleAI;
 import ecs.components.ai.transition.ITransition;
 import ecs.entities.items.Item;
 import graphic.Animation;
@@ -42,7 +44,6 @@ public class MonsterChest extends Monster {
             "objects/treasurechest/chest_full_open_anim_f2.png",
             "objects/treasurechest/chest_empty_open_anim_f2.png");
 
-    @Override
     public void setupPosition() {
         positionComponent = new PositionComponent(this);
     }
@@ -52,16 +53,39 @@ public class MonsterChest extends Monster {
 
     }
 
-    @Override
     public void setupAnimation() {
-        AnimationComponent ac =
-            new AnimationComponent(
-                this,
-                new Animation(DEFAULT_CLOSED_ANIMATION_FRAMES, 100, false),
-                new Animation(DEFAULT_OPENING_ANIMATION_FRAMES, 100, false));
         idleRight = AnimationBuilder.buildAnimation(monsterChest_closed);
         idleLeft = AnimationBuilder.buildAnimation(monsterChest_closed);
         new AnimationComponent(this, idleLeft, idleRight);
+    }
+
+    @Override
+    protected void setupHealthComponent() {
+        healthComponent = new HealthComponent(
+            this,
+            10,
+            deathFunction,
+            idleLeft,
+            idleRight
+        );
+    }
+
+    @Override
+    protected void setupAI() {
+        AIComponent ai = new AIComponent(this, new IFightAI() {
+            @Override
+            public void fight(Entity entity) {
+                if (itransition.isInFightMode(entity)) {
+                    followHero(entity);
+                }
+
+                if(healthComponent.getCurrentHealthpoints()==0){
+                    dropItem();
+                }
+
+
+            }
+        }, this, itransition);
     }
 
     public void setupInteraction() {
@@ -77,37 +101,9 @@ public class MonsterChest extends Monster {
         HitboxComponent hitboxComponent = new HitboxComponent(this);
     }
 
-    public void setupAI() {
-        AIComponent ai = new AIComponent(this, new IFightAI() {
-            @Override
-            public void fight(Entity entity) {
-                if (itransition.isInFightMode(entity)) {
-                  followHero(entity);
-                }
-
-                if(healthComponent.getCurrentHealthpoints()==0){
-                    dropItem();
-                }
-
-
-            }
-        }, this, itransition);
-
-    }
-
-    @Override
-    public void setupHealthComponent() {
-        healthComponent = new HealthComponent(
-            this,
-            10,
-            deathFunction,
-            idle,
-            idle
-        );
-    }
-
     public MonsterChest() {
         super();
+        this.deathFunction = (e) -> {};
         setupITransition();
         setupAnimation();
         setupInteraction();
@@ -125,14 +121,11 @@ public class MonsterChest extends Monster {
         int anzahl = 2;
         ArrayList<Item> drop = new ArrayList<>();
         for(int i = 0;i<anzahl;i++ ){
-           drop.add(Item.ranItem());
+            drop.add(Item.ranItem());
         }
-
         for(Item item:drop){
             item.positionComponent.setPosition(positionComponent.getPosition().toCoordinate().toPoint());
         }
-
-
     }
 
 

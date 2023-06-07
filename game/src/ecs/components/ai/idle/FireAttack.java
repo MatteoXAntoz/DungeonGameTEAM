@@ -49,7 +49,10 @@ public class FireAttack {
 
     }
 
-    //SpitFireAgressive is set up
+    /**
+     * Set up the FireAgressive skill
+     */
+
     public void setupSpitFireAgressive() {
         spitFireAgressive = new Skill(new Spitfire(new ITargetSelection() {
             @Override
@@ -62,7 +65,10 @@ public class FireAttack {
 
     }
 
-    //TeleportSkill is set up
+
+    /**
+     * Set up the Teleport skill
+     */
     public void setupTeleportSkill() {
         teleportSkill = new TeleportSkill(new ISkillFunction() {
             @Override
@@ -73,12 +79,11 @@ public class FireAttack {
         fireAttack_Logger.info("Teleport wurde initialisiert.");
     }
 
-    /**
+    /**Checks if the entity is within a certain radius around the hero.
      * @param entity
      * @return
      */
     public boolean isInRadius(Entity entity) {
-        // Check if the entity is within a certain radius around the hero.
 
         float radius = 5; // The radius that defines how far the entity can be from the hero
         float heroX = Game.hero.positionComponent.getPosition().x; // The x-coordinate of the hero's position

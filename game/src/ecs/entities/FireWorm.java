@@ -28,7 +28,8 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
     private String pathToWalkingRight; // Pfad zur Animation für das Gehen nach rechts.
 
     /**
-     *
+     * Constructor for the FireWorm class.
+     * Creates an instance of FireWorm and initializes its properties.
      */
 
     public FireWorm() {
@@ -132,25 +133,38 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
 
     /**
      * {@inheritDoc}
+     * Initiates a fight with the specified entity.
+     *
+     * @param entity The entity to fight against.
+     *
      */
     @Override
+    /**
+     * Initiates a fight with the specified entity.
+     *
+     * @param entity The entity to fight against.
+     */
     public void fight(Entity entity) {
-
         if (!isSecondStage()) {
+            // If in range and colliding with the entity, execute SpitFire attack
             if (getFireAttack().isInRadius(entity) && getFireAttack().isColliding(entity)) {
                 getFireAttack().getSpitFire().execute(entity);
-            } else if (getFireAttack().isInRadius(entity) && !getFireAttack().isColliding(entity)) {
+            }
+            // If in range but not colliding with the entity, execute FireballSkill attack
+            else if (getFireAttack().isInRadius(entity) && !getFireAttack().isColliding(entity)) {
                 getFireAttack().getFireballSkill().execute(entity);
             }
         } else {
+            // Set the X and Y velocity to 0.05f in second stage
             velocityComponent.setXVelocity(0.05f);
             velocityComponent.setYVelocity(0.05f);
+            // If in range and colliding with the entity, execute aggressive SpitFire attack
             if (getFireAttack().isInRadius(entity) && getFireAttack().isColliding(entity)) {
                 getFireAttack().getSpitFireAgressive().execute(entity);
             }
         }
-
     }
+
 
     /**
      * {@inheritDoc}
@@ -165,20 +179,19 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
         return false;
     }
 
-    //Checks if the secondStage is active
+    //isSecondStage checks, if the monster lose half of the healthpoints
     private boolean isSecondStage() {
         return (healthComponent.getCurrentHealthpoints() < (healthComponent.getMaximalHealthpoints() / 2));
     }
 
     /**
-     *
      * @return skillComponent
      */
     public SkillComponent getSkillComponent() {
         return skillComponent;
     }
+
     /**
-     *
      * @param skillComponent
      */
     public void setSkillComponent(SkillComponent skillComponent) {
@@ -186,7 +199,6 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
     }
 
     /**
-     *
      * @return fireAttack
      */
     public FireAttack getFireAttack() {
@@ -194,7 +206,6 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
     }
 
     /**
-     *
      * @param fireAttack
      */
     public void setFireAttack(FireAttack fireAttack) {
@@ -202,7 +213,6 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
     }
 
     /**
-     *
      * @return goToLadder
      */
     public GoToLadder getGoToLadder() {
@@ -210,7 +220,6 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
     }
 
     /**
-     *
      * @param goToLadder
      */
     public void setGoToLadder(GoToLadder goToLadder) {
@@ -218,7 +227,6 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
     }
 
     /**
-     *
      * @return walkLeft
      */
     public Animation getWalkLeft() {
@@ -226,7 +234,6 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
     }
 
     /**
-     *
      * @param walkLeft
      */
     public void setWalkLeft(Animation walkLeft) {
@@ -234,7 +241,6 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
     }
 
     /**
-     *
      * @return walkRight
      */
     public Animation getWalkRight() {
@@ -242,7 +248,6 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
     }
 
     /**
-     *
      * @param walkRight
      */
     public void setWalkRight(Animation walkRight) {
@@ -250,7 +255,6 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
     }
 
     /**
-     *
      * @return animationComponent
      */
     public AnimationComponent getAnimationComponent() {
@@ -258,7 +262,6 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
     }
 
     /**
-     *
      * @param animationComponent
      */
     public void setAnimationComponent(AnimationComponent animationComponent) {
@@ -266,7 +269,6 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
     }
 
     /**
-     *
      * @return pathToWalkingLeft
      */
     public String getPathToWalkingLeft() {
@@ -274,7 +276,6 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
     }
 
     /**
-     *
      * @param pathToWalkingLeft
      */
     public void setPathToWalkingLeft(String pathToWalkingLeft) {
@@ -282,7 +283,6 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
     }
 
     /**
-     *
      * @return pathToWalkingRight
      */
     public String getPathToWalkingRight() {
@@ -290,7 +290,6 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
     }
 
     /**
-     *
      * @param pathToWalkingRight
      */
     public void setPathToWalkingRight(String pathToWalkingRight) {
