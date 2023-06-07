@@ -54,11 +54,6 @@ public class MonsterChest extends Monster {
     }
 
     public void setupAnimation() {
-        AnimationComponent ac =
-            new AnimationComponent(
-                this,
-                new Animation(DEFAULT_CLOSED_ANIMATION_FRAMES, 100, false),
-                new Animation(DEFAULT_OPENING_ANIMATION_FRAMES, 100, false));
         idleRight = AnimationBuilder.buildAnimation(monsterChest_closed);
         idleLeft = AnimationBuilder.buildAnimation(monsterChest_closed);
         new AnimationComponent(this, idleLeft, idleRight);
@@ -70,8 +65,8 @@ public class MonsterChest extends Monster {
             this,
             10,
             deathFunction,
-            idle,
-            idle
+            idleLeft,
+            idleRight
         );
     }
 
@@ -93,8 +88,6 @@ public class MonsterChest extends Monster {
         }, this, itransition);
     }
 
-
-
     public void setupInteraction() {
         interactionComponent = new InteractionComponent(this, 0.5f, false, new IInteraction() {
             @Override
@@ -108,20 +101,17 @@ public class MonsterChest extends Monster {
         HitboxComponent hitboxComponent = new HitboxComponent(this);
     }
 
-
-
-
-
     public MonsterChest() {
         super();
+        this.deathFunction = (e) -> {};
         setupITransition();
         setupAnimation();
         setupInteraction();
         setupPosition();
         setupHitbox();
-        setupAi();
+        setupAI();
         new VelocityComponent(this, 0.04f, 0.04F, idleLeft, idleRight);
-        setupHealthcomponent();
+        setupHealthComponent();
 
 
     }
@@ -133,12 +123,9 @@ public class MonsterChest extends Monster {
         for(int i = 0;i<anzahl;i++ ){
             drop.add(Item.ranItem());
         }
-
         for(Item item:drop){
             item.positionComponent.setPosition(positionComponent.getPosition().toCoordinate().toPoint());
         }
-
-
     }
 
 
