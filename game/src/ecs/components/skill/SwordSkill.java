@@ -12,6 +12,7 @@ public class SwordSkill extends DamageMeeleSkill {
             new Point(1.5f, 1.5f),
             0.15f,
             10,
+            9,
             targetSelection
         );
     }

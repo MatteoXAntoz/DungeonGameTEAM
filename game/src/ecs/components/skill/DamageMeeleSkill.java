@@ -7,6 +7,7 @@ import ecs.damage.Damage;
 import ecs.damage.DamageType;
 import ecs.entities.Entity;
 import graphic.Animation;
+import jdk.jfr.Unsigned;
 import tools.Point;
 
 import java.util.logging.Level;
@@ -24,6 +25,7 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
     private final Point meeleHitboxSize;
     private final float knockBackVelocity;
     private final int knockBackDuration;
+    private final int durationInFrames;
     private static Logger meeleLogger = Logger.getLogger(DamageMeeleSkill.class.getName());
 
     private ITargetSelection selectionFunction;
@@ -37,6 +39,7 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
      * @param meeleHitboxSize Size and Orientation of the Meele Hitbox, oriented North.
      * @param knockBackVelocity Velocity the enemy/ies is/are pushed back with
      * @param knockBackDuration Duration the enemy/ies is/are pushed back for
+     * @param durationInFrames Duration the meele is Visible
      * @param selectionFunction How the Target is targeted. Has to return a Point that works as a vektor
      */
     public DamageMeeleSkill(
@@ -45,6 +48,7 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
         Point meeleHitboxSize,
         float knockBackVelocity,
         int knockBackDuration,
+        int durationInFrames,
         ITargetSelection selectionFunction) {
 
         this.pathToTextures = pathToTextures;
@@ -52,13 +56,18 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
         this.meeleHitboxSize = meeleHitboxSize;
         this.knockBackVelocity = knockBackVelocity;
         this.knockBackDuration = knockBackDuration;
+        this.durationInFrames = durationInFrames;
         this.selectionFunction = selectionFunction;
         meeleLogger.setLevel(Level.INFO);
     }
 
     @Override
     public void execute(Entity entity) {
-        damageDealt = false;
+
+        // Values that are needed
+        //#########################
+
+        // Entity that
         Entity meele = new Entity();
 
         // Vector for the direction
@@ -70,20 +79,34 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
                     .orElseThrow(
                         () -> new MissingComponentException("HitboxComponent"));
 
+        meeleLogger.fine("Entity Hitbox: BL-" + ehc.getBottomLeft() + " TR-" + ehc.getTopRight() + "\n");
+
         Point hitboxSize = meeleHitboxSize;
 
         // Hitbox is rotated if direction is east or west
         if(direction.x != 0)
             hitboxSize = new Point(meeleHitboxSize.y, meeleHitboxSize.x);
 
-        new PositionComponent(meele, this.calculateHitboxPosition(ehc, direction, hitboxSize));
+        // setUpMethods for all the Components
+        //####################################
+        this.setUpPositionComponent(meele, ehc, direction, hitboxSize);
 
-        final int durationInFrames = 9;
         new MeeleComponent(meele, durationInFrames);
 
+        this.setUpAnimationComponent(meele, direction);
+    }
+
+    private void setUpPositionComponent(Entity meele, HitboxComponent ehc, Point direction, Point hitboxSize) {
+        new PositionComponent(meele, this.calculateHitboxPosition(ehc, direction, hitboxSize));
+    }
+
+    private void setUpAnimationComponent(Entity meele, Point direction) {
         Animation animation = this.getAnimations(direction, durationInFrames/3);
         new AnimationComponent(meele, animation);
+    }
 
+    private void setUpHitboxcomponent(Entity entity, Entity meele, Point hitboxSize) {
+        damageDealt = false;
         ICollide collide =
             (self, other, from) -> {
                 if (other != entity && !damageDealt) {
@@ -114,30 +137,10 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
 
         HitboxComponent hc =
             new HitboxComponent(
-            meele, new Point(0f, 0f), hitboxSize, collide, null);
+                meele, new Point(0f, 0f), hitboxSize, collide, null);
 
-//        this.cloneEntityVelocity(entity, meele);
-
-        // Logger
-        meeleLogger.fine(J
-            "Entity Hitbox: BL-" + ehc.getBottomLeft() + " TR-" + ehc.getTopRight() + "\n" +
-                "Meele Hitbox: BL-" + hc.getBottomLeft() + " TR-" + hc.getTopRight()
-        );
+        meeleLogger.fine("Meele Hitbox: BL-" + hc.getBottomLeft() + " TR-" + hc.getTopRight());
     }
-
-    private void setUpPositionComponent(Entity meele, HitboxComponent ehc, Point direction, Point hitboxSize) {
-
-    }
-
-    private void setUpAnimationComponent(Entity meele, Point direction, int durationInFrames) {
-
-    }
-
-    private void setUpHitboxcomponent(Entity meele, Point hitboxSize) {
-
-    }
-
-
 
     private Animation getAnimations(Point direction, int frameTime)
     {
@@ -174,15 +177,13 @@ public abstract class DamageMeeleSkill implements ISkillFunction {
         return mPosition;
     }
 
-    private
+    private void cloneEntityVelocity(Entity entity, Entity meele) {
+        VelocityComponent ehc =
+            (VelocityComponent)
+                entity.getComponent(VelocityComponent.class)
+                    .orElseThrow(
+                        () -> new MissingComponentException("VelocityComponent"));
 
-//    private void cloneEntityVelocity(Entity entity, Entity meele) {
-//        VelocityComponent ehc =
-//            (VelocityComponent)
-//                entity.getComponent(VelocityComponent.class)
-//                    .orElseThrow(
-//                        () -> new MissingComponentException("VelocityComponent"));
-//
-//        meele.addComponent(ehc);
+        meele.addComponent(ehc);
 //    }
 }
