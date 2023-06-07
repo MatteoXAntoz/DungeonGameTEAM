@@ -133,8 +133,8 @@ public class MonsterChest extends Monster {
             this,
             10,
             deathFunction,
-            idle,
-            idle
+            idleRight,
+            idleLeft
         );
         healthComponent.setMaximalHealthpoints(50);
         healthComponent.setCurrentHealthpoints(50);
