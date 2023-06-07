@@ -6,12 +6,9 @@ import ecs.components.VelocityComponent;
 import ecs.components.ai.idle.IIdleAI;
 import graphic.Animation;
 
-/**
- * abstract class to create a template to build monster
- */
+/** abstract class to create a template to build monster */
 public abstract class Monster extends Entity implements IIdleAI {
-    public Monster()
-    {
+    public Monster() {
         super();
         setUpHitboxComponent();
     }
@@ -24,14 +21,10 @@ public abstract class Monster extends Entity implements IIdleAI {
 
     protected int damage;
 
-    /**
-     * String to the path of the assets for the animation
-     */
+    /** String to the path of the assets for the animation */
     protected String pathToIdleLeft;
 
-    /**
-     * String to the path of the assets for the animation
-     */
+    /** String to the path of the assets for the animation */
     protected String pathToIdleRight;
 
     protected abstract void setupPosition();
@@ -39,6 +32,7 @@ public abstract class Monster extends Entity implements IIdleAI {
     protected abstract void setupVelocity();
 
     protected abstract void setupAnimation();
+
     protected abstract void setupHealthComponent();
 
     protected abstract void setupAI();
@@ -46,7 +40,6 @@ public abstract class Monster extends Entity implements IIdleAI {
     protected void setUpHitboxComponent() {
         new HitboxComponent(this);
     }
-
 
     /**
      * method to check if monster is colliding with hero
@@ -58,13 +51,13 @@ public abstract class Monster extends Entity implements IIdleAI {
         float hitBoxScale = 0.6f;
 
         return (positionComponent.getPosition().x + hitBoxScale
-            > hero.positionComponent.getPosition().x
-            && positionComponent.getPosition().x
-            < hero.positionComponent.getPosition().x + hitBoxScale
-            && positionComponent.getPosition().y + hitBoxScale
-            > hero.positionComponent.getPosition().y
-            && positionComponent.getPosition().y
-            < hero.positionComponent.getPosition().y + hitBoxScale);
+                        > hero.positionComponent.getPosition().x
+                && positionComponent.getPosition().x
+                        < hero.positionComponent.getPosition().x + hitBoxScale
+                && positionComponent.getPosition().y + hitBoxScale
+                        > hero.positionComponent.getPosition().y
+                && positionComponent.getPosition().y
+                        < hero.positionComponent.getPosition().y + hitBoxScale);
     }
 
     /**
@@ -83,7 +76,4 @@ public abstract class Monster extends Entity implements IIdleAI {
             return new Demon();
         }
     }
-
-
-
 }

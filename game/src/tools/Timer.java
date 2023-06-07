@@ -1,23 +1,17 @@
 package tools;
 
-/**
- * The Timer class represents a simple countdown timer.
- */
+/** The Timer class represents a simple countdown timer. */
 public class Timer {
 
     int durationInFrames;
     int currentDurationInFrames;
 
-    /**
-     * Reduces the current duration by 1 frame, ensuring it does not go below 0.
-     */
+    /** Reduces the current duration by 1 frame, ensuring it does not go below 0. */
     public void reduceCounter() {
         currentDurationInFrames = Math.max(0, --currentDurationInFrames);
     }
 
-    /**
-     * Activates the counter by setting the current duration to the initial duration.
-     */
+    /** Activates the counter by setting the current duration to the initial duration. */
     public void activateCounter() {
         currentDurationInFrames = durationInFrames;
     }

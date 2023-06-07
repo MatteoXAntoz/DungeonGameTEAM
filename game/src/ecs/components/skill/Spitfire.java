@@ -4,16 +4,15 @@ import ecs.damage.Damage;
 import ecs.damage.DamageType;
 import tools.Point;
 
-public class Spitfire extends DamageProjectileSkill{
-
+public class Spitfire extends DamageProjectileSkill {
 
     public Spitfire(ITargetSelection targetSelection) {
         super(
-            "skills/Spitfire/",
-            0.007f,
-            new Damage(1,
-                DamageType.FIRE,
-                null),
-            new Point(1, 1), targetSelection, 1);
+                "skills/Spitfire/",
+                0.007f,
+                new Damage(1, DamageType.FIRE, null),
+                new Point(1, 1),
+                targetSelection,
+                1);
     }
 }

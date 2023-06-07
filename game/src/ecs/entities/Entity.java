@@ -75,6 +75,4 @@ public class Entity implements Serializable {
                 && positionComponent.getPosition().y + hitBoxScale > tile.getCoordinateAsPoint().y
                 && positionComponent.getPosition().y < tile.getCoordinateAsPoint().y + hitBoxScale);
     }
-
-
 }

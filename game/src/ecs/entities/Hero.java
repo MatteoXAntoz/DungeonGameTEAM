@@ -70,7 +70,7 @@ public class Hero extends Entity {
         skillComponent.addSkill(healingSkill);
         skillComponent.addSkill(swordSkill);
 
-        //Der Inventarplatz vom Spieler wird auf wird auf 10 gesetzt
+        // Der Inventarplatz vom Spieler wird auf wird auf 10 gesetzt
         getMyInventory().setMaxSpace(10);
     }
 
@@ -118,14 +118,11 @@ public class Hero extends Entity {
     }
 
     private void setUpSwordSkill() {
-        swordSkill =
-            new Skill(
-                new SwordSkill(SkillTools::getCursorPositionAsDirection), 0.7f);
+        swordSkill = new Skill(new SwordSkill(SkillTools::getCursorPositionAsDirection), 0.7f);
     }
 
     private void setupHitboxComponent() {
-        hitboxComponent =
-            new HitboxComponent(this);
+        hitboxComponent = new HitboxComponent(this);
     }
 
     private void setupHealthComponent() {

@@ -2,9 +2,7 @@ package ecs.components;
 
 import ecs.entities.Entity;
 
-/**
- * Class holds information to apply knockback on an Entity
- */
+/** Class holds information to apply knockback on an Entity */
 public class KnockBackComponent extends Component {
     private final float xVelocity;
     private final float yVelocity;
@@ -27,9 +25,7 @@ public class KnockBackComponent extends Component {
         this.currentDuration = duration;
     }
 
-    /**
-     * reduces The current duration by one Frame.
-     */
+    /** reduces The current duration by one Frame. */
     public void reduceDuration() {
         currentDuration = Math.max(0, --currentDuration);
     }
@@ -40,20 +36,19 @@ public class KnockBackComponent extends Component {
      * @return if the Knockback is still happening
      */
     public boolean isAktive() {
-        if(currentDuration == 0)
-            return false;
+        if (currentDuration == 0) return false;
         return true;
     }
 
     /**
-     * @return y  Velocity of the Knockback Component
+     * @return y Velocity of the Knockback Component
      */
     public float getYVelocity() {
         return this.yVelocity;
     }
 
     /**
-     * @return x  Velocity of the Knockback Component
+     * @return x Velocity of the Knockback Component
      */
     public float getXVelocity() {
         return this.xVelocity;

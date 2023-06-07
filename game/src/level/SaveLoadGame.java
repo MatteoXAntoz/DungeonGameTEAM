@@ -204,8 +204,7 @@ public class SaveLoadGame implements Serializable {
                         newMonsters.add(new Chort());
                     } else if (st.equals("Demon")) {
                         newMonsters.add(new Demon());
-                    }
-                    else if (st.equals("FireWorm")) {
+                    } else if (st.equals("FireWorm")) {
                         newMonsters.add(new FireWorm());
                     }
                 }

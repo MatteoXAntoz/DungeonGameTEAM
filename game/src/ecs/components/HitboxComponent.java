@@ -132,7 +132,9 @@ public class HitboxComponent extends Component {
      *
      * @return size of Hitbox as <code>Point</code>
      */
-    public Point getSize() {return this.size;}
+    public Point getSize() {
+        return this.size;
+    }
 
     /**
      * @param iCollideEnter new collideMethod of the associated entity

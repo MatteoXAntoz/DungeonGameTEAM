@@ -50,8 +50,7 @@ public class TextureHandler {
      * Searches for all textures paths that matches with the given regular expression.
      *
      * <p>Example: knight_m_idle_anim_f(2|3).png will return the paths for knight_m_idle_anim_f2.png
-     * and knight_m_idle_anim_f3.png.
-     * Textures in bin and build directory are being ignored.
+     * and knight_m_idle_anim_f3.png. Textures in bin and build directory are being ignored.
      *
      * @param regex the regular expression
      * @return a String List with all texture paths, that have matched

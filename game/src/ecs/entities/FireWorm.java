@@ -10,28 +10,27 @@ import ecs.components.ai.idle.FireAttack;
 import ecs.components.ai.idle.GoToLadder;
 import ecs.components.ai.transition.ITransition;
 import ecs.components.skill.*;
-
 import graphic.Animation;
-
 import java.util.logging.Logger;
 
 public class FireWorm extends BossMonster implements IFightAI, ITransition {
 
-
     private final Logger fireWorm_Logger = Logger.getLogger(this.getClass().getName());
     private SkillComponent skillComponent; // Skill-Komponente für die FireWorm-Entität.
-    private FireAttack fireAttack; // Instanz der FireAttack-Klasse für den Angriff der FireWorm-Entität.
-    private GoToLadder goToLadder; // Instanz der GoToLadder-Klasse für das Verhalten der FireWorm-Entität.
+    private FireAttack
+            fireAttack; // Instanz der FireAttack-Klasse für den Angriff der FireWorm-Entität.
+    private GoToLadder
+            goToLadder; // Instanz der GoToLadder-Klasse für das Verhalten der FireWorm-Entität.
     private Animation walkLeft, walkRight; // Animationen für das Gehen nach links und rechts.
-    private AnimationComponent animationComponent; // Komponente zur Verwaltung der Animationen der FireWorm-Entität.
+    private AnimationComponent
+            animationComponent; // Komponente zur Verwaltung der Animationen der FireWorm-Entität.
     private String pathToWalkingLeft; // Pfad zur Animation für das Gehen nach links.
     private String pathToWalkingRight; // Pfad zur Animation für das Gehen nach rechts.
 
     /**
-     * Constructor for the FireWorm class.
-     * Creates an instance of FireWorm and initializes its properties.
+     * Constructor for the FireWorm class. Creates an instance of FireWorm and initializes its
+     * properties.
      */
-
     public FireWorm() {
         super();
 
@@ -49,11 +48,9 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
         setupVelocity();
         setupAI();
         setupSkillComponent();
-
-
     }
 
-    //Setup of skillComponent and Skills
+    // Setup of skillComponent and Skills
     private void setupSkillComponent() {
         skillComponent = new SkillComponent(this);
         fireAttack.setupSpitfire();
@@ -68,75 +65,53 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
         fireWorm_Logger.info("TeleportSkill was added");
         skillComponent.addSkill(fireAttack.getSpitFireAgressive());
         fireWorm_Logger.info("SpitFireAgressive was added");
-
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void idle(Entity entity) {
         goToLadder.idle(entity);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
-    protected void setupPosition() {
+    protected void setupPosition() {}
 
-    }
-
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected void setupVelocity() {
         xSpeed = 0.4f;
         ySpeed = 0.4f;
         velocityComponent = new VelocityComponent(this, xSpeed, ySpeed, walkLeft, walkRight);
-
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected void setupAnimation() {
         walkLeft = AnimationBuilder.buildAnimation(pathToWalkingLeft);
         walkRight = AnimationBuilder.buildAnimation(pathToWalkingRight);
 
         animationComponent = new AnimationComponent(this, walkLeft, walkRight);
-
     }
 
-    /**
-     * {@inheritDoc}
-     * MaxHealth is set up to 250
-     * CurrentHealth is set up to 250 as well
-     */
+    /** {@inheritDoc} MaxHealth is set up to 250 CurrentHealth is set up to 250 as well */
     @Override
     protected void setupHealthComponent() {
         healthComponent = new HealthComponent(this);
         healthComponent.setMaximalHealthpoints(120);
         healthComponent.setCurrentHealthpoints(120);
-
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected void setupAI() {
         new AIComponent(this, this, this, this);
     }
 
     /**
-     * {@inheritDoc}
-     * Initiates a fight with the specified entity.
+     * {@inheritDoc} Initiates a fight with the specified entity.
      *
      * @param entity The entity to fight against.
-     *
      */
     @Override
     /**
@@ -165,10 +140,7 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
         }
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isInFightMode(Entity entity) {
         if (getFireAttack().isInRadius(entity)) {
@@ -179,9 +151,10 @@ public class FireWorm extends BossMonster implements IFightAI, ITransition {
         return false;
     }
 
-    //isSecondStage checks, if the monster lose half of the healthpoints
+    // isSecondStage checks, if the monster lose half of the healthpoints
     private boolean isSecondStage() {
-        return (healthComponent.getCurrentHealthpoints() < (healthComponent.getMaximalHealthpoints() / 2));
+        return (healthComponent.getCurrentHealthpoints()
+                < (healthComponent.getMaximalHealthpoints() / 2));
     }
 
     /**

@@ -37,10 +37,6 @@ public class LevelAPI {
 
     Grave grave;
 
-
-
-
-
     /**
      * @param batch Batch on which to draw.
      * @param painter Who draws?
@@ -80,15 +76,14 @@ public class LevelAPI {
         grave.positionComponent.setPosition(
                 currentLevel.getRandomFloorTile().getCoordinateAsPoint());
 
-
-
         spawnItems();
 
         spawnTraps();
 
         spawnMonsters();
 
-        String heroInfo = "Current Hero health: " + Game.hero.healthComponent.getCurrentHealthpoints();
+        String heroInfo =
+                "Current Hero health: " + Game.hero.healthComponent.getCurrentHealthpoints();
         levelAPI_logger.info(heroInfo);
     }
 
@@ -209,8 +204,8 @@ public class LevelAPI {
     }
 
     /**
-     * die Methode spawnTraps ist für das Spawnen der Traps zuständig, entweder werden sie
-     * geladen oder neue generiert.
+     * die Methode spawnTraps ist für das Spawnen der Traps zuständig, entweder werden sie geladen
+     * oder neue generiert.
      */
     public void spawnTraps() {
 
@@ -251,8 +246,8 @@ public class LevelAPI {
     }
 
     /**
-     * die Methode spawnItems ist für das Spawnen der Item zuständig, entweder werden sie
-     * geladen oder neue generiert.
+     * die Methode spawnItems ist für das Spawnen der Item zuständig, entweder werden sie geladen
+     * oder neue generiert.
      */
     public void spawnItems() {
         if (levelID == 1 && !SaveLoadGame.isEmpty(SaveLoadGame.PATH, SaveLoadGame.ITEM_DATA)) {
@@ -313,7 +308,6 @@ public class LevelAPI {
             }
         }
     }
-
 
     /**
      * die Methode spawnMonsters ist für das Spawnen der Monster zuständig, entweder werden sie

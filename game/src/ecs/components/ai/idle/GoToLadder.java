@@ -2,33 +2,20 @@ package ecs.components.ai.idle;
 
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import ecs.components.ai.AITools;
-import ecs.components.skill.ISkillFunction;
 import ecs.entities.Entity;
-import ecs.entities.items.Item;
-import level.elements.tile.ExitTile;
-import level.elements.tile.FloorTile;
+import java.util.logging.Logger;
 import level.elements.tile.Tile;
-import level.tools.LevelElement;
 import starter.Game;
-import tools.Constants;
 import tools.Point;
 import tools.Timer;
-
-import javax.swing.plaf.PanelUI;
-import java.awt.event.ItemEvent;
-import java.util.logging.Logger;
 
 public class GoToLadder implements IIdleAI {
 
     private final Logger goToLadder_logger = Logger.getLogger(this.getClass().getName());
 
-    /**
-     * grapLadderPath is the path to the Ladder
-     */
+    /** grapLadderPath is the path to the Ladder */
     public GraphPath<Tile> graphLadderPath;
-    /**
-     * graphRandomPoint is the path to a random Point in the dungeon
-     */
+    /** graphRandomPoint is the path to a random Point in the dungeon */
     public GraphPath<Tile> graphRandomPoint;
     // timer is used for the cooldown of the paths
     private Timer timer = new Timer();
@@ -39,7 +26,6 @@ public class GoToLadder implements IIdleAI {
     //
     private Tile ladderTile;
 
-
     public GoToLadder() {
         ladderTile = Game.currentLevel.getExitTiles().get(0);
         randomPoint = Game.currentLevel.getRandomFloorTile().getCoordinateAsPoint();
@@ -48,9 +34,9 @@ public class GoToLadder implements IIdleAI {
     }
 
     /**
-     * Puts the entity in an idle state, alternating between left and right modes.
-     * If the timer is not counting, it switches the mode and activates the timer.
-     * Otherwise, it moves the entity according to the current mode and reduces the timer counter.
+     * Puts the entity in an idle state, alternating between left and right modes. If the timer is
+     * not counting, it switches the mode and activates the timer. Otherwise, it moves the entity
+     * according to the current mode and reduces the timer counter.
      *
      * @param entity The entity to put in idle state.
      */
@@ -73,12 +59,14 @@ public class GoToLadder implements IIdleAI {
         getTimer().reduceCounter();
     }
 
-    //Moves the entity according to the specified mode.
+    // Moves the entity according to the specified mode.
     private void move(Entity entity, Character mode) {
         if (mode.equals('L')) {
-            // If there is no graph random point set, calculate a new path from the entity's position to a random point
+            // If there is no graph random point set, calculate a new path from the entity's
+            // position to a random point
             if (getGraphRandomPoint() == null) {
-                setGraphRandomPoint(AITools.calculatePath(entity.positionComponent.getPosition(), randomPoint));
+                setGraphRandomPoint(
+                        AITools.calculatePath(entity.positionComponent.getPosition(), randomPoint));
             }
             // Move the entity along the calculated path
             AITools.move(entity, graphRandomPoint);
@@ -88,9 +76,13 @@ public class GoToLadder implements IIdleAI {
             graphLadderPath = null;
         }
         if (mode.equals('R')) {
-            // If the ladder path is not set, calculate a new path from the entity's position to the ladder tile
+            // If the ladder path is not set, calculate a new path from the entity's position to the
+            // ladder tile
             if (graphLadderPath == null) {
-                graphLadderPath = AITools.calculatePath(entity.positionComponent.getPosition(), ladderTile.getCoordinate().toPoint());
+                graphLadderPath =
+                        AITools.calculatePath(
+                                entity.positionComponent.getPosition(),
+                                ladderTile.getCoordinate().toPoint());
             }
             // Move the entity along the ladder path
             AITools.move(entity, graphLadderPath);
@@ -147,5 +139,3 @@ public class GoToLadder implements IIdleAI {
         this.ladderTile = ladderTile;
     }
 }
-
-

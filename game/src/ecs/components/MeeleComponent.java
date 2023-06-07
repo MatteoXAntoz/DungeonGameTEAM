@@ -2,9 +2,7 @@ package ecs.components;
 
 import ecs.entities.Entity;
 
-/**
- * Component that Manages the deletion of MeeleAttack Entities
- */
+/** Component that Manages the deletion of MeeleAttack Entities */
 public class MeeleComponent extends Component {
     private final int animationFramesDuration;
     private int currentDuration;
@@ -13,8 +11,8 @@ public class MeeleComponent extends Component {
      * Manages the removal of temporary meele Entities.
      *
      * @param entity meele
-     * @param animationFramesDuration time in Frames until the entity gets removed,
-     *                                should be equal to the frames the animation takes.
+     * @param animationFramesDuration time in Frames until the entity gets removed, should be equal
+     *     to the frames the animation takes.
      */
     public MeeleComponent(Entity entity, int animationFramesDuration) {
         super(entity);
@@ -22,9 +20,7 @@ public class MeeleComponent extends Component {
         this.currentDuration = animationFramesDuration;
     }
 
-    /**
-     * reduces The current duration by one Frame.
-     */
+    /** reduces The current duration by one Frame. */
     public void reduceDuration() {
         currentDuration = Math.max(0, --currentDuration);
     }
@@ -35,7 +31,7 @@ public class MeeleComponent extends Component {
      * @return if the meele Atack is Aktive
      */
     public boolean isAktive() {
-        if(currentDuration == 0) {
+        if (currentDuration == 0) {
             return false;
         }
         return true;
