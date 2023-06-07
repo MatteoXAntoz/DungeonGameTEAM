@@ -67,7 +67,7 @@ public class MonsterChest extends Monster {
     public void setupInteraction() {
         interactionComponent = new InteractionComponent(this, 0.5f, false, new IInteraction() {
             @Override
-            public void onInteraction(Entity entity) { 
+            public void onInteraction(Entity entity) {
                 fight = true;
             }
         });
