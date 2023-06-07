@@ -1,7 +1,6 @@
 package ecs.entities;
 
 
-import com.badlogic.gdx.ai.Logger;
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import dslToGame.AnimationBuilder;
 import ecs.components.*;
@@ -12,6 +11,7 @@ import ecs.components.ai.idle.FollowHeroOrEatItem;
 import ecs.components.ai.idle.IIdleAI;
 import ecs.components.ai.transition.ITransition;
 import ecs.entities.items.Item;
+import ecs.entities.items.Potion;
 import graphic.Animation;
 import level.elements.tile.Tile;
 import starter.Game;
@@ -19,12 +19,14 @@ import starter.Game;
 
 import java.util.ArrayList;
 import java.util.List;
-import  java.util.logging.Logger;
+import java.util.logging.Logger;
 
 /**
  * class to create a monsterchest that attacks and follows the player
  */
 public class MonsterChest extends Monster {
+
+    private final Logger monsterChest_logger = Logger.getLogger(this.getClass().getName());
     IFightAI iFightAI;
     ITransition itransition;
     Animation idle, idleLeft, idleRight;
@@ -88,7 +90,6 @@ public class MonsterChest extends Monster {
         interactionComponent = new InteractionComponent(this, 0.5f, false, new IInteraction() {
             @Override
             public void onInteraction(Entity entity) {
-                monsterChest_logger.info("Monster now follows player");
                 fight = true;
             }
         });
@@ -130,6 +131,8 @@ public class MonsterChest extends Monster {
             idle,
             idle
         );
+        healthComponent.setMaximalHealthpoints(50);
+        healthComponent.setCurrentHealthpoints(50);
     }
 
     /**
@@ -137,14 +140,7 @@ public class MonsterChest extends Monster {
      */
     public void dropItem() {
         Game.removeEntity(this);
-        int anzahl = 2;
-        ArrayList<Item> drop = new ArrayList<>();
-        for(int i = 0;i<anzahl;i++ ){
-           drop.add(Item.ranItem());
-        }
-        for(Item item:drop){
-            item.positionComponent.setPosition(positionComponent.getPosition().toCoordinate().toPoint());
-        }
+        //item.positionComponent.setPosition(positionComponent.getPosition().toCoordinate().toPoint());
     }
 
     // method to calculate the path to player and moves the monsterchest in the direction
