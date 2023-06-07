@@ -5,7 +5,10 @@ import ecs.damage.DamageType;
 import tools.Point;
 
 public class Spitfire extends DamageProjectileSkill {
-
+    /**
+     * 
+     * @param targetSelection
+     */
     public Spitfire(ITargetSelection targetSelection) {
         super(
                 "skills/Spitfire/",
