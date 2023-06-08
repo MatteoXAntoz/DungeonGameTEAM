@@ -28,11 +28,15 @@ public class MonsterChest extends Monster {
     HealthComponent healthComponent;
 
     boolean fight;
+    /** set the default interaction radius in which the player can operate with the monsterchest */
     public static final float defaultInteractionRadius = 1f;
+    /** path to the animation for the monsterchest */
     public static final String monsterChest_closed =
             "objects/treasurechest/chest_full_open_anim_f0.png";
+    /** animation frame for the chest */
     public static final List<String> DEFAULT_CLOSED_ANIMATION_FRAMES =
             List.of("objects/treasurechest/chest_full_open_anim_f0.png");
+    /** animation frames for the chest */
     public static final List<String> DEFAULT_OPENING_ANIMATION_FRAMES =
             List.of(
                     "objects/treasurechest/chest_full_open_anim_f0.png",
