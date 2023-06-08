@@ -4,9 +4,7 @@ import ecs.components.PositionComponent;
 import ecs.entities.Entity;
 import tools.Point;
 
-/**
- * Skill that teleports stuff
- */
+/** Skill that teleports stuff */
 public class TeleportSkill extends Skill {
     /**
      * @param skillFunction Function of this skill

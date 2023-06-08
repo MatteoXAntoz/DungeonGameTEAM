@@ -9,20 +9,14 @@ import starter.Game;
 import tools.Point;
 import tools.Timer;
 
-/**
- * Idle AI in which the entity goes to the ladder an back to a random point
- */
+/** Idle AI in which the entity goes to the ladder an back to a random point */
 public class GoToLadder implements IIdleAI {
 
     private final Logger goToLadder_logger = Logger.getLogger(this.getClass().getName());
 
-    /**
-     * grapLadderPath is the path to the Ladder
-     */
+    /** grapLadderPath is the path to the Ladder */
     public GraphPath<Tile> graphLadderPath;
-    /**
-     * graphRandomPoint is the path to a random Point in the dungeon
-     */
+    /** graphRandomPoint is the path to a random Point in the dungeon */
     public GraphPath<Tile> graphRandomPoint;
     // timer is used for the cooldown of the paths
     private Timer timer = new Timer();
@@ -33,9 +27,7 @@ public class GoToLadder implements IIdleAI {
     //
     private Tile ladderTile;
 
-    /**
-     * Konstruktor
-     */
+    /** Konstruktor */
     public GoToLadder() {
         ladderTile = Game.currentLevel.getExitTiles().get(0);
         randomPoint = Game.currentLevel.getRandomFloorTile().getCoordinateAsPoint();
@@ -76,7 +68,7 @@ public class GoToLadder implements IIdleAI {
             // position to a random point
             if (getGraphRandomPoint() == null) {
                 setGraphRandomPoint(
-                    AITools.calculatePath(entity.positionComponent.getPosition(), randomPoint));
+                        AITools.calculatePath(entity.positionComponent.getPosition(), randomPoint));
             }
             // Move the entity along the calculated path
             AITools.move(entity, graphRandomPoint);
@@ -90,9 +82,9 @@ public class GoToLadder implements IIdleAI {
             // ladder tile
             if (graphLadderPath == null) {
                 graphLadderPath =
-                    AITools.calculatePath(
-                        entity.positionComponent.getPosition(),
-                        ladderTile.getCoordinate().toPoint());
+                        AITools.calculatePath(
+                                entity.positionComponent.getPosition(),
+                                ladderTile.getCoordinate().toPoint());
             }
             // Move the entity along the ladder path
             AITools.move(entity, graphLadderPath);

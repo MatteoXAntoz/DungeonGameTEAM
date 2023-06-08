@@ -15,8 +15,8 @@ import java.util.logging.Logger;
 
 /**
  * FireWorm class extends BossMonster
- * @author MatteoXAntoz
  *
+ * @author MatteoXAntoz
  */
 public class FireWorm extends BossMonster implements IFightAI, ITransition {
 
