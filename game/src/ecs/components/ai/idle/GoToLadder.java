@@ -13,9 +13,13 @@ public class GoToLadder implements IIdleAI {
 
     private final Logger goToLadder_logger = Logger.getLogger(this.getClass().getName());
 
-    /** grapLadderPath is the path to the Ladder */
+    /**
+     * grapLadderPath is the path to the Ladder
+     */
     public GraphPath<Tile> graphLadderPath;
-    /** graphRandomPoint is the path to a random Point in the dungeon */
+    /**
+     * graphRandomPoint is the path to a random Point in the dungeon
+     */
     public GraphPath<Tile> graphRandomPoint;
     // timer is used for the cooldown of the paths
     private Timer timer = new Timer();
@@ -66,7 +70,7 @@ public class GoToLadder implements IIdleAI {
             // position to a random point
             if (getGraphRandomPoint() == null) {
                 setGraphRandomPoint(
-                        AITools.calculatePath(entity.positionComponent.getPosition(), randomPoint));
+                    AITools.calculatePath(entity.positionComponent.getPosition(), randomPoint));
             }
             // Move the entity along the calculated path
             AITools.move(entity, graphRandomPoint);
@@ -80,9 +84,9 @@ public class GoToLadder implements IIdleAI {
             // ladder tile
             if (graphLadderPath == null) {
                 graphLadderPath =
-                        AITools.calculatePath(
-                                entity.positionComponent.getPosition(),
-                                ladderTile.getCoordinate().toPoint());
+                    AITools.calculatePath(
+                        entity.positionComponent.getPosition(),
+                        ladderTile.getCoordinate().toPoint());
             }
             // Move the entity along the ladder path
             AITools.move(entity, graphLadderPath);
@@ -91,50 +95,110 @@ public class GoToLadder implements IIdleAI {
         }
     }
 
+    /**
+     * Returns the graph path for the ladder.
+     *
+     * @return The graph path for the ladder.
+     */
     public GraphPath<Tile> getGraphLadderPath() {
         return graphLadderPath;
     }
 
+    /**
+     * Sets the graph path for the ladder.
+     *
+     * @param graphLadderPath The new graph path for the ladder.
+     */
     public void setGraphLadderPath(GraphPath<Tile> graphLadderPath) {
         this.graphLadderPath = graphLadderPath;
     }
 
+    /**
+     * Returns the graph path for the random point.
+     *
+     * @return The graph path for the random point.
+     */
     public GraphPath<Tile> getGraphRandomPoint() {
         return graphRandomPoint;
     }
 
+    /**
+     * Sets the graph path for the random point.
+     *
+     * @param graphRandomPoint The new graph path for the random point.
+     */
     public void setGraphRandomPoint(GraphPath<Tile> graphRandomPoint) {
         this.graphRandomPoint = graphRandomPoint;
     }
 
+    /**
+     * Returns the timer instance.
+     *
+     * @return The timer instance.
+     */
     public Timer getTimer() {
         return timer;
     }
 
+    /**
+     * Sets the timer instance.
+     *
+     * @param timer The new timer instance.
+     */
     public void setTimer(Timer timer) {
         this.timer = timer;
     }
 
+    /**
+     * Returns the mode character.
+     *
+     * @return The mode character.
+     */
     public Character getMode() {
         return mode;
     }
 
+    /**
+     * Sets the mode character.
+     *
+     * @param mode The new mode character.
+     */
     public void setMode(Character mode) {
         this.mode = mode;
     }
 
+    /**
+     * Returns the random point.
+     *
+     * @return The random point.
+     */
     public Point getRandomPoint() {
         return randomPoint;
     }
 
+    /**
+     * Sets the random point.
+     *
+     * @param randomPoint The new random point.
+     */
     public void setRandomPoint(Point randomPoint) {
         this.randomPoint = randomPoint;
     }
 
+    /**
+     * Returns the ladder tile.
+     *
+     * @return The ladder tile.
+     */
     public Tile getLadderTile() {
         return ladderTile;
     }
 
+    /**
+     * Sets the ladder tile.
+     *
+     * @param ladderTile The new ladder tile.
+     */
     public void setLadderTile(Tile ladderTile) {
         this.ladderTile = ladderTile;
     }

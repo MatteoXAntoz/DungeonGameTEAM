@@ -13,6 +13,11 @@ import ecs.components.skill.*;
 import graphic.Animation;
 import java.util.logging.Logger;
 
+/**
+ * FireWorm class extends BossMonster
+ * @author MatteoXAntoz
+ *
+ */
 public class FireWorm extends BossMonster implements IFightAI, ITransition {
 
     private final Logger fireWorm_Logger = Logger.getLogger(this.getClass().getName());
