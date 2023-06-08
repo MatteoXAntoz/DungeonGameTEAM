@@ -6,12 +6,20 @@ import java.util.logging.Logger;
 import starter.Game;
 import tools.Point;
 
+/**
+ * @author MatteoXAntoz
+ * A class representing a fire attack.
+ */
 public class FireAttack {
 
     private final Logger fireAttack_Logger = Logger.getLogger(this.getClass().getName());
     private float fireballCooldown = 2;
     private float spitfireCoolDown = 1;
 
+
+    /**
+     * Constructs a new instance of the FireAttack class.
+     */
     public FireAttack() {
     }
 
@@ -38,7 +46,9 @@ public class FireAttack {
         fireAttack_Logger.info("FireballSkill wurde initialisiert.");
     }
 
-    // SpitFire is set up
+    /**
+     * SpitFire Skill is set up
+     */
     public void setupSpitfire() {
         spitFire =
             new Skill(
