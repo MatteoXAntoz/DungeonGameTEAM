@@ -9,6 +9,9 @@ import starter.Game;
 import tools.Point;
 import tools.Timer;
 
+/**
+ * Idle AI in which the entity goes to the ladder an back to a random point
+ */
 public class GoToLadder implements IIdleAI {
 
     private final Logger goToLadder_logger = Logger.getLogger(this.getClass().getName());
@@ -30,6 +33,9 @@ public class GoToLadder implements IIdleAI {
     //
     private Tile ladderTile;
 
+    /**
+     * Konstruktor
+     */
     public GoToLadder() {
         ladderTile = Game.currentLevel.getExitTiles().get(0);
         randomPoint = Game.currentLevel.getRandomFloorTile().getCoordinateAsPoint();

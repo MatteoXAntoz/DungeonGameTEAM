@@ -4,8 +4,15 @@ import ecs.damage.Damage;
 import ecs.damage.DamageType;
 import tools.Point;
 
+/**
+ * Implements specific Projektile Skill that respresents a fireBall
+ */
 public class FireballSkill extends DamageProjectileSkill {
-
+    /**
+     * Konstruktor
+     *
+     * @param targetSelection how the direction of fireball is given
+     */
     public FireballSkill(ITargetSelection targetSelection) {
         super(
                 "skills/fireball/fireBall_Down/",
