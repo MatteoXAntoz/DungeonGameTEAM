@@ -1,10 +1,7 @@
 package level;
 
 import ecs.components.HealthComponent;
-import ecs.entities.Chort;
-import ecs.entities.Demon;
-import ecs.entities.Entity;
-import ecs.entities.Mouse;
+import ecs.entities.*;
 import ecs.entities.items.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -207,6 +204,8 @@ public class SaveLoadGame implements Serializable {
                         newMonsters.add(new Chort());
                     } else if (st.equals("Demon")) {
                         newMonsters.add(new Demon());
+                    } else if (st.equals("FireWorm")) {
+                        newMonsters.add(new FireWorm());
                     }
                 }
                 objectInputStream.close();

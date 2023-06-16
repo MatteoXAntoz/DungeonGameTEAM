@@ -39,7 +39,7 @@ import tools.Point;
 /** The heart of the framework. From here all strings are pulled. */
 public class Game extends ScreenAdapter implements IOnLevelLoader {
 
-    public static final LevelSize LEVELSIZE = LevelSize.LARGE;
+    public static final LevelSize LEVELSIZE = LevelSize.MEDIUM;
 
     /**
      * The batch is necessary to draw ALL the stuff. Every object that uses draw need to know the
@@ -319,10 +319,12 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         new DrawSystem(painter);
         new PlayerSystem();
         new AISystem();
+        new KnockBackSystem();
         new CollisionSystem();
         new HealthSystem();
         new XPSystem();
         new SkillSystem();
         new ProjectileSystem();
+        new MeeleSystem();
     }
 }

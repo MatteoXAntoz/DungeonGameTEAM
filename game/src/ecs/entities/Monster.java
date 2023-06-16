@@ -1,18 +1,25 @@
 package ecs.entities;
 
+import ecs.components.HealthComponent;
+import ecs.components.HitboxComponent;
 import ecs.components.VelocityComponent;
 import ecs.components.ai.idle.IIdleAI;
 import graphic.Animation;
 
 /** abstract class to create a template to build monster */
 public abstract class Monster extends Entity implements IIdleAI {
+    public Monster() {
+        super();
+        setUpHitboxComponent();
+    }
 
-    float xSpeed;
-    float ySpeed;
-    Animation idleLeft, idleRight;
-    VelocityComponent velocityComponent;
+    protected float xSpeed;
+    protected float ySpeed;
+    protected Animation idleLeft, idleRight;
+    protected VelocityComponent velocityComponent;
+    protected HealthComponent healthComponent;
 
-    int damage;
+    protected int damage;
 
     /** String to the path of the assets for the animation */
     protected String pathToIdleLeft;
@@ -25,6 +32,14 @@ public abstract class Monster extends Entity implements IIdleAI {
     protected abstract void setupVelocity();
 
     protected abstract void setupAnimation();
+
+    protected abstract void setupHealthComponent();
+
+    protected abstract void setupAI();
+
+    protected void setUpHitboxComponent() {
+        new HitboxComponent(this);
+    }
 
     /**
      * method to check if monster is colliding with hero

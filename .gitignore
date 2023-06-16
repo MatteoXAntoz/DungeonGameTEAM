@@ -24,8 +24,6 @@
 #######################
 tmp/
 temp/
-**/saves/*
-!**/saves/PlaceHolder.txt
 
 # Logging #
 ###########
@@ -62,3 +60,9 @@ replay_pid*
 # Game Generated Files #
 ########################
 dungeon_config.json
+**/saves/*
+!**/saves/PlaceHolder.txt
+
+# Contributers #
+################
+concepts/UML Skills.png

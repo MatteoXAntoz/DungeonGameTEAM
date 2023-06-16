@@ -7,6 +7,7 @@ import ecs.components.stats.StatsComponent;
 import ecs.components.xp.XPComponent;
 import ecs.damage.DamageType;
 import ecs.entities.Entity;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 import starter.Game;
 
@@ -18,6 +19,8 @@ public class HealthSystem extends ECS_System {
 
     // private record to hold all data during streaming
     private record HSData(Entity e, HealthComponent hc, AnimationComponent ac) {}
+
+    private Logger healthLogger = Logger.getLogger(HealthSystem.class.getName());
 
     @Override
     public void update() {
@@ -86,7 +89,14 @@ public class HealthSystem extends ECS_System {
         }
         // reset all damage objects in health component and apply damage
         hsd.hc.clearDamage();
-        hsd.hc.setCurrentHealthpoints(hsd.hc.getCurrentHealthpoints() - dmgAmount);
+        if (dmgAmount > 0)
+            hsd.hc.setCurrentHealthpoints(hsd.hc.getCurrentHealthpoints() - dmgAmount);
+        if (hsd.hc.getCurrentHealthpoints() > 0 && dmgAmount > 0)
+            healthLogger.info(
+                    "New "
+                            + hsd.e.getClass().getSimpleName()
+                            + " health: "
+                            + hsd.hc.getCurrentHealthpoints());
     }
 
     private void removeDeadEntities(HSData hsd) {

@@ -69,4 +69,9 @@ public class Point implements Serializable {
         float yDiff = p1.y - p2.y;
         return (float) Math.sqrt(xDiff * xDiff + yDiff * yDiff);
     }
+
+    @Override
+    public String toString() {
+        return ("Point(" + this.x + ", " + this.y + ")");
+    }
 }

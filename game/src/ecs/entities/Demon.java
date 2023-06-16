@@ -3,6 +3,7 @@ package ecs.entities;
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import dslToGame.AnimationBuilder;
 import ecs.components.AnimationComponent;
+import ecs.components.HealthComponent;
 import ecs.components.PositionComponent;
 import ecs.components.VelocityComponent;
 import ecs.components.ai.AIComponent;
@@ -19,6 +20,7 @@ public class Demon extends Monster {
     GraphPath<Tile> path;
 
     public Demon() {
+        super();
 
         pathToIdleLeft = "demon/idleLeft";
         pathToIdleRight = "demon/idleRight";
@@ -26,7 +28,8 @@ public class Demon extends Monster {
         setupAnimation();
         setupPosition();
         setupVelocity();
-        setupAi();
+        setupHealthComponent();
+        setupAI();
         damage = 10;
     }
 
@@ -36,6 +39,13 @@ public class Demon extends Monster {
         idleRight = AnimationBuilder.buildAnimation(pathToIdleRight);
         idleLeft = AnimationBuilder.buildAnimation(pathToIdleLeft);
         new AnimationComponent(this, idleLeft, idleRight);
+    }
+
+    @Override
+    protected void setupHealthComponent() {
+        healthComponent = new HealthComponent(this);
+        healthComponent.setMaximalHealthpoints(100);
+        healthComponent.setCurrentHealthpoints(100);
     }
 
     /**
@@ -54,7 +64,7 @@ public class Demon extends Monster {
     }
 
     /** setup the AI component */
-    private void setupAi() {
+    public void setupAI() {
         new AIComponent(
                 this,
                 new IFightAI() {

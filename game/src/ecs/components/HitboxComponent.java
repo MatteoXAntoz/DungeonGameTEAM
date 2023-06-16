@@ -13,7 +13,7 @@ import tools.Point;
 public class HitboxComponent extends Component {
     public static final Point DEFAULT_OFFSET = new Point(0.25f, 0.25f);
     public static final Point DEFAULT_SIZE = new Point(0.5f, 0.5f);
-    public static final ICollide DEFAULT_COLLIDER = (a, b, c) -> System.out.println("Collide");
+    public static final ICollide DEFAULT_COLLIDER = (a, b, c) -> {};
     private /*@DSLTypeMember(name="offset")*/ Point offset;
     private /*@DSLTypeMember(name="size")*/ Point size;
     private ICollide iCollideEnter;
@@ -126,6 +126,14 @@ public class HitboxComponent extends Component {
         return new Point(
                 pc.getPosition().x + offset.x + size.x / 2,
                 pc.getPosition().y + offset.y + size.y / 2);
+    }
+    /**
+     * Returns the size of the Hitbox
+     *
+     * @return size of Hitbox as <code>Point</code>
+     */
+    public Point getSize() {
+        return this.size;
     }
 
     /**

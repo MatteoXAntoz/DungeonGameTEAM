@@ -4,7 +4,6 @@ import ecs.entities.Hero;
 import level.elements.ILevel;
 import level.tools.Coordinate;
 import level.tools.DesignLabel;
-import level.tools.LevelElement;
 
 public class TrapTile extends FloorTile {
 

@@ -76,23 +76,14 @@ public class LevelAPI {
         grave.positionComponent.setPosition(
                 currentLevel.getRandomFloorTile().getCoordinateAsPoint());
 
-        /**
-         * die Methode spawnItems ist für das Spawnen der Item zuständig, entweder werden sie
-         * geladen oder neue generiert.
-         */
         spawnItems();
-        /**
-         * die Methode spawnTraps ist für das Spawnen der Traps zuständig, entweder werden sie
-         * geladen oder neue generiert.
-         */
+
         spawnTraps();
-        /**
-         * die Methode spawnMonsters ist für das Spawnen der Monster zuständig, entweder werden sie
-         * geladen oder neue generiert.
-         */
+
         spawnMonsters();
 
-        String heroInfo = String.valueOf(Game.hero.healthComponent.getCurrentHealthpoints());
+        String heroInfo =
+                "Current Hero health: " + Game.hero.healthComponent.getCurrentHealthpoints();
         levelAPI_logger.info(heroInfo);
     }
 
@@ -212,6 +203,10 @@ public class LevelAPI {
         return null;
     }
 
+    /**
+     * die Methode spawnTraps ist für das Spawnen der Traps zuständig, entweder werden sie geladen
+     * oder neue generiert.
+     */
     public void spawnTraps() {
 
         trapElements.clear();
@@ -250,6 +245,10 @@ public class LevelAPI {
         }
     }
 
+    /**
+     * die Methode spawnItems ist für das Spawnen der Item zuständig, entweder werden sie geladen
+     * oder neue generiert.
+     */
     public void spawnItems() {
         if (levelID == 1 && !SaveLoadGame.isEmpty(SaveLoadGame.PATH, SaveLoadGame.ITEM_DATA)) {
             levelAPI_logger.info("Items wurden geladen");
@@ -260,7 +259,7 @@ public class LevelAPI {
     }
 
     public void updateTrapCollider() {
-        for (FloorTile floorTile : Game.currentLevel.getTrapTiles()) {
+        for (FloorTile floorTile : Game.currentLevel.getFloorTiles()) {
             if (Game.hero.isCollidingWithTrapTile(floorTile)
                     && floorTile.getLevelElement() == LevelElement.POISON
                     && !floorTile.isActivated()) {
@@ -310,6 +309,10 @@ public class LevelAPI {
         }
     }
 
+    /**
+     * die Methode spawnMonsters ist für das Spawnen der Monster zuständig, entweder werden sie
+     * geladen oder neue generiert.
+     */
     public void spawnMonsters() {
         if (!SaveLoadGame.isEmpty(SaveLoadGame.PATH, SaveLoadGame.MONSTER_DATA) && levelID == 1) {
             levelAPI_logger.info("Monster wurden geladen");
