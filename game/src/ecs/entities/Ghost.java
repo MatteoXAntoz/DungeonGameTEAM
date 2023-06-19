@@ -55,6 +55,7 @@ public class Ghost extends Entity implements IInteraction, IIdleAI {
     @Override
     public void onInteraction(Entity entity) {
         giveWand();
+        killHero();
     }
 
     @Override
@@ -86,5 +87,9 @@ public class Ghost extends Entity implements IInteraction, IIdleAI {
         zauberstab.positionComponent.setPosition(hero.positionComponent.getPosition());
         Game.items.add(zauberstab);
         Game.removeEntity(this);
+    }
+
+    private void killHero() {
+        hero.healthComponent.setCurrentHealthpoints(0);
     }
 }
