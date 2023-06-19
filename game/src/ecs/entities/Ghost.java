@@ -54,16 +54,7 @@ public class Ghost extends Entity implements IInteraction, IIdleAI {
 
     @Override
     public void onInteraction(Entity entity) {
-        int randomValue = (int) (Math.random() * 2 + 1);
-
-        if (randomValue == 1) {
-            Game.removeEntity(this);
-        } else if (randomValue == 2) {
-            Zauberstab zauberstab = new Zauberstab();
-            zauberstab.positionComponent.setPosition(hero.positionComponent.getPosition());
-            Game.items.add(zauberstab);
-            Game.removeEntity(this);
-        }
+        giveWand();
     }
 
     @Override
@@ -88,5 +79,12 @@ public class Ghost extends Entity implements IInteraction, IIdleAI {
                         return false;
                     }
                 });
+    }
+
+    private void giveWand() {
+        Zauberstab zauberstab = new Zauberstab();
+        zauberstab.positionComponent.setPosition(hero.positionComponent.getPosition());
+        Game.items.add(zauberstab);
+        Game.removeEntity(this);
     }
 }
