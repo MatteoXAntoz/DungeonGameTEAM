@@ -34,7 +34,7 @@ public class Ghost extends Entity implements IInteraction, IIdleAI {
         setupPosition();
         setupInteraction();
 
-        new VelocityComponent(this, 0.04f, 0.04F, idleLeft, idleLeft);
+        new VelocityComponent(this, 0.09f, 0.09f, idleLeft, idleLeft);
         setupAi();
     }
 
