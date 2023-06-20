@@ -160,7 +160,9 @@ public class TileLevel implements ILevel {
     }
 
     @Override
-    public void addRiddleHintTile(RiddleHintTile tile) { riddleHintTiles.add(tile); }
+    public void addRiddleHintTile(RiddleHintTile tile) {
+        riddleHintTiles.add(tile);
+    }
 
     @Override
     public void addExitTile(ExitTile tile) {
@@ -211,7 +213,9 @@ public class TileLevel implements ILevel {
     }
 
     @Override
-    public  List<RiddleHintTile> getRiddleHintTile() { return riddleHintTiles; }
+    public List<RiddleHintTile> getRiddleHintTile() {
+        return riddleHintTiles;
+    }
 
     @Override
     public List<ExitTile> getExitTiles() {
@@ -314,7 +318,6 @@ public class TileLevel implements ILevel {
     }
 
     @Override
-    public Tile getTrapTile() {
-        return null;
-    }
+    public Tile getTrapTile() { return null; }
+
 }
