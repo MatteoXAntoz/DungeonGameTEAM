@@ -249,6 +249,9 @@ public class LevelAPI {
         }
     }
 
+    /**
+     * method to spawn a riddle hint tile in the dungeon
+     */
     public void spawnRiddleTile() {
         getCurrentLevel().getRandomTile(LevelElement.FLOOR).setLevelElement(LevelElement.RIDDLE);
         for(FloorTile floorTile : currentLevel.getFloorTiles()) {
@@ -258,6 +261,10 @@ public class LevelAPI {
         }
     }
 
+    /**
+     * method to check if hero is stepping on a riddle hint tile
+     * once if hero is stepped on it, the tile disappears
+     */
     public void heroIsSteppingOnRiddleHintTile() {
         for(FloorTile floorTile : Game.currentLevel.getFloorTiles()) {
             if(Game.hero.isCollidingWithRiddleHintTile(floorTile)
