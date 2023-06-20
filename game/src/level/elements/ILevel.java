@@ -60,7 +60,7 @@ public interface ILevel extends ITileable {
     void addLavaTrap(LavaTrap tile);
 
     /**
-     *  Add riddlehint tile
+     * Add riddlehint tile
      *
      * @param tile new riddlehint tile
      */
@@ -164,8 +164,6 @@ public interface ILevel extends ITileable {
      * @return a List with all Lava, Poison and Mousetraps.
      */
     List<TrapTile> getTrapTiles();
-
-
 
     void addConnectionsToNeighbours(Tile checkTile);
 
