@@ -8,8 +8,8 @@ import level.tools.LevelElement;
 
 /**
  * class to create a riddle hint tile
- * @author Moritz Luetzkendorf
  *
+ * @author Moritz Luetzkendorf
  */
 public class RiddleHintTile extends Tile {
     private boolean activated;
