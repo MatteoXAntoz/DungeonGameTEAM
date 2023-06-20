@@ -263,6 +263,9 @@ public class LevelAPI {
             if(Game.hero.isCollidingWithRiddleHintTile(floorTile)
                 && floorTile.getLevelElement() == LevelElement.RIDDLE
                 && !floorTile.isActivated()) {
+                    System.out.println("Think always twice!");
+                    floorTile.setTexturePath("dungeon/default/floor/floor_1.png");
+                    floorTile.setActivated(true);
             }
         }
     }
