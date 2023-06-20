@@ -318,6 +318,7 @@ public class TileLevel implements ILevel {
     }
 
     @Override
-    public Tile getTrapTile() { return null; }
-
+    public Tile getTrapTile() {
+        return null;
+    }
 }
