@@ -1,8 +1,6 @@
 package ecs.entities.NPCs;
 
 import com.badlogic.gdx.ai.pfa.GraphPath;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import dslToGame.AnimationBuilder;
 import ecs.components.*;
 import ecs.components.ai.AIComponent;
@@ -14,15 +12,9 @@ import ecs.entities.Entity;
 import ecs.entities.Hero;
 import ecs.entities.items.Zauberstab;
 import graphic.Animation;
-import graphic.hud.DialogSystem;
-import graphic.hud.GameOverMenu;
-import graphic.hud.ScreenInput;
 import level.elements.tile.Tile;
 import level.riddle.Riddle;
 import starter.Game;
-import tools.Point;
-
-import java.util.Scanner;
 
 /** class to create a friendly npc ghost in the dungeon */
 public class Ghost extends Entity implements IInteraction, IIdleAI {
@@ -103,7 +95,7 @@ public class Ghost extends Entity implements IInteraction, IIdleAI {
 
     private void dialogWithGhost() {
         boolean riddleIsSolved = riddle.ghostRiddle();
-        if(riddleIsSolved) {
+        if (riddleIsSolved) {
             giveWand();
         } else {
             killHero();
