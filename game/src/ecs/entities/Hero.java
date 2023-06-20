@@ -159,6 +159,7 @@ public class Hero extends Entity {
 
     /**
      * method to check if hero is colliding with a riddle hint tile
+     *
      * @param tile gets riddle tile as parameter
      * @return returns boolean value if hero is colliding
      */
@@ -166,9 +167,9 @@ public class Hero extends Entity {
         float hitBoxScale = 0.6f;
 
         return (positionComponent.getPosition().x + hitBoxScale > tile.getCoordinateAsPoint().x
-            && positionComponent.getPosition().x < tile.getCoordinateAsPoint().x + hitBoxScale
-            && positionComponent.getPosition().y + hitBoxScale > tile.getCoordinateAsPoint().y
-            && positionComponent.getPosition().y < tile.getCoordinateAsPoint().y + hitBoxScale);
+                && positionComponent.getPosition().x < tile.getCoordinateAsPoint().x + hitBoxScale
+                && positionComponent.getPosition().y + hitBoxScale > tile.getCoordinateAsPoint().y
+                && positionComponent.getPosition().y < tile.getCoordinateAsPoint().y + hitBoxScale);
     }
 
     private void setupInventory() {
