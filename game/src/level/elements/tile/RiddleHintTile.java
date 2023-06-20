@@ -1,17 +1,16 @@
 package level.elements.tile;
 
 import ecs.entities.Entity;
-import ecs.entities.MonsterChest;
-import graphic.hud.ScreenText;
 import level.elements.ILevel;
 import level.tools.Coordinate;
 import level.tools.DesignLabel;
 import level.tools.LevelElement;
-import starter.Game;
-import tools.Point;
 
-import java.util.logging.Logger;
-
+/**
+ * class to create a riddle hint tile
+ * @author Moritz Luetzkendorf
+ *
+ */
 public class RiddleHintTile extends Tile {
     private boolean activated;
     /**
@@ -29,13 +28,13 @@ public class RiddleHintTile extends Tile {
     }
 
     @Override
-    public void onEntering(Entity element) {
-    }
+    public void onEntering(Entity element) {}
+
     @Override
     public boolean isAccessible() {
         return levelElement.getValue();
     }
-
+    /** method to check if a tile was activated or not */
     public boolean isActivated() {
         return activated;
     }
@@ -43,5 +42,4 @@ public class RiddleHintTile extends Tile {
     public void setActivated(boolean activated) {
         this.activated = activated;
     }
-
 }
