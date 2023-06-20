@@ -5,13 +5,23 @@ import ecs.entities.NPCs.Ghost;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
+/**
+ * A class to create a riddle
+ * @author Moritz Luetzkendorf
+ *
+ */
 public class Riddle {
-
+    // Logger for the class Riddle
     private final Logger riddle_logger = Logger.getLogger(this.getClass().getName());
+    /** constructor for class Riddle */
     public Riddle() {
         ghostRiddle();
     }
 
+    /**
+     * method to implement a riddle
+     * @return boolean if a riddle was solved or not
+     */
     public boolean ghostRiddle() {
         riddle_logger.info("Riddle was loaded.");
         boolean isSolved = false;
