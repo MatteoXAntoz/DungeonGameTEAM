@@ -1,6 +1,8 @@
 package ecs.entities.NPCs;
 
 import com.badlogic.gdx.ai.pfa.GraphPath;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import dslToGame.AnimationBuilder;
 import ecs.components.*;
 import ecs.components.ai.AIComponent;
@@ -12,14 +14,22 @@ import ecs.entities.Entity;
 import ecs.entities.Hero;
 import ecs.entities.items.Zauberstab;
 import graphic.Animation;
+import graphic.hud.DialogSystem;
+import graphic.hud.GameOverMenu;
+import graphic.hud.ScreenInput;
 import level.elements.tile.Tile;
+import level.riddle.Riddle;
 import starter.Game;
+import tools.Point;
+
+import java.util.Scanner;
 
 /** class to create a friendly npc ghost in the dungeon */
 public class Ghost extends Entity implements IInteraction, IIdleAI {
-
     Animation idleLeft, idleRight;
     InteractionComponent interactionComponent;
+
+    Riddle riddle = new Riddle();
 
     Hero hero = Game.hero;
 
@@ -33,8 +43,7 @@ public class Ghost extends Entity implements IInteraction, IIdleAI {
         setupAnimationComponent();
         setupPosition();
         setupInteraction();
-
-        new VelocityComponent(this, 0.09f, 0.09f, idleLeft, idleLeft);
+        new VelocityComponent(this, 0.9f, 0.9f, idleLeft, idleLeft);
         setupAi();
     }
 
@@ -54,8 +63,7 @@ public class Ghost extends Entity implements IInteraction, IIdleAI {
 
     @Override
     public void onInteraction(Entity entity) {
-        giveWand();
-        killHero();
+        dialogWithGhost();
     }
 
     @Override
@@ -89,7 +97,16 @@ public class Ghost extends Entity implements IInteraction, IIdleAI {
         Game.removeEntity(this);
     }
 
-    private void killHero() {
+    public void killHero() {
         hero.healthComponent.setCurrentHealthpoints(0);
+    }
+
+    private void dialogWithGhost() {
+        boolean riddleIsSolved = riddle.ghostRiddle();
+        if(riddleIsSolved) {
+            giveWand();
+        } else {
+            killHero();
+        }
     }
 }
