@@ -97,7 +97,7 @@ public class Ghost extends Entity implements IInteraction, IIdleAI {
         Game.removeEntity(this);
     }
 
-    public void killHero() {
+    private void killHero() {
         hero.healthComponent.setCurrentHealthpoints(0);
     }
 
