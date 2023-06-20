@@ -82,6 +82,9 @@ public class LevelAPI {
 
         spawnMonsters();
 
+        spawnRiddleTile();
+
+
         String heroInfo =
                 "Current Hero health: " + Game.hero.healthComponent.getCurrentHealthpoints();
         levelAPI_logger.info(heroInfo);
@@ -115,6 +118,7 @@ public class LevelAPI {
         drawLevel();
         levelManager.update();
         updateTrapCollider();
+        heroIsSteppingOnRiddleHintTile();
     }
 
     /**
@@ -241,6 +245,24 @@ public class LevelAPI {
                 floorTile.setTexturePath("dungeon/default/floor/floor_poison.png");
             } else if (floorTile.getLevelElement() == LevelElement.LAVA) {
                 floorTile.setTexturePath("dungeon/default/floor/floor_lava.png");
+            }
+        }
+    }
+
+    public void spawnRiddleTile() {
+        getCurrentLevel().getRandomTile(LevelElement.FLOOR).setLevelElement(LevelElement.RIDDLE);
+        for(FloorTile floorTile : currentLevel.getFloorTiles()) {
+            if(floorTile.getLevelElement() == LevelElement.RIDDLE) {
+                floorTile.setTexturePath("dungeon/default/floor/floor_riddle.png");
+            }
+        }
+    }
+
+    public void heroIsSteppingOnRiddleHintTile() {
+        for(FloorTile floorTile : Game.currentLevel.getFloorTiles()) {
+            if(Game.hero.isCollidingWithRiddleHintTile(floorTile)
+                && floorTile.getLevelElement() == LevelElement.RIDDLE
+                && !floorTile.isActivated()) {
             }
         }
     }
