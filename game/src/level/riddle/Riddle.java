@@ -3,13 +3,17 @@ package level.riddle;
 import ecs.entities.NPCs.Ghost;
 
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class Riddle {
+
+    private final Logger riddle_logger = Logger.getLogger(this.getClass().getName());
     public Riddle() {
         ghostRiddle();
     }
 
     public boolean ghostRiddle() {
+        riddle_logger.info("Riddle was loaded.");
         boolean isSolved = false;
         Scanner scanner = new Scanner(System.in);
         System.out.println("How many we are both?");
@@ -30,9 +34,11 @@ public class Riddle {
                 ghostRiddle();
             } else {
                 System.out.println("You have to die.");
+
                 isSolved = false;
             }
         }
+        riddle_logger.info("Riddle solved: " + isSolved + "!");
         return isSolved;
     }
 }
