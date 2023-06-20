@@ -6,12 +6,7 @@ import java.util.Scanner;
 
 public class Riddle {
     public Riddle() {
-        loadRiddleFromFile();
         ghostRiddle();
-    }
-
-    public void loadRiddleFromFile() {
-
     }
 
     public boolean ghostRiddle() {
