@@ -75,7 +75,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     public static ILevel currentLevel;
     private static PauseMenu<Actor> pauseMenu;
     private static GameOverMenu<Actor> gameOverMenu;
-    public static HeroUI<Actor> heroUI;
+    private static HeroUI<Actor> heroUI;
     public static Hero hero;
     private Logger gameLogger;
 
@@ -126,8 +126,8 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         gameOverMenu = new GameOverMenu<>(levelAPI);
         heroUI = HeroUI.getInstance();
         controller.add(pauseMenu);
-        controller.add(gameOverMenu);
         controller.add(heroUI);
+        controller.add(gameOverMenu);
         hero = new Hero();
 
         levelAPI.loadLevel(LEVELSIZE);
@@ -330,5 +330,6 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         new SkillSystem();
         new ProjectileSystem();
         new MeeleSystem();
+        new HeroUISystem();
     }
 }
