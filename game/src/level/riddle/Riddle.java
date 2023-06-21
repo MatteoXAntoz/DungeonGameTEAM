@@ -45,7 +45,7 @@ public class Riddle {
                 valueToReturnForRiddle = 0;
                 riddleIsOver = true;
 
-            } else if (input.matches("help")) {
+            } else if (input.matches("[hH][eE][lL][pP]")) {
 
                 System.out.println("\n");
 
@@ -64,7 +64,7 @@ public class Riddle {
                     valueToReturnForRiddle = 0;
                     riddleIsOver = true;
 
-                } else if (input2.matches("help")) {
+                } else if (input2.matches("[hH][eE][lL][pP]")) {
 
                 } else {
                     System.out.println("You have to die.");
