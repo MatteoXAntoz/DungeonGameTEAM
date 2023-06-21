@@ -12,20 +12,23 @@ import ecs.entities.Entity;
 import ecs.entities.Hero;
 import ecs.entities.items.Zauberstab;
 import graphic.Animation;
+import java.util.logging.Logger;
 import level.elements.tile.Tile;
 import level.riddle.Riddle;
 import starter.Game;
 
 /** class to create a friendly npc ghost in the dungeon */
 public class Ghost extends Entity implements IInteraction, IIdleAI {
+
+    private final Logger ghost_logger = Logger.getLogger(this.getClass().getName());
     Animation idleLeft, idleRight;
     InteractionComponent interactionComponent;
-
-    Riddle riddle = new Riddle();
 
     Hero hero = Game.hero;
 
     GraphPath<Tile> path;
+
+    Riddle riddle;
 
     private final String pathToIdleLeft = "ghost/idleLeft";
     private final String pathToIdleRight = "ghost/idleRight";
@@ -94,11 +97,16 @@ public class Ghost extends Entity implements IInteraction, IIdleAI {
     }
 
     private void dialogWithGhost() {
-        boolean riddleIsSolved = riddle.ghostRiddle();
-        if (riddleIsSolved) {
-            giveWand();
-        } else {
-            killHero();
+        int riddleReturnValue = new Riddle().ghostRiddle();
+        switch (riddleReturnValue) {
+            case 0:
+                giveWand();
+                break;
+            case 1:
+                killHero();
+                break;
+            default:
+                ghost_logger.warning("Riddle was neither solved nor not solved!");
         }
     }
 }
