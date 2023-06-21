@@ -214,9 +214,7 @@ public class LevelAPI {
             levelAPI_logger.info("Fallen wurden geladen");
             trapElements = SaveLoadGame.loadTraps();
         } else {
-            for (int i = 0; i < 2; i++) {
-                trapElements.add(getRandomTraps());
-            }
+           addTraps();
         }
 
         for (int i = 0; i < trapElements.size(); i++) {
@@ -242,6 +240,11 @@ public class LevelAPI {
             } else if (floorTile.getLevelElement() == LevelElement.LAVA) {
                 floorTile.setTexturePath("dungeon/default/floor/floor_lava.png");
             }
+        }
+    }
+    void addTraps(){
+        for (int i = 0; i < 2; i++) {
+            trapElements.add(getRandomTraps());
         }
     }
 
