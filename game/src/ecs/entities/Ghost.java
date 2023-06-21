@@ -12,18 +12,23 @@ import ecs.entities.Entity;
 import ecs.entities.Hero;
 import ecs.entities.items.Zauberstab;
 import graphic.Animation;
+import java.util.logging.Logger;
 import level.elements.tile.Tile;
+import level.riddle.Riddle;
 import starter.Game;
 
 /** class to create a friendly npc ghost in the dungeon */
 public class Ghost extends Entity implements IInteraction, IIdleAI {
 
+    private final Logger ghost_logger = Logger.getLogger(this.getClass().getName());
     Animation idleLeft, idleRight;
     InteractionComponent interactionComponent;
 
     Hero hero = Game.hero;
 
     GraphPath<Tile> path;
+
+    Riddle riddle;
 
     private final String pathToIdleLeft = "ghost/idleLeft";
     private final String pathToIdleRight = "ghost/idleRight";
@@ -33,8 +38,7 @@ public class Ghost extends Entity implements IInteraction, IIdleAI {
         setupAnimationComponent();
         setupPosition();
         setupInteraction();
-
-        new VelocityComponent(this, 0.04f, 0.04F, idleLeft, idleLeft);
+        new VelocityComponent(this, 0.9f, 0.9f, idleLeft, idleLeft);
         setupAi();
     }
 
@@ -54,16 +58,7 @@ public class Ghost extends Entity implements IInteraction, IIdleAI {
 
     @Override
     public void onInteraction(Entity entity) {
-        int randomValue = (int) (Math.random() * 2 + 1);
-
-        if (randomValue == 1) {
-            Game.removeEntity(this);
-        } else if (randomValue == 2) {
-            Zauberstab zauberstab = new Zauberstab();
-            zauberstab.positionComponent.setPosition(hero.positionComponent.getPosition());
-            Game.items.add(zauberstab);
-            Game.removeEntity(this);
-        }
+        dialogWithGhost();
     }
 
     @Override
@@ -88,5 +83,30 @@ public class Ghost extends Entity implements IInteraction, IIdleAI {
                         return false;
                     }
                 });
+    }
+
+    private void giveWand() {
+        Zauberstab zauberstab = new Zauberstab();
+        zauberstab.positionComponent.setPosition(hero.positionComponent.getPosition());
+        Game.items.add(zauberstab);
+        Game.removeEntity(this);
+    }
+
+    private void killHero() {
+        hero.healthComponent.setCurrentHealthpoints(0);
+    }
+
+    private void dialogWithGhost() {
+        int riddleReturnValue = new Riddle().ghostRiddle();
+        switch (riddleReturnValue) {
+            case 0:
+                giveWand();
+                break;
+            case 1:
+                killHero();
+                break;
+            default:
+                ghost_logger.warning("Riddle was neither solved nor not solved!");
+        }
     }
 }

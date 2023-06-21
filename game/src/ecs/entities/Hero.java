@@ -157,6 +157,21 @@ public class Hero extends Entity {
                         < item.getPositionComponent().getPosition().y + hitBoxScale);
     }
 
+    /**
+     * method to check if hero is colliding with a riddle hint tile
+     *
+     * @param tile gets riddle tile as parameter
+     * @return returns boolean value if hero is colliding
+     */
+    public boolean isCollidingWithRiddleHintTile(FloorTile tile) {
+        float hitBoxScale = 0.6f;
+
+        return (positionComponent.getPosition().x + hitBoxScale > tile.getCoordinateAsPoint().x
+                && positionComponent.getPosition().x < tile.getCoordinateAsPoint().x + hitBoxScale
+                && positionComponent.getPosition().y + hitBoxScale > tile.getCoordinateAsPoint().y
+                && positionComponent.getPosition().y < tile.getCoordinateAsPoint().y + hitBoxScale);
+    }
+
     private void setupInventory() {
         myInventory = new MyInventory();
     }

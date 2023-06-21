@@ -20,6 +20,7 @@ public enum LevelElement {
     LAVA(Constants.LEVELELEMENT_IS_ACCESSIBLE),
     POISON(Constants.LEVELELEMENT_IS_ACCESSIBLE),
     MOUSETRAP(Constants.LEVELELEMENT_IS_ACCESSIBLE),
+    RIDDLE(Constants.LEVELELEMENT_IS_ACCESSIBLE),
 
     /** This field is the exit-field to the next level */
     EXIT(Constants.LEVELELEMENT_IS_ACCESSIBLE),

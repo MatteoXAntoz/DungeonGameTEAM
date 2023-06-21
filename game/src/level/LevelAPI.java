@@ -82,6 +82,8 @@ public class LevelAPI {
 
         spawnMonsters();
 
+        spawnRiddleTile();
+
         String heroInfo =
                 "Current Hero health: " + Game.hero.healthComponent.getCurrentHealthpoints();
         levelAPI_logger.info(heroInfo);
@@ -115,6 +117,7 @@ public class LevelAPI {
         drawLevel();
         levelManager.update();
         updateTrapCollider();
+        heroIsSteppingOnRiddleHintTile();
     }
 
     /**
@@ -245,6 +248,32 @@ public class LevelAPI {
     void addTraps(){
         for (int i = 0; i < 2; i++) {
             trapElements.add(getRandomTraps());
+        }
+    }
+
+    /** method to spawn a riddle hint tile in the dungeon */
+    public void spawnRiddleTile() {
+        getCurrentLevel().getRandomTile(LevelElement.FLOOR).setLevelElement(LevelElement.RIDDLE);
+        for (FloorTile floorTile : currentLevel.getFloorTiles()) {
+            if (floorTile.getLevelElement() == LevelElement.RIDDLE) {
+                floorTile.setTexturePath("dungeon/default/floor/floor_riddle.png");
+            }
+        }
+    }
+
+    /**
+     * method to check if hero is stepping on a riddle hint tile once if hero is stepped on it, the
+     * tile disappears
+     */
+    public void heroIsSteppingOnRiddleHintTile() {
+        for (FloorTile floorTile : Game.currentLevel.getFloorTiles()) {
+            if (Game.hero.isCollidingWithRiddleHintTile(floorTile)
+                    && floorTile.getLevelElement() == LevelElement.RIDDLE
+                    && !floorTile.isActivated()) {
+                System.out.println("The ghost don't like the number two.");
+                floorTile.setTexturePath("dungeon/default/floor/floor_1.png");
+                floorTile.setActivated(true);
+            }
         }
     }
 
