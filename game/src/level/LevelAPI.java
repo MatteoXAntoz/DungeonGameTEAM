@@ -267,7 +267,7 @@ public class LevelAPI {
             if (Game.hero.isCollidingWithRiddleHintTile(floorTile)
                     && floorTile.getLevelElement() == LevelElement.RIDDLE
                     && !floorTile.isActivated()) {
-                System.out.println("The ghost don't like the number two.");
+                System.out.println("The ghost don't likes the number two.");
                 floorTile.setTexturePath("dungeon/default/floor/floor_1.png");
                 floorTile.setActivated(true);
             }
