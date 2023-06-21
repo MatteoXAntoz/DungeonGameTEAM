@@ -32,53 +32,47 @@ public class Riddle {
 
         do {
 
-        System.out.println("How many we are both?");
+            System.out.println("How many we are both?");
 
-        String input = scanner.nextLine();
+            String input = scanner.nextLine();
 
-        if (input.matches("10")) {
+            if (input.matches("10")) {
 
-            System.out.println("You are a worthy hero.");
-
-            riddle_logger.info("Riddle solved!");
-
-            valueToReturnForRiddle = 0;
-            riddleIsOver = true;
-
-
-
-
-        } else if (input.matches("help")) {
-
-            System.out.println("\n");
-
-            System.out.println("You are on your own. Good Luck.");
-
-
-        } else {
-
-            System.out.println(
-                    "Oh, you fool. This dungeon is not for little kids like you. Last chance...");
-            String input2 = scanner.nextLine();
-
-            if (input2.matches("10")) {
+                System.out.println("You are a worthy hero.");
 
                 riddle_logger.info("Riddle solved!");
 
                 valueToReturnForRiddle = 0;
                 riddleIsOver = true;
 
-            } else if (input2.matches("help")) {
+            } else if (input.matches("help")) {
 
+                System.out.println("\n");
+
+                System.out.println("You are on your own. Good Luck.");
 
             } else {
-                System.out.println("You have to die.");
-                riddle_logger.info("Riddle not solved!");
-                valueToReturnForRiddle = 1;
-                riddleIsOver = true;
 
+                System.out.println(
+                        "Oh, you fool. This dungeon is not for little kids like you. Last chance...");
+                String input2 = scanner.nextLine();
+
+                if (input2.matches("10")) {
+
+                    riddle_logger.info("Riddle solved!");
+
+                    valueToReturnForRiddle = 0;
+                    riddleIsOver = true;
+
+                } else if (input2.matches("help")) {
+
+                } else {
+                    System.out.println("You have to die.");
+                    riddle_logger.info("Riddle not solved!");
+                    valueToReturnForRiddle = 1;
+                    riddleIsOver = true;
+                }
             }
-        }
         } while (!riddleIsOver);
         if (valueToReturnForRiddle != 0) {
             valueToReturnForRiddle = 1;
