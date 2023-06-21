@@ -11,7 +11,10 @@ public class HeroUISystem extends ECS_System {
 //    private XPComponent xpc;
     private SkillComponent sc;
 
-    public void HeroUISystem() {
+
+    private boolean doSetup = true;
+    private void setup() {
+        doSetup = false;
         hc = (HealthComponent) Game.hero.
             getComponent(HealthComponent.class).get();
 
@@ -23,9 +26,11 @@ public class HeroUISystem extends ECS_System {
 
         sc = (SkillComponent) Game.hero.
             getComponent(SkillComponent.class).get();
+        System.out.println("HeroUI Konstrukor finished");
     }
     @Override
     public void update() {
+        if(doSetup) setup();
         HeroUI heroUI = HeroUI.getInstance();
         heroUI.setHealth(hc.getCurrentHealthpoints());
 
