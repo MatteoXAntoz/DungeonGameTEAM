@@ -21,6 +21,7 @@ import ecs.systems.*;
 import graphic.DungeonCamera;
 import graphic.Painter;
 import graphic.hud.GameOverMenu;
+import graphic.hud.HeroUI;
 import graphic.hud.PauseMenu;
 import java.io.IOException;
 import java.util.*;
@@ -74,6 +75,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     public static ILevel currentLevel;
     private static PauseMenu<Actor> pauseMenu;
     private static GameOverMenu<Actor> gameOverMenu;
+    public static HeroUI<Actor> heroUI;
     public static Hero hero;
     private Logger gameLogger;
 
@@ -122,8 +124,10 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         controller.add(systems);
         pauseMenu = new PauseMenu<>();
         gameOverMenu = new GameOverMenu<>(levelAPI);
+        heroUI = HeroUI.getInstance();
         controller.add(pauseMenu);
         controller.add(gameOverMenu);
+        controller.add(heroUI);
         hero = new Hero();
 
         levelAPI.loadLevel(LEVELSIZE);
