@@ -9,8 +9,8 @@ public class ManaSystem extends ECS_System {
     @Override
     public void update() {
         Game.getEntities().stream()
-            // Consider only entities that have a ManaComponent
-            .flatMap(e -> e.getComponent(ManaComponent.class).stream())
-            .forEach(mc -> ((ManaComponent) mc).generatePoints());
+                // Consider only entities that have a ManaComponent
+                .flatMap(e -> e.getComponent(ManaComponent.class).stream())
+                .forEach(mc -> ((ManaComponent) mc).generatePoints());
     }
 }

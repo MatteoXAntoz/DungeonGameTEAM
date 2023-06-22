@@ -2,7 +2,6 @@ package ecs.components.skill;
 
 import ecs.entities.Entity;
 import ecs.entities.Hero;
-import starter.Game;
 
 public class SprintSkill extends Skill {
 
@@ -22,9 +21,7 @@ public class SprintSkill extends Skill {
      */
     public SprintSkill(Entity entity, ISkillFunction skillFunction, float coolDownInSeconds) {
         super(skillFunction, coolDownInSeconds);
-        mc = (ManaComponent)
-            entity
-                .getComponent(ManaComponent.class).get();
+        mc = (ManaComponent) entity.getComponent(ManaComponent.class).get();
     }
 
     public void update(Hero hero) {
@@ -40,8 +37,7 @@ public class SprintSkill extends Skill {
             hero.velocityComponent.setYVelocity(0.3f);
             manaConsumed = false;
         }
-        if(!manaConsumed)
-        {
+        if (!manaConsumed) {
             mc.reduceManaPoints(7);
             manaConsumed = true;
         }

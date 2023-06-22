@@ -93,12 +93,13 @@ public class Hero extends Entity {
     private void setupSprintSkill() {
         sprintSkill =
                 new SprintSkill(
-                    this,
+                        this,
                         new ISkillFunction() {
                             @Override
                             public void execute(Entity entity) {
-                                if(((ManaComponent)getComponent(ManaComponent.class).get()).getCurrentPoints() >= 7)
-                                    sprintSkill.active = true;
+                                if (((ManaComponent) getComponent(ManaComponent.class).get())
+                                                .getCurrentPoints()
+                                        >= 7) sprintSkill.active = true;
                             }
                         },
                         0);

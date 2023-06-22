@@ -226,13 +226,10 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         if (pauseMenu != null) {
             if (paused) {
                 pauseMenu.showMenu();
-                if(heroUI != null)
-                    heroUI.hideMenu();
-            }
-            else {
+                if (heroUI != null) heroUI.hideMenu();
+            } else {
                 pauseMenu.hideMenu();
-                if(heroUI != null)
-                    heroUI.showMenu();
+                if (heroUI != null) heroUI.showMenu();
             }
         }
     }
@@ -246,13 +243,10 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         if (gameOverMenu != null) {
             if (paused) {
                 gameOverMenu.showMenu();
-                if(heroUI != null)
-                    heroUI.hideMenu();
-            }
-            else {
+                if (heroUI != null) heroUI.hideMenu();
+            } else {
                 gameOverMenu.hideMenu();
-                if(heroUI != null)
-                    heroUI.showMenu();
+                if (heroUI != null) heroUI.showMenu();
             }
         }
     }

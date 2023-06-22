@@ -12,10 +12,8 @@ import controller.ScreenController;
 import tools.Constants;
 import tools.Point;
 
-/**
- * Represents stats of the Hero as a HUD
- */
-public class HeroUI <T extends Actor> extends ScreenController<T> {
+/** Represents stats of the Hero as a HUD */
+public class HeroUI<T extends Actor> extends ScreenController<T> {
     private static final HeroUI inst = new HeroUI();
 
     private ProgressBar healthP;
@@ -28,123 +26,75 @@ public class HeroUI <T extends Actor> extends ScreenController<T> {
         super(new SpriteBatch());
 
         // Health #######################################################
-        ScreenText health = getDefaultScreenText (
-            1,
-            40,
-            60,
-            Color.GREEN,
-            "HEALTH"
-        );
+        ScreenText health = getDefaultScreenText(1, 40, 60, Color.GREEN, "HEALTH");
         add((T) health);
 
-        healthP = getDefaultProgressBar(
-            10,
-            120,
-            30,
-            30,
-            Color.LIGHT_GRAY,
-            Color.GREEN,
-            0,
-            100,
-            1,
-            100,
-            1
-        );
+        healthP =
+                getDefaultProgressBar(
+                        10, 120, 30, 30, Color.LIGHT_GRAY, Color.GREEN, 0, 100, 1, 100, 1);
         add((T) healthP);
 
         // Armor ############################################################
-        ScreenText armor = getDefaultScreenText (
-            1,
-            90,
-            60,
-            Color.BLUE,
-            "ARMOR"
-        );
+        ScreenText armor = getDefaultScreenText(1, 90, 60, Color.BLUE, "ARMOR");
         add((T) armor);
 
-        armorP = getDefaultProgressBar(
-            10,
-            120,
-            80,
-            30,
-            Color.LIGHT_GRAY,
-            Color.BLUE,
-            0,
-            100,
-            1,
-            0,
-            1
-        );
+        armorP =
+                getDefaultProgressBar(
+                        10, 120, 80, 30, Color.LIGHT_GRAY, Color.BLUE, 0, 100, 1, 0, 1);
         add((T) armorP);
 
         // Mana ###################################################
 
-        ScreenText mana = getDefaultScreenText (
-            1,
-            140,
-            60,
-            Color.MAGENTA,
-            "MANA"
-        );
+        ScreenText mana = getDefaultScreenText(1, 140, 60, Color.MAGENTA, "MANA");
         add((T) mana);
 
-        manaP = getDefaultProgressBar(
-            10,
-            120,
-            130,
-            30,
-            Color.LIGHT_GRAY,
-            Color.MAGENTA,
-            0,
-            15,
-            1,
-            0,
-            2
-        );
+        manaP =
+                getDefaultProgressBar(
+                        10, 120, 130, 30, Color.LIGHT_GRAY, Color.MAGENTA, 0, 15, 1, 0, 2);
         add((T) manaP);
 
         // XP ########################################################
-        xpP = getDefaultProgressBar(
-            10,
-            250,
-            Constants.WINDOW_HEIGHT - 40,
-            (Constants.WINDOW_WIDTH - 250)/2,
-            Color.LIGHT_GRAY,
-            Color.GREEN,
-            0,
-            100,
-            1,
-            0,
-            1
-        );
+        xpP =
+                getDefaultProgressBar(
+                        10,
+                        250,
+                        Constants.WINDOW_HEIGHT - 40,
+                        (Constants.WINDOW_WIDTH - 250) / 2,
+                        Color.LIGHT_GRAY,
+                        Color.GREEN,
+                        0,
+                        100,
+                        1,
+                        0,
+                        1);
         add((T) xpP);
 
         // LEVEL ###########################################################
-        levelST = getDefaultScreenText (
-            1,
-            Constants.WINDOW_HEIGHT - 70,
-            Constants.WINDOW_WIDTH/2,
-            Color.GREEN,
-            "0"
-        );
+        levelST =
+                getDefaultScreenText(
+                        1,
+                        Constants.WINDOW_HEIGHT - 70,
+                        Constants.WINDOW_WIDTH / 2,
+                        Color.GREEN,
+                        "0");
         add((T) levelST);
 
         showMenu();
-    };
+    }
+    ;
 
     private ProgressBar getDefaultProgressBar(
-        int height,
-        int width,
-        int y,
-        int x,
-        Color backgroundColor,
-        Color knobColor,
-        int min,
-        int max,
-        int step,
-        int value,
-        float animateDuration
-        ) {
+            int height,
+            int width,
+            int y,
+            int x,
+            Color backgroundColor,
+            Color knobColor,
+            int min,
+            int max,
+            int step,
+            int value,
+            float animateDuration) {
         Skin background = new Skin();
         Pixmap pixmapB = new Pixmap(1, height, Pixmap.Format.RGBA8888);
         pixmapB.setColor(backgroundColor);
@@ -157,56 +107,38 @@ public class HeroUI <T extends Actor> extends ScreenController<T> {
         pixmapK.fill();
         knob.add("knob", new Texture(pixmapK));
 
-        ProgressBar.ProgressBarStyle barStyle = new ProgressBar.ProgressBarStyle(
-            background.newDrawable("background", backgroundColor),
-            knob.newDrawable("knob", knobColor));
+        ProgressBar.ProgressBarStyle barStyle =
+                new ProgressBar.ProgressBarStyle(
+                        background.newDrawable("background", backgroundColor),
+                        knob.newDrawable("knob", knobColor));
 
         barStyle.knobBefore = barStyle.knob;
 
-        ProgressBar pBar =
-            new ProgressBar(
-                min,
-                max,
-                step,
-                false,
-                barStyle
-            );
-        pBar.setPosition(
-            x,
-            y
-        );
+        ProgressBar pBar = new ProgressBar(min, max, step, false, barStyle);
+        pBar.setPosition(x, y);
         pBar.setAnimateDuration(animateDuration);
         pBar.setValue(value);
         pBar.setWidth(width);
         return pBar;
     }
 
-    private ScreenText getDefaultScreenText (
-        int scale,
-        int y,
-        int x,
-        Color color,
-        String text
-    )
-    {
+    private ScreenText getDefaultScreenText(int scale, int y, int x, Color color, String text) {
         ScreenText screenText =
-            new ScreenText(
-                text,
-                new Point(0, 0),
-                3,
-                new LabelStyleBuilder(FontBuilder.DEFAULT_FONT)
-                    .setFontcolor(color)
-                    .build());
+                new ScreenText(
+                        text,
+                        new Point(0, 0),
+                        3,
+                        new LabelStyleBuilder(FontBuilder.DEFAULT_FONT)
+                                .setFontcolor(color)
+                                .build());
         screenText.setFontScale(scale);
-        screenText.setPosition(
-            x,
-            y,
-            Align.center | Align.bottom);
+        screenText.setPosition(x, y, Align.center | Align.bottom);
         return screenText;
     }
 
     /**
      * Method according to Singelton pattern
+     *
      * @return the instance of HeroUI
      */
     public static HeroUI getInstance() {
@@ -215,6 +147,7 @@ public class HeroUI <T extends Actor> extends ScreenController<T> {
 
     /**
      * Sets the fill level of the health Progressbar
+     *
      * @param value the health Progressbar is set to
      */
     public void setCurrentHealth(int value) {
@@ -223,6 +156,7 @@ public class HeroUI <T extends Actor> extends ScreenController<T> {
 
     /**
      * Sets the maximum fill level of the health Progressbar
+     *
      * @param value the maximum health Progressbar is set to
      */
     public void setMaximumHealth(int value) {
@@ -231,6 +165,7 @@ public class HeroUI <T extends Actor> extends ScreenController<T> {
 
     /**
      * Sets the fill level of the mana Progressbar
+     *
      * @param value the mana Progressbar is set to
      */
     public void setCurrentMana(int value) {
@@ -239,6 +174,7 @@ public class HeroUI <T extends Actor> extends ScreenController<T> {
 
     /**
      * Sets the maximum fill level of the mana Progressbar
+     *
      * @param value the maximum mana Progressbar is set to
      */
     public void setMaximumMana(int value) {
@@ -247,6 +183,7 @@ public class HeroUI <T extends Actor> extends ScreenController<T> {
 
     /**
      * Sets the fill level of the xp Progressbar
+     *
      * @param value the xp Progressbar is set to
      */
     public void setCurrentXP(int value) {
@@ -255,6 +192,7 @@ public class HeroUI <T extends Actor> extends ScreenController<T> {
 
     /**
      * Sets the maximum fill level of the mana Progressbar
+     *
      * @param value the maximum mana Progressbar is set to
      */
     public void setMaximumXP(int value) {
@@ -263,11 +201,10 @@ public class HeroUI <T extends Actor> extends ScreenController<T> {
 
     /**
      * Sets the Text of the Level ScreenText
+     *
      * @param value the level Screentext is set to
      */
     public void setLevel(int value) {
         levelST.setText(value);
     }
-
-
 }

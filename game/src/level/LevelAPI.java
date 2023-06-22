@@ -1,7 +1,6 @@
 package level;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import ecs.components.xp.XPComponent;
 import ecs.entities.*;
 import ecs.entities.items.*;
 import graphic.Painter;
