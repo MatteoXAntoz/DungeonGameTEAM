@@ -14,6 +14,7 @@ import controller.AbstractController;
 import controller.SystemController;
 import ecs.components.MissingComponentException;
 import ecs.components.PositionComponent;
+import ecs.components.xp.XPComponent;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
 import ecs.entities.items.Item;
@@ -21,6 +22,7 @@ import ecs.systems.*;
 import graphic.DungeonCamera;
 import graphic.Painter;
 import graphic.hud.GameOverMenu;
+import graphic.hud.HeroUI;
 import graphic.hud.PauseMenu;
 import java.io.IOException;
 import java.util.*;
@@ -74,6 +76,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     public static ILevel currentLevel;
     private static PauseMenu<Actor> pauseMenu;
     private static GameOverMenu<Actor> gameOverMenu;
+    private static HeroUI<Actor> heroUI;
     public static Hero hero;
     private Logger gameLogger;
 
@@ -122,7 +125,9 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         controller.add(systems);
         pauseMenu = new PauseMenu<>();
         gameOverMenu = new GameOverMenu<>(levelAPI);
+        heroUI = HeroUI.getInstance();
         controller.add(pauseMenu);
+        controller.add(heroUI);
         controller.add(gameOverMenu);
         hero = new Hero();
 
@@ -187,6 +192,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
             if (hero.healingSkill.potion < hero.healingSkill.MAX_POTIONAMOUNT) {
                 hero.healingSkill.addPotion();
             }
+            ((XPComponent) Game.hero.getComponent(XPComponent.class).get()).addXP(40);
         }
     }
 
@@ -215,10 +221,16 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         if (gameOverMenu.isVisible()) {
             return;
         }
+
         togglePause();
         if (pauseMenu != null) {
-            if (paused) pauseMenu.showMenu();
-            else pauseMenu.hideMenu();
+            if (paused) {
+                pauseMenu.showMenu();
+                if (heroUI != null) heroUI.hideMenu();
+            } else {
+                pauseMenu.hideMenu();
+                if (heroUI != null) heroUI.showMenu();
+            }
         }
     }
 
@@ -229,8 +241,13 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         }
         togglePause();
         if (gameOverMenu != null) {
-            if (paused) gameOverMenu.showMenu();
-            else gameOverMenu.hideMenu();
+            if (paused) {
+                gameOverMenu.showMenu();
+                if (heroUI != null) heroUI.hideMenu();
+            } else {
+                gameOverMenu.hideMenu();
+                if (heroUI != null) heroUI.showMenu();
+            }
         }
     }
 
@@ -322,9 +339,11 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         new KnockBackSystem();
         new CollisionSystem();
         new HealthSystem();
+        new ManaSystem();
         new XPSystem();
         new SkillSystem();
         new ProjectileSystem();
         new MeeleSystem();
+        new HeroUISystem();
     }
 }

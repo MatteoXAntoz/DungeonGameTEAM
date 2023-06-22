@@ -81,12 +81,6 @@ public class LevelAPI {
         spawnTraps();
 
         spawnMonsters();
-
-        spawnRiddleTile();
-
-        String heroInfo =
-                "Current Hero health: " + Game.hero.healthComponent.getCurrentHealthpoints();
-        levelAPI_logger.info(heroInfo);
     }
 
     /**

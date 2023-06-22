@@ -6,6 +6,7 @@ import ecs.components.AnimationComponent;
 import ecs.components.PositionComponent;
 import ecs.components.VelocityComponent;
 import ecs.components.skill.*;
+import ecs.components.xp.XPComponent;
 import ecs.entities.items.*;
 import ecs.systems.PlayerSystem;
 import graphic.Animation;
@@ -58,6 +59,9 @@ public class Hero extends Entity {
         setupHealthComponent();
         PlayableComponent pc = new PlayableComponent(this);
 
+        new ManaComponent(this, 15, 0, 30);
+        new XPComponent(this);
+
         setupSprintSkill();
         setupHealingSkill();
         setUpSwordSkill();
@@ -89,13 +93,16 @@ public class Hero extends Entity {
     private void setupSprintSkill() {
         sprintSkill =
                 new SprintSkill(
+                        this,
                         new ISkillFunction() {
                             @Override
                             public void execute(Entity entity) {
-                                sprintSkill.active = true;
+                                if (((ManaComponent) getComponent(ManaComponent.class).get())
+                                                .getCurrentPoints()
+                                        >= 7) sprintSkill.active = true;
                             }
                         },
-                        5);
+                        0);
     }
 
     private void setupHealingSkill() {
