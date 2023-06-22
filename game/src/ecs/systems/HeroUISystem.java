@@ -31,8 +31,11 @@ public class HeroUISystem extends ECS_System {
     @Override
     public void update() {
         if(doSetup) setup();
+
         HeroUI heroUI = HeroUI.getInstance();
-        heroUI.setHealth(hc.getCurrentHealthpoints());
+
+        heroUI.setCurrentHealth(hc.getCurrentHealthpoints());
+        heroUI.setMaximumHealth(hc.getMaximalHealthpoints());
 
         heroUI.update();
     }

@@ -1,11 +1,9 @@
 package graphic.hud;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -208,8 +206,11 @@ public class HeroUI <T extends Actor> extends ScreenController<T> {
         return inst;
     }
 
-    public void setHealth(int value) {
+    public void setCurrentHealth(int value) {
         healthP.setValue(value);
+    }
+    public void setMaximumHealth(int value) {
+        healthP.setRange(0, value);
     }
 
 
