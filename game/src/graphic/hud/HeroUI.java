@@ -93,10 +93,10 @@ public class HeroUI <T extends Actor> extends ScreenController<T> {
             Color.LIGHT_GRAY,
             Color.MAGENTA,
             0,
-            100,
+            15,
             1,
             0,
-            1
+            2
         );
         add((T) manaP);
 
@@ -140,7 +140,7 @@ public class HeroUI <T extends Actor> extends ScreenController<T> {
         int max,
         int step,
         int value,
-        int animateDuration
+        float animateDuration
         ) {
         Skin background = new Skin();
         Pixmap pixmapB = new Pixmap(1, height, Pixmap.Format.RGBA8888);

@@ -58,6 +58,7 @@ public class Hero extends Entity {
         setupHitboxComponent();
         setupHealthComponent();
         PlayableComponent pc = new PlayableComponent(this);
+
         new ManaComponent(this, 15, 0, 30);
         new XPComponent(this);
 
@@ -92,13 +93,15 @@ public class Hero extends Entity {
     private void setupSprintSkill() {
         sprintSkill =
                 new SprintSkill(
+                    this,
                         new ISkillFunction() {
                             @Override
                             public void execute(Entity entity) {
-                                sprintSkill.active = true;
+                                if(((ManaComponent)getComponent(ManaComponent.class).get()).getCurrentPoints() >= 7)
+                                    sprintSkill.active = true;
                             }
                         },
-                        5);
+                        0);
     }
 
     private void setupHealingSkill() {

@@ -102,15 +102,6 @@ public class XPComponent extends Component {
     }
 
     /**
-     * executes levelUp() in Hero class
-     */
-    public void levelUp() {
-        System.out.println("Level: " + currentLevel);
-        Hero hero = (Hero) entity;
-        hero.levelUp();
-    }
-
-    /**
      * Get the amount of xp that will be dropped when the entity dies. If no value is set, the xp
      * will be set to half of the current xp
      *
