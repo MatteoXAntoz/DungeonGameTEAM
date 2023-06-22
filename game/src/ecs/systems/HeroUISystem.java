@@ -31,7 +31,6 @@ public class HeroUISystem extends ECS_System {
 
         sc = (SkillComponent) Game.hero.
             getComponent(SkillComponent.class).get();
-        System.out.println("HeroUI Konstrukor finished");
     }
     @Override
     public void update() {
