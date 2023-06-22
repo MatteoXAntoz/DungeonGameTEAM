@@ -40,6 +40,11 @@ public class HeroUISystem extends ECS_System {
         heroUI.setMaximumHealth(hc.getMaximalHealthpoints());
 
         heroUI.setCurrentMana(mc.getCurrentPoints());
+
+        heroUI.setCurrentXP((int) xpc.getCurrentXP());
+        heroUI.setMaximumXP((int) (xpc.getCurrentXP() + xpc.getXPToNextLevel()));
+        heroUI.setLevel((int) xpc.getCurrentLevel());
+
         heroUI.update();
     }
 }

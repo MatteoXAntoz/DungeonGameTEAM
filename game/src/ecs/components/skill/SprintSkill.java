@@ -30,8 +30,6 @@ public class SprintSkill extends Skill {
     public void update(Hero hero) {
         if (active) {
             duration -= 1;
-            hero.healthComponent.setCurrentHealthpoints(
-                    hero.healthComponent.getCurrentHealthpoints() - damageProTick);
             hero.velocityComponent.setXVelocity(xBoost);
             hero.velocityComponent.setYVelocity(yBoost);
         }

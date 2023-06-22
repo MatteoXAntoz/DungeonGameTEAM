@@ -117,7 +117,7 @@ public class HeroUI <T extends Actor> extends ScreenController<T> {
         add((T) xpP);
 
         // LEVEL ###########################################################
-        ScreenText levelST = getDefaultScreenText (
+        levelST = getDefaultScreenText (
             1,
             Constants.WINDOW_HEIGHT - 70,
             Constants.WINDOW_WIDTH/2,
@@ -217,6 +217,15 @@ public class HeroUI <T extends Actor> extends ScreenController<T> {
     }
     public void setMaximumMana(int value) {
         manaP.setRange(0, value);
+    }
+    public void setCurrentXP(int value) {
+        xpP.setValue(value);
+    }
+    public void setMaximumXP(int value) {
+        xpP.setRange(0, value);
+    }
+    public void setLevel(int value) {
+        levelST.setText(value);
     }
 
 
