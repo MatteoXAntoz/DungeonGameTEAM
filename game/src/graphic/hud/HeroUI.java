@@ -212,6 +212,12 @@ public class HeroUI <T extends Actor> extends ScreenController<T> {
     public void setMaximumHealth(int value) {
         healthP.setRange(0, value);
     }
+    public void setCurrentMana(int value) {
+        manaP.setValue(value);
+    }
+    public void setMaximumMana(int value) {
+        manaP.setRange(0, value);
+    }
 
 
 }

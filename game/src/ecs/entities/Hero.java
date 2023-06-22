@@ -6,6 +6,7 @@ import ecs.components.AnimationComponent;
 import ecs.components.PositionComponent;
 import ecs.components.VelocityComponent;
 import ecs.components.skill.*;
+import ecs.components.xp.XPComponent;
 import ecs.entities.items.*;
 import ecs.systems.PlayerSystem;
 import graphic.Animation;
@@ -57,6 +58,8 @@ public class Hero extends Entity {
         setupHitboxComponent();
         setupHealthComponent();
         PlayableComponent pc = new PlayableComponent(this);
+        new ManaComponent(this, 15, 0, 30);
+        new XPComponent(this);
 
         setupSprintSkill();
         setupHealingSkill();
