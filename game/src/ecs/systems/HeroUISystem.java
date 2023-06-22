@@ -7,6 +7,9 @@ import ecs.components.xp.XPComponent;
 import graphic.hud.HeroUI;
 import starter.Game;
 
+/**
+ * Updates Values for HeroUI
+ */
 public class HeroUISystem extends ECS_System {
     private HealthComponent hc;
     private ManaComponent mc;

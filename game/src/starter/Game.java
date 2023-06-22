@@ -14,6 +14,7 @@ import controller.AbstractController;
 import controller.SystemController;
 import ecs.components.MissingComponentException;
 import ecs.components.PositionComponent;
+import ecs.components.xp.XPComponent;
 import ecs.entities.Entity;
 import ecs.entities.Hero;
 import ecs.entities.items.Item;
@@ -191,6 +192,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
             if (hero.healingSkill.potion < hero.healingSkill.MAX_POTIONAMOUNT) {
                 hero.healingSkill.addPotion();
             }
+            ((XPComponent) Game.hero.getComponent(XPComponent.class).get()).addXP(40);
         }
     }
 

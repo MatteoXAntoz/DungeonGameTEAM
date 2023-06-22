@@ -68,7 +68,6 @@ public class LevelAPI {
         onLevelLoader.onLevelLoad();
         levelID += 1;
         levelAPI_logger.info("Level " + levelID + " was loaded.");
-        ((XPComponent) Game.hero.getComponent(XPComponent.class).get()).addXP(40);
 
         levelManager.setLevelSurvivedWithoutDamage(
                 levelManager.getLevelSurvivedWithoutDamage() + 1);

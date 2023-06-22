@@ -12,6 +12,9 @@ import controller.ScreenController;
 import tools.Constants;
 import tools.Point;
 
+/**
+ * Represents stats of the Hero as a HUD
+ */
 public class HeroUI <T extends Actor> extends ScreenController<T> {
     private static final HeroUI inst = new HeroUI();
 
@@ -202,28 +205,66 @@ public class HeroUI <T extends Actor> extends ScreenController<T> {
         return screenText;
     }
 
+    /**
+     * Method according to Singelton pattern
+     * @return the instance of HeroUI
+     */
     public static HeroUI getInstance() {
         return inst;
     }
 
+    /**
+     * Sets the fill level of the health Progressbar
+     * @param value the health Progressbar is set to
+     */
     public void setCurrentHealth(int value) {
         healthP.setValue(value);
     }
+
+    /**
+     * Sets the maximum fill level of the health Progressbar
+     * @param value the maximum health Progressbar is set to
+     */
     public void setMaximumHealth(int value) {
         healthP.setRange(0, value);
     }
+
+    /**
+     * Sets the fill level of the mana Progressbar
+     * @param value the mana Progressbar is set to
+     */
     public void setCurrentMana(int value) {
         manaP.setValue(value);
     }
+
+    /**
+     * Sets the maximum fill level of the mana Progressbar
+     * @param value the maximum mana Progressbar is set to
+     */
     public void setMaximumMana(int value) {
         manaP.setRange(0, value);
     }
+
+    /**
+     * Sets the fill level of the xp Progressbar
+     * @param value the xp Progressbar is set to
+     */
     public void setCurrentXP(int value) {
         xpP.setValue(value);
     }
+
+    /**
+     * Sets the maximum fill level of the mana Progressbar
+     * @param value the maximum mana Progressbar is set to
+     */
     public void setMaximumXP(int value) {
         xpP.setRange(0, value);
     }
+
+    /**
+     * Sets the Text of the Level ScreenText
+     * @param value the level Screentext is set to
+     */
     public void setLevel(int value) {
         levelST.setText(value);
     }
