@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.logging.Logger;
-
 import level.elements.tile.FloorTile;
 import level.elements.tile.HoleTile;
 import semanticAnalysis.types.DSLContextPush;

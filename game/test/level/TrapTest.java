@@ -1,5 +1,8 @@
 package level;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ecs.components.*;
 import ecs.entities.Entity;
@@ -15,8 +18,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import tools.Point;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 public class TrapTest {
 
@@ -34,23 +35,19 @@ public class TrapTest {
 
         hero = Mockito.mock(Hero.class);
 
-        coordinate = new Coordinate(5,5);
+        coordinate = new Coordinate(5, 5);
 
         spriteBatch = Mockito.mock(SpriteBatch.class);
         iGenerator = Mockito.mock(IGenerator.class);
         iOnLevelLoader = Mockito.mock(IOnLevelLoader.class);
-        levelAPI = new LevelAPI(spriteBatch,painter,iGenerator,iOnLevelLoader);
-
+        levelAPI = new LevelAPI(spriteBatch, painter, iGenerator, iOnLevelLoader);
     }
 
     // Test für die Erzeugung einer Lava-Falle
     @Test
     public void test_shouldSpawnLavaTrap() {
-        LevelElement[][] levelElement = new LevelElement[][]{
-            {LevelElement.FLOOR}
-        };
-        TileLevel level = new TileLevel(levelElement,
-            DesignLabel.DEFAULT);
+        LevelElement[][] levelElement = new LevelElement[][] {{LevelElement.FLOOR}};
+        TileLevel level = new TileLevel(levelElement, DesignLabel.DEFAULT);
         levelAPI.setLevel(level);
         level.getRandomTile().setLevelElement(LevelElement.LAVA);
 
@@ -60,11 +57,8 @@ public class TrapTest {
     // Test für die Erzeugung einer Mausefalle
     @Test
     public void test_shouldSpawnMouseTrap() {
-        LevelElement[][] levelElement = new LevelElement[][]{
-            {LevelElement.FLOOR}
-        };
-        TileLevel level = new TileLevel(levelElement,
-            DesignLabel.DEFAULT);
+        LevelElement[][] levelElement = new LevelElement[][] {{LevelElement.FLOOR}};
+        TileLevel level = new TileLevel(levelElement, DesignLabel.DEFAULT);
         levelAPI.setLevel(level);
         level.getRandomTile().setLevelElement(LevelElement.MOUSETRAP);
 
@@ -74,11 +68,8 @@ public class TrapTest {
     // Test für die Erzeugung einer Giftfalle
     @Test
     public void test_shouldSpawnPoisonTrap() {
-        LevelElement[][] levelElement = new LevelElement[][]{
-            {LevelElement.FLOOR}
-        };
-        TileLevel level = new TileLevel(levelElement,
-            DesignLabel.DEFAULT);
+        LevelElement[][] levelElement = new LevelElement[][] {{LevelElement.FLOOR}};
+        TileLevel level = new TileLevel(levelElement, DesignLabel.DEFAULT);
         levelAPI.setLevel(level);
         level.getRandomTile().setLevelElement(LevelElement.POISON);
 
@@ -88,9 +79,7 @@ public class TrapTest {
     // Test für die Nicht-Erzeugung einer Lava-Falle
     @Test
     public void test_shouldNotSpawnLavaTrap() {
-        LevelElement[][] levelElement = new LevelElement[][]{
-            {LevelElement.FLOOR}
-        };
+        LevelElement[][] levelElement = new LevelElement[][] {{LevelElement.FLOOR}};
         TileLevel level = new TileLevel(levelElement, DesignLabel.DEFAULT);
         levelAPI.setLevel(level);
 
@@ -100,9 +89,7 @@ public class TrapTest {
     // Test für die Nicht-Erzeugung einer Mausefalle
     @Test
     public void test_shouldNotSpawnMouseTrap() {
-        LevelElement[][] levelElement = new LevelElement[][]{
-            {LevelElement.FLOOR}
-        };
+        LevelElement[][] levelElement = new LevelElement[][] {{LevelElement.FLOOR}};
         TileLevel level = new TileLevel(levelElement, DesignLabel.DEFAULT);
         levelAPI.setLevel(level);
 
@@ -112,9 +99,7 @@ public class TrapTest {
     // Test für die Nicht-Erzeugung einer Giftfalle
     @Test
     public void test_shouldNotSpawnPoisonTrap() {
-        LevelElement[][] levelElement = new LevelElement[][]{
-            {LevelElement.FLOOR}
-        };
+        LevelElement[][] levelElement = new LevelElement[][] {{LevelElement.FLOOR}};
         TileLevel level = new TileLevel(levelElement, DesignLabel.DEFAULT);
         levelAPI.setLevel(level);
 
@@ -123,16 +108,14 @@ public class TrapTest {
 
     // Test für die Aktivierung einer Bodenfliese nach Kollision mit einer Falle
     @Test
-    public void test_activationAfterCollision(){
-        LevelElement[][] levelElement = new LevelElement[][]{
-            {LevelElement.FLOOR}
-        };
+    public void test_activationAfterCollision() {
+        LevelElement[][] levelElement = new LevelElement[][] {{LevelElement.FLOOR}};
         TileLevel level = new TileLevel(levelElement, DesignLabel.DEFAULT);
         levelAPI.setLevel(level);
 
         FloorTile floorTile = levelAPI.getCurrentLevel().getFloorTiles().get(0);
         when(hero.isCollidingWithTrapTile(any())).thenReturn(true);
-        if(hero.isCollidingWithTrapTile(any())){
+        if (hero.isCollidingWithTrapTile(any())) {
             floorTile.setActivated(true);
         }
         assertTrue(floorTile.isActivated());
@@ -140,16 +123,14 @@ public class TrapTest {
 
     // Test für die Nicht-Aktivierung einer Bodenfliese nach Kollision mit einer Falle
     @Test
-    public void test_activationAfterCollisionShouldNotWork(){
-        LevelElement[][] levelElement = new LevelElement[][]{
-            {LevelElement.FLOOR}
-        };
+    public void test_activationAfterCollisionShouldNotWork() {
+        LevelElement[][] levelElement = new LevelElement[][] {{LevelElement.FLOOR}};
         TileLevel level = new TileLevel(levelElement, DesignLabel.DEFAULT);
         levelAPI.setLevel(level);
 
         FloorTile floorTile = levelAPI.getCurrentLevel().getFloorTiles().get(0);
         when(hero.isCollidingWithTrapTile(any())).thenReturn(false);
-        if(hero.isCollidingWithTrapTile(any())){
+        if (hero.isCollidingWithTrapTile(any())) {
             floorTile.setActivated(false);
         }
         assertFalse(floorTile.isActivated());
@@ -157,48 +138,44 @@ public class TrapTest {
 
     // Test für die Kollision zwischen Entity und Bodenfliese
     @Test
-    public void test_collision(){
-        LevelElement[][] levelElement = new LevelElement[][]{
-            {LevelElement.FLOOR}
-        };
+    public void test_collision() {
+        LevelElement[][] levelElement = new LevelElement[][] {{LevelElement.FLOOR}};
         TileLevel level = new TileLevel(levelElement, DesignLabel.DEFAULT);
         levelAPI.setLevel(level);
 
         FloorTile floorTile = levelAPI.getCurrentLevel().getFloorTiles().get(0);
         Entity entity = new Entity();
-        entity.positionComponent = new PositionComponent(entity,new Point(0,0));
+        entity.positionComponent = new PositionComponent(entity, new Point(0, 0));
         assertTrue(entity.isCollidingWithTrapTile(floorTile));
     }
 
     // Test für das Nicht-Vorkommen einer Kollision zwischen Entity und Bodenfliese
     @Test
-    public void test_collisionShouldNotWork(){
-        LevelElement[][] levelElement = new LevelElement[][]{
-            {LevelElement.FLOOR}
-        };
+    public void test_collisionShouldNotWork() {
+        LevelElement[][] levelElement = new LevelElement[][] {{LevelElement.FLOOR}};
         TileLevel level = new TileLevel(levelElement, DesignLabel.DEFAULT);
         levelAPI.setLevel(level);
 
         FloorTile floorTile = levelAPI.getCurrentLevel().getFloorTiles().get(0);
         Entity entity = new Entity();
-        entity.positionComponent = new PositionComponent(entity,new Point(10,10));
+        entity.positionComponent = new PositionComponent(entity, new Point(10, 10));
         assertFalse(entity.isCollidingWithTrapTile(floorTile));
     }
 
     // Test für die maximale Anzahl von Fallen (zwei)
     @Test
-    public void test_maxSizeOfTrapsShouldBeTwo(){
+    public void test_maxSizeOfTrapsShouldBeTwo() {
         levelAPI.addTraps();
         int amount = levelAPI.trapElements.size();
-        assertEquals(2,amount);
+        assertEquals(2, amount);
     }
 
-    //Grenzwert: 3
+    // Grenzwert: 3
     // Test für die maximale Anzahl von Fallen (nicht drei)
     @Test
-    public void test_maxSizeOfTrapsShouldNotBe3(){
+    public void test_maxSizeOfTrapsShouldNotBe3() {
         levelAPI.addTraps();
         int amount = levelAPI.trapElements.size();
-        assertNotEquals(3,amount);
+        assertNotEquals(3, amount);
     }
 }

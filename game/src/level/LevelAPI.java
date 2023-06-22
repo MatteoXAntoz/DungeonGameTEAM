@@ -211,7 +211,7 @@ public class LevelAPI {
             levelAPI_logger.info("Fallen wurden geladen");
             trapElements = SaveLoadGame.loadTraps();
         } else {
-           addTraps();
+            addTraps();
         }
 
         for (int i = 0; i < trapElements.size(); i++) {
@@ -239,7 +239,8 @@ public class LevelAPI {
             }
         }
     }
-    void addTraps(){
+
+    void addTraps() {
         for (int i = 0; i < 2; i++) {
             trapElements.add(getRandomTraps());
         }
