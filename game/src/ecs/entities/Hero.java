@@ -6,6 +6,7 @@ import ecs.components.AnimationComponent;
 import ecs.components.PositionComponent;
 import ecs.components.VelocityComponent;
 import ecs.components.skill.*;
+import ecs.components.xp.XPComponent;
 import ecs.entities.items.*;
 import ecs.systems.PlayerSystem;
 import graphic.Animation;
@@ -58,6 +59,9 @@ public class Hero extends Entity {
         setupHealthComponent();
         PlayableComponent pc = new PlayableComponent(this);
 
+        new ManaComponent(this, 15, 0, 30);
+        new XPComponent(this);
+
         setupSprintSkill();
         setupHealingSkill();
         setUpSwordSkill();
@@ -89,13 +93,16 @@ public class Hero extends Entity {
     private void setupSprintSkill() {
         sprintSkill =
                 new SprintSkill(
+                        this,
                         new ISkillFunction() {
                             @Override
                             public void execute(Entity entity) {
-                                sprintSkill.active = true;
+                                if (((ManaComponent) getComponent(ManaComponent.class).get())
+                                                .getCurrentPoints()
+                                        >= 7) sprintSkill.active = true;
                             }
                         },
-                        5);
+                        0);
     }
 
     private void setupHealingSkill() {
@@ -155,6 +162,21 @@ public class Hero extends Entity {
                         > item.getPositionComponent().getPosition().y
                 && positionComponent.getPosition().y
                         < item.getPositionComponent().getPosition().y + hitBoxScale);
+    }
+
+    /**
+     * method to check if hero is colliding with a riddle hint tile
+     *
+     * @param tile gets riddle tile as parameter
+     * @return returns boolean value if hero is colliding
+     */
+    public boolean isCollidingWithRiddleHintTile(FloorTile tile) {
+        float hitBoxScale = 0.6f;
+
+        return (positionComponent.getPosition().x + hitBoxScale > tile.getCoordinateAsPoint().x
+                && positionComponent.getPosition().x < tile.getCoordinateAsPoint().x + hitBoxScale
+                && positionComponent.getPosition().y + hitBoxScale > tile.getCoordinateAsPoint().y
+                && positionComponent.getPosition().y < tile.getCoordinateAsPoint().y + hitBoxScale);
     }
 
     private void setupInventory() {

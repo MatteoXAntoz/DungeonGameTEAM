@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.logging.Logger;
+import level.elements.tile.FloorTile;
 import level.elements.tile.HoleTile;
 import semanticAnalysis.types.DSLContextPush;
 import semanticAnalysis.types.DSLType;
@@ -67,7 +68,7 @@ public class Entity implements Serializable {
         return false;
     }
 
-    public boolean isCollidingWithTrapTile(HoleTile tile) {
+    public boolean isCollidingWithTrapTile(FloorTile tile) {
         float hitBoxScale = 0.6f;
 
         return (positionComponent.getPosition().x + hitBoxScale > tile.getCoordinateAsPoint().x

@@ -23,6 +23,7 @@ public class TileFactory {
             case MOUSETRAP -> new MouseTrap(texturePath, coordinate, designLabel, level);
             case EXIT -> new ExitTile(texturePath, coordinate, designLabel, level);
             case SKIP -> new SkipTile(texturePath, coordinate, designLabel, level);
+            case RIDDLE -> new RiddleHintTile(texturePath, coordinate, designLabel, level);
         };
     }
 

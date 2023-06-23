@@ -32,6 +32,7 @@ public class TileLevel implements ILevel {
     protected ArrayList<MouseTrap> mouseTraps = new ArrayList<>();
     protected ArrayList<PoisonTrap> poisonTraps = new ArrayList<>();
     protected ArrayList<LavaTrap> lavaTraps = new ArrayList<>();
+    protected ArrayList<RiddleHintTile> riddleHintTiles = new ArrayList<>();
 
     private static final Coordinate CONNECTION_OFFSETS[] = {
         new Coordinate(0, 1), new Coordinate(0, -1), new Coordinate(1, 0), new Coordinate(-1, 0),
@@ -159,6 +160,11 @@ public class TileLevel implements ILevel {
     }
 
     @Override
+    public void addRiddleHintTile(RiddleHintTile tile) {
+        riddleHintTiles.add(tile);
+    }
+
+    @Override
     public void addExitTile(ExitTile tile) {
         if (getEndTile() != null) {
             changeTileElementType(getEndTile(), LevelElement.FLOOR);
@@ -207,6 +213,11 @@ public class TileLevel implements ILevel {
     }
 
     @Override
+    public List<RiddleHintTile> getRiddleHintTile() {
+        return riddleHintTiles;
+    }
+
+    @Override
     public List<ExitTile> getExitTiles() {
         return exitTiles;
     }
@@ -237,6 +248,7 @@ public class TileLevel implements ILevel {
             case LAVA -> lavaTraps.remove(tile);
             case POISON -> poisonTraps.remove(tile);
             case MOUSETRAP -> mouseTraps.remove(tile);
+            case RIDDLE -> riddleHintTiles.remove(tile);
         }
 
         tile.getConnections()
@@ -268,6 +280,7 @@ public class TileLevel implements ILevel {
             case POISON -> addPoisonTrap((PoisonTrap) tile);
             case EXIT -> addExitTile((ExitTile) tile);
             case DOOR -> addDoorTile((DoorTile) tile);
+            case RIDDLE -> addRiddleHintTile((RiddleHintTile) tile);
         }
         if (tile.isAccessible()) {
             this.addConnectionsToNeighbours(tile);

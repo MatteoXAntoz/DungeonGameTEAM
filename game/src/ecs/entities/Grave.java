@@ -2,13 +2,12 @@ package ecs.entities;
 
 import dslToGame.AnimationBuilder;
 import ecs.components.*;
-import ecs.entities.NPCs.Ghost;
 import graphic.Animation;
 import starter.Game;
 
 public class Grave extends Entity implements IInteraction {
 
-    ecs.entities.NPCs.Ghost ghost;
+    ecs.entities.Ghost ghost;
 
     Animation idle;
     InteractionComponent interactionComponent;

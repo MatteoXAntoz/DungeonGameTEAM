@@ -60,6 +60,13 @@ public interface ILevel extends ITileable {
     void addLavaTrap(LavaTrap tile);
 
     /**
+     * Add riddlehint tile
+     *
+     * @param tile new riddlehint tile
+     */
+    void addRiddleHintTile(RiddleHintTile tile);
+
+    /**
      * Add door tile to level.
      *
      * @param tile new door tile
@@ -113,6 +120,13 @@ public interface ILevel extends ITileable {
     List<LavaTrap> getLavaTrap();
 
     List<PoisonTrap> getPoisonTrap();
+
+    /**
+     * Return List of all riddlehint tiles of the level
+     *
+     * @return list of riddlehint tiles
+     */
+    List<RiddleHintTile> getRiddleHintTile();
 
     /**
      * Returns List of all hole tiles of the level.
@@ -228,6 +242,9 @@ public interface ILevel extends ITileable {
                     : null;
             case DOOR -> getDoorTiles().size() > 0
                     ? getDoorTiles().get(RANDOM.nextInt(getDoorTiles().size()))
+                    : null;
+            case RIDDLE -> getRiddleHintTile().size() > 0
+                    ? getRiddleHintTile().get(RANDOM.nextInt(getRiddleHintTile().size()))
                     : null;
         };
     }
