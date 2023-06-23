@@ -1,4 +1,4 @@
-package ecs.entities.NPCs;
+package ecs.entities;
 
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import dslToGame.AnimationBuilder;

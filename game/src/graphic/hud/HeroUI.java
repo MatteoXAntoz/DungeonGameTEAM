@@ -95,6 +95,7 @@ public class HeroUI<T extends Actor> extends ScreenController<T> {
             int step,
             int value,
             float animateDuration) {
+
         Skin background = new Skin();
         Pixmap pixmapB = new Pixmap(1, height, Pixmap.Format.RGBA8888);
         pixmapB.setColor(backgroundColor);
