@@ -8,8 +8,6 @@ import ecs.components.ai.AITools;
 import ecs.components.ai.fight.IFightAI;
 import ecs.components.ai.idle.IIdleAI;
 import ecs.components.ai.transition.ITransition;
-import ecs.entities.Entity;
-import ecs.entities.Hero;
 import ecs.entities.items.Zauberstab;
 import graphic.Animation;
 import java.util.logging.Logger;
@@ -58,7 +56,7 @@ public class Ghost extends Entity implements IInteraction, IIdleAI {
 
     @Override
     public void onInteraction(Entity entity) {
-        dialogWithGhost();
+        new Thread(this::dialogWithGhost).start();
     }
 
     @Override
@@ -97,6 +95,7 @@ public class Ghost extends Entity implements IInteraction, IIdleAI {
     }
 
     private void dialogWithGhost() {
+        Game.togglePause();
         int riddleReturnValue = new Riddle().ghostRiddle();
         switch (riddleReturnValue) {
             case 0:
@@ -108,5 +107,6 @@ public class Ghost extends Entity implements IInteraction, IIdleAI {
             default:
                 ghost_logger.warning("Riddle was neither solved nor not solved!");
         }
+        Game.togglePause();
     }
 }

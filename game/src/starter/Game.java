@@ -251,7 +251,8 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         }
     }
 
-    private static void togglePause() {
+    /** Starts/Stops all ECSSystems */
+    public static void togglePause() {
         paused = !paused;
         if (systems != null) {
             systems.forEach(ECS_System::toggleRun);

@@ -2,7 +2,6 @@ package ecs.entities;
 
 import dslToGame.AnimationBuilder;
 import ecs.components.*;
-import ecs.entities.Ghost;
 import graphic.Animation;
 import starter.Game;
 
